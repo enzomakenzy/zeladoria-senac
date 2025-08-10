@@ -1,12 +1,16 @@
 export default {
   COLORS: {
-    WHITE: "#FFFFFF",
+    WHITE: {
+      TRANSPARENCE_70: "#ffffffb4",
+      TRANSPARENCE_100: "#FFFFFF",
+    },
 
     BLACK: {
       TRANSPARENCE_4: "#0000000a",
       TRANSPARENCE_6: "#0000000f",
       TRANSPARENCE_30: "#0000004d",
-      TRANSPARENCE_39: "#00000063"
+      TRANSPARENCE_39: "#00000063",
+      TRANSPARENCE_100: "#000000"
     },
 
     BLUE: "#004A8D",
