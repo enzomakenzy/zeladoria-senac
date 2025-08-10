@@ -1,7 +1,7 @@
-import { Login } from "@screens/Login";
+import { Routes } from "@routes/index";
 
 export default function App() {
   return (
-    <Login />
+    <Routes />
   );
 }
