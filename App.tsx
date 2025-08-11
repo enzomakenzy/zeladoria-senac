@@ -1,4 +1,4 @@
-import { Login } from "@screens/Login";
+import { Routes } from "@routes/index";
 
 import MainTheme from "@themes/MainTheme";
 import { ThemeProvider } from "styled-components/native";
@@ -6,7 +6,7 @@ import { ThemeProvider } from "styled-components/native";
 export default function App() {
   return (
     <ThemeProvider theme={MainTheme}>
-      <Login />
+      <Routes />
     </ThemeProvider>
   );
 }
