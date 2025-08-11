@@ -1,9 +1,11 @@
-import { Container, Title } from "./styles";
+import { Container, Main } from "./styles";
 
 export function RoomDetails() {
   return (
     <Container>
-      <Title>Detalhes da Sala em construção...</Title>
+      <Main>
+        
+      </Main>
     </Container>
   )
 }
