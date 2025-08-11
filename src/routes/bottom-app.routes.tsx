@@ -1,10 +1,17 @@
+import { TouchableOpacity } from "react-native";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Home } from "@screens/Home";
 import { CleanRooms } from "@screens/CleanRooms";
 import { Profile } from "@screens/Profile";
+
+import HomeIcon from "@assets/home.svg";
+import CleanIcon from "@assets/clean.svg";
+import ProfileIcon from "@assets/profile.svg";
+
 import { useTheme } from "styled-components/native";
-import { TouchableOpacity } from "react-native";
+
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type BottomAppProps = {
@@ -32,6 +39,10 @@ export function BottomAppRoutes() {
         tabBarButton: (props: any) => (
           <TouchableOpacity 
             {...props}
+            onPress={(e) => {
+              e.preventDefault?.(); // evita reload na web
+              props.onPress?.(e); // se onPress existir, chama ele
+            }}
             style={{ alignItems: "center", justifyContent: "center", width: "100%", height: "100%" }}
             activeOpacity={1}
           />
@@ -41,16 +52,25 @@ export function BottomAppRoutes() {
       <Screen 
         name="home"
         component={Home}
+        options={{
+          tabBarIcon: ({ focused }) => <HomeIcon color={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} />
+        }}
       />
 
       <Screen 
         name="cleanRooms"
         component={CleanRooms}
+        options={{
+          tabBarIcon: ({ focused }) => <CleanIcon color={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} />
+        }}
       />
 
       <Screen 
         name="profile"
         component={Profile}
+        options={{
+          tabBarIcon: ({ focused }) => <ProfileIcon color={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} />
+        }}
       />
     </Navigator>
   )
