@@ -1,9 +1,11 @@
-import { Container, Title } from "./styles";
+import { Container, Main } from "./styles";
 
 export function EditRoom() {
   return (
     <Container>
-      <Title>Editar Sala em construção...</Title>
+      <Main>
+        
+      </Main>
     </Container>
   )
 }

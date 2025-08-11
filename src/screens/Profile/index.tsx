@@ -1,9 +1,11 @@
-import { Container, Title } from "./styles";
+import { Container, Main } from "./styles";
 
 export function Profile() {
   return (
     <Container>
-      <Title>Perfil em construção...</Title>
+      <Main>
+        
+      </Main>
     </Container>
   )
 }

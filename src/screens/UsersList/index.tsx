@@ -1,9 +1,11 @@
-import { Container, Title } from "./styles";
+import { Container, Main } from "./styles";
 
 export function UsersList() {
   return (
     <Container>
-      <Title>Criar Novo Usuário em construção...</Title>
+      <Main>
+
+      </Main>
     </Container>
   )
 }
