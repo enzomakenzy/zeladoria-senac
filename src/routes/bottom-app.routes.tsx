@@ -53,7 +53,7 @@ export function BottomAppRoutes() {
         name="home"
         component={Home}
         options={{
-          tabBarIcon: ({ focused }) => <HomeIcon color={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} />
+          tabBarIcon: ({ focused }) => <HomeIcon height={30} width={30} fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} />
         }}
       />
 
@@ -61,7 +61,7 @@ export function BottomAppRoutes() {
         name="cleanRooms"
         component={CleanRooms}
         options={{
-          tabBarIcon: ({ focused }) => <CleanIcon color={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} />
+          tabBarIcon: ({ focused }) => <CleanIcon height={28} width={28} fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} />
         }}
       />
 
@@ -69,7 +69,7 @@ export function BottomAppRoutes() {
         name="profile"
         component={Profile}
         options={{
-          tabBarIcon: ({ focused }) => <ProfileIcon color={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} />
+          tabBarIcon: ({ focused }) => <ProfileIcon height={34} width={34} fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} />
         }}
       />
     </Navigator>
