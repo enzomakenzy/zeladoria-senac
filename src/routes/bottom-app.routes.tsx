@@ -39,10 +39,6 @@ export function BottomAppRoutes() {
         tabBarButton: (props: any) => (
           <TouchableOpacity 
             {...props}
-            onPress={(e) => {
-              e.preventDefault?.(); // evita reload na web
-              props.onPress?.(e); // se onPress existir, chama ele
-            }}
             style={{ alignItems: "center", justifyContent: "center", width: "100%", height: "100%" }}
             activeOpacity={1}
           />
@@ -61,7 +57,7 @@ export function BottomAppRoutes() {
         name="cleanRooms"
         component={CleanRooms}
         options={{
-          tabBarIcon: ({ focused }) => <CleanIcon height={28} width={28} fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} />
+          tabBarIcon: ({ focused }) => <CleanIcon height={26} width={26} fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} />
         }}
       />
 
