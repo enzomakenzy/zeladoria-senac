@@ -1,9 +1,14 @@
-import { Container, Title } from "./styles";
+import { Header } from "@components/Header";
+import { Container, Main } from "./styles";
 
 export function Home() {
   return (
     <Container>
-      <Title>Home em construção...</Title>
+      <Header name="Enzo Makenzy" />
+      
+      <Main>
+
+      </Main>
     </Container>
   )
 }

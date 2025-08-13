@@ -1,9 +1,14 @@
-import { Container, Title } from "./styles";
+import { Header } from "@components/Header";
+import { Container, Main } from "./styles";
 
 export function CreateUser() {
   return (
     <Container>
-      <Title>Criar Novo Usuário em construção...</Title>
+      <Header />
+      
+      <Main>
+        
+      </Main>
     </Container>
   )
 }

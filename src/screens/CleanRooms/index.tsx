@@ -1,9 +1,14 @@
-import { Container, Title } from "./styles";
+import { Header } from "@components/Header";
+import { Container, Main } from "./styles";
 
 export function CleanRooms() {
   return (
     <Container>
-      <Title>Salas Limpas em construção...</Title>
+      <Header />
+
+      <Main>
+        
+      </Main>
     </Container>
   )
 }

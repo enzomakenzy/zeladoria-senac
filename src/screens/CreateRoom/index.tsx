@@ -1,9 +1,14 @@
-import { Container, Title } from "./styles";
+import { Header } from "@components/Header";
+import { Container, Main } from "./styles";
 
 export function CreateRoom() {
   return (
     <Container>
-      <Title>Criar Nova Sala em construção...</Title>
+      <Header />
+
+      <Main>
+        
+      </Main>
     </Container>
   )
 }
