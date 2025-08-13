@@ -1,5 +1,5 @@
 import { Header } from "@components/Header";
-import { Container, Main } from "./styles";
+import { Container, Main, ScreenTitle } from "./styles";
 
 export function Home() {
   return (
@@ -7,7 +7,7 @@ export function Home() {
       <Header name="Enzo Makenzy" />
       
       <Main>
-
+        <ScreenTitle>Todas as salas</ScreenTitle>
       </Main>
     </Container>
   )
