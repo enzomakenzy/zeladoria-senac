@@ -35,8 +35,10 @@ export const StaffName = styled.Text`
 `
 
 export const NotificationButton = styled.TouchableOpacity.attrs({
-  activeOpacity: 1
-})``
+  activeOpacity: 0.6
+})`
+  padding: 10px;
+`
 
 export const NotificationIcon = styled(Notification).attrs(({ theme }) => ({
   fill: theme.COLORS.WHITE.TRANSPARENCE_100
