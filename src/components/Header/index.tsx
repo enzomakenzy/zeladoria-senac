@@ -1,10 +1,14 @@
 import { Image } from "react-native";
 
-import { HeaderContainer, HiText, NotificationButton, NotificationIcon, StaffName, TextContainer } from "./styles";
+import { HeaderContainer, HiText, NavContainer, NotificationButton, NotificationIcon, StaffName, TextContainer } from "./styles";
 
 import SenacLogoImage from "@assets/senac-logo.png";
 
-export function Header() {
+type Props = {
+  name?: string;
+}
+
+export function Header({ name }: Props) {
   return (
     <HeaderContainer>
       <Image 
@@ -13,19 +17,25 @@ export function Header() {
         style={{ width: 75, height: 48 }} 
       />
 
-      <TextContainer>
-        <HiText>
-          Olá,
-        </HiText>
+      <NavContainer>
+        {
+          name && 
+          <TextContainer>
+            <HiText>
+              Olá,
+            </HiText>
 
-        <StaffName>
-          Enzo Makenzy!
-        </StaffName>
-      </TextContainer>
+            <StaffName>
+              {name}!
+            </StaffName>
+          </TextContainer>
+        }
+        
+        <NotificationButton>
+          <NotificationIcon />
+        </NotificationButton>
+      </NavContainer>
       
-      <NotificationButton>
-        <NotificationIcon />
-      </NotificationButton>
     </HeaderContainer>
   )
 }

@@ -10,10 +10,16 @@ export const HeaderContainer = styled.View`
   gap: 15px;
 `;
 
+export const NavContainer = styled.View`
+  flex: 1;
+  padding-top: 12px;
+  flex-direction: row;
+  align-items: center;
+`;
+
 export const TextContainer = styled.View`
   flex-direction: column;
-  padding-top: 10px;
-  flex: 1;
+  max-width: 80%;
 `;  
 
 export const HiText = styled.Text`
@@ -23,7 +29,7 @@ export const HiText = styled.Text`
   `}
 
   font-size: 17px;
-`
+`;
 
 export const StaffName = styled.Text`
   ${({ theme }) => css`
@@ -32,14 +38,16 @@ export const StaffName = styled.Text`
   `};
   
   font-size: 17px;
-`
+`;
 
 export const NotificationButton = styled.TouchableOpacity.attrs({
   activeOpacity: 0.6
 })`
   padding: 10px;
-`
+  flex: 1;
+  align-items: flex-end;
+`;
 
 export const NotificationIcon = styled(Notification).attrs(({ theme }) => ({
   fill: theme.COLORS.WHITE.TRANSPARENCE_100
-}))``
+}))``;
