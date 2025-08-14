@@ -1,5 +1,7 @@
 import { Header } from "@components/Header";
-import { Container, Main, ScreenTitle } from "./styles";
+import { Container, Main, ScreenTitle, SearchFilterContainer } from "./styles";
+import { FilterButton } from "@components/FilterButton";
+import { SearchInput } from "@components/SearchInput";
 
 export function Home() {
   return (
@@ -8,6 +10,10 @@ export function Home() {
       
       <Main>
         <ScreenTitle>Todas as salas</ScreenTitle>
+        <SearchFilterContainer>
+          <FilterButton/>
+          <SearchInput/>
+        </SearchFilterContainer>
       </Main>
     </Container>
   )
