@@ -1,7 +1,10 @@
-import { Input } from "./styles";
+import { Input, InputContainer, SearchIcon } from "./styles";
 
 export function SearchInput() {
   return (
-    <Input />
+    <InputContainer>
+      <Input />
+      <SearchIcon />
+    </InputContainer>
   )
 }
