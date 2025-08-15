@@ -1,6 +1,10 @@
 import styled, { css } from "styled-components/native";
 import CircleSvg from "@assets/circle.svg";
 
+type StatusProp = {
+  roomStatus: boolean
+} 
+
 export const CardContainer = styled.TouchableOpacity.attrs({
   activeOpacity: 0.58
 })`
@@ -38,16 +42,16 @@ export const StatusRoomContainer = styled.View`
   gap: 4px;
 `;
 
-export const RoomStatus = styled.Text`
-  ${({ theme }) => css`
-    color: ${theme.COLORS.GREEN};
+export const RoomStatus = styled.Text<StatusProp>`
+  ${({ theme, roomStatus }) => css`
+    color: ${roomStatus? theme.COLORS.GREEN : theme.COLORS.ORANGE};
     font-size: ${theme.FONTS.MEDIUM};
   `}
   font-size: 18px;
 `;
 
-export const CircleIcon = styled(CircleSvg).attrs(({ theme }) => ({
-  fill: theme.COLORS.GREEN,
+export const CircleIcon = styled(CircleSvg).attrs<StatusProp>(({ theme, roomStatus }) => ({
+  fill: roomStatus ? theme.COLORS.GREEN : theme.COLORS.ORANGE,
   height: 14,
   width: 14
 }))``
