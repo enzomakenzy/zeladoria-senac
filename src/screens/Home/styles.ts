@@ -12,7 +12,7 @@ export const Container = styled(SafeAreaView).attrs({
 export const Main = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.COLORS.WHITE.TRANSPARENCE_100};
-  padding: 15px;
+  padding: 15px 15px 0px 15px;
 `;
 
 export const ScreenTitle = styled.Text`
@@ -28,4 +28,5 @@ export const SearchFilterContainer = styled.View`
   justify-content: space-between;
   gap: 15px;
   border-radius: 6px;
+  margin-bottom: 20px;
 `; 
