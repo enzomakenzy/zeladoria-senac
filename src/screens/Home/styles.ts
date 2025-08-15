@@ -28,4 +28,5 @@ export const SearchFilterContainer = styled.View`
   justify-content: space-between;
   gap: 15px;
   border-radius: 6px;
+  margin-bottom: 20px;
 `; 
