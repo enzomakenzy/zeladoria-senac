@@ -1,5 +1,6 @@
 import { Header } from "@components/Header";
-import { Container, Main } from "./styles";
+import { Container, Main, ScreenTitle } from "./styles";
+import { CleanRoomCard } from "@components/CleanRoomCard";
 
 export function CleanRooms() {
   return (
@@ -7,7 +8,7 @@ export function CleanRooms() {
       <Header />
 
       <Main>
-        
+        <ScreenTitle>Suas salas limpas</ScreenTitle>
       </Main>
     </Container>
   )
