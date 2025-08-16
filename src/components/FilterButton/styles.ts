@@ -10,6 +10,7 @@ export const Button = styled.Pressable<PressedProp>`
   width: 65px;
   border-radius: 6px;
   align-items: center;
+  justify-content: center;
   background-color: ${({ theme, pressed }) => (
     pressed ? 
     theme.COLORS.BLUE
@@ -19,5 +20,6 @@ export const Button = styled.Pressable<PressedProp>`
 `;
 
 export const Icon = styled(FilterIcon).attrs<PressedProp>(({ theme, pressed }) => ({
-  fill: pressed ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.BLUE
+  fill: pressed ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.BLUE,
+  height: 26
 }))``;

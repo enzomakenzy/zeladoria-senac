@@ -25,7 +25,7 @@ export function Home() {
         <ScreenTitle>Todas as salas</ScreenTitle>
         <SearchFilterContainer>
           <FilterButton/>
-          <SearchInput/>
+          <SearchInput flex />
         </SearchFilterContainer>
 
         <FlatList 
