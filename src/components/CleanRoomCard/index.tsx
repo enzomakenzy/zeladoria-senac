@@ -1,12 +1,18 @@
 import { ButtonDetails, ButtonText, CardContainer, RoomInfo, RoomInfoContainer, RoomName } from "./styles"
 
-export function CleanRoomCard() {
+type Props = {
+  roomName: string;
+  cleanerBy: string;
+  dateAndTimeOfCleaning: string
+}
+
+export function CleanRoomCard({ roomName, cleanerBy, dateAndTimeOfCleaning }: Props) {
   return (
     <CardContainer>
       <RoomInfoContainer>
-        <RoomName>Laboratório 2</RoomName>
-        <RoomInfo>Limpador por: Enzo Makenzy</RoomInfo>
-        <RoomInfo>Data e hora da limpeza: 04/08/2025 às 15:30</RoomInfo>
+        <RoomName>{roomName}</RoomName>
+        <RoomInfo>Limpador por: {cleanerBy}</RoomInfo>
+        <RoomInfo>Data e hora da limpeza: {dateAndTimeOfCleaning}</RoomInfo>
       </RoomInfoContainer>
 
       <ButtonDetails>
