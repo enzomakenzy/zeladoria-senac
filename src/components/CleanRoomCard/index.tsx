@@ -1,12 +1,12 @@
 import { ButtonDetails, ButtonText, CardContainer, RoomInfo, RoomInfoContainer, RoomName } from "./styles"
 
-type Props = {
+export type CleanRoomProps = {
   roomName: string;
   cleanerBy: string;
   dateAndTimeOfCleaning: string
 }
 
-export function CleanRoomCard({ roomName, cleanerBy, dateAndTimeOfCleaning }: Props) {
+export function CleanRoomCard({ roomName, cleanerBy, dateAndTimeOfCleaning }: CleanRoomProps) {
   return (
     <CardContainer>
       <RoomInfoContainer>

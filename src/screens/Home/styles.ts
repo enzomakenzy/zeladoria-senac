@@ -23,9 +23,8 @@ export const ScreenTitle = styled.Text`
   font-size: 25px;
 `; 
 
-export const SearchFilterContainer = styled.View`
+export const SearchFilterContainer = styled.View` 
   flex-direction: row;
-  justify-content: space-between;
   gap: 15px;
   border-radius: 6px;
   margin-bottom: 20px;
