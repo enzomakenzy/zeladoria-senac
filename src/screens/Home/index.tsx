@@ -5,17 +5,10 @@ import { SearchInput } from "@components/SearchInput";
 import { useState } from "react";
 import { FlatList } from "react-native";
 import { RoomCardHome } from "@components/RoomCardHome";
+import { allRoomsData } from "@utils/dataTest";
 
 export function Home() {
-  const [rooms, setRooms] = useState([
-    { roomName: "Laboratório 2", roomCapaticy: "30", roomLocation: "Bloco A", roomStatus: false },
-    { roomName: "Sala Idiomas 1", roomCapaticy: "20", roomLocation: "Bloco B", roomStatus: false },
-    { roomName: "Smart Lab", roomCapaticy: "25", roomLocation: "Bloco C", roomStatus: true },
-    { roomName: "Salão", roomCapaticy: "18", roomLocation: "Bloco D", roomStatus: true },
-    { roomName: "Laboratório 3", roomCapaticy: "18", roomLocation: "Bloco A", roomStatus: false },
-    { roomName: "Sala Idiomas 2", roomCapaticy: "20", roomLocation: "Bloco B", roomStatus: true },
-    { roomName: "Auditório", roomCapaticy: "60", roomLocation: "Bloco C", roomStatus: false }
-  ])
+  const [rooms, setRooms] = useState(allRoomsData)
 
   return (
     <Container>

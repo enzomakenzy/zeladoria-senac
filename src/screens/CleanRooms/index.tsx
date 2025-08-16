@@ -7,17 +7,10 @@ import { SearchInput } from "@components/SearchInput";
 import { CleanRoomCard } from "@components/CleanRoomCard";
 import { CleanRoomProps } from "@components/CleanRoomCard";
 import { FlatList } from "react-native";
+import { cleanRoomsData } from "@utils/dataTest";
 
 export function CleanRooms() {
-  const [cleanRooms, setCleanRooms] = useState<CleanRoomProps[]>([
-    { roomName: "Laboratório 2", cleanerBy: "Enzo Makenzy", dateAndTimeOfCleaning: "04/08/2025 às 15:30" },
-    { roomName: "Laboratório 3", cleanerBy: "Enzo Makenzy", dateAndTimeOfCleaning: "04/08/2025 às 15:30" },
-    { roomName: "Sala de Idiomas 5", cleanerBy: "Enzo Makenzy", dateAndTimeOfCleaning: "04/08/2025 às 15:30" },
-    { roomName: "SmartLab", cleanerBy: "Enzo Makenzy", dateAndTimeOfCleaning: "04/08/2025 às 15:30" },
-    { roomName: "Auditório", cleanerBy: "Enzo Makenzy", dateAndTimeOfCleaning: "04/08/2025 às 15:30" },
-    { roomName: "Sala de Idiomas 2", cleanerBy: "Enzo Makenzy", dateAndTimeOfCleaning: "04/08/2025 às 15:30" },
-    { roomName: "Salão 1", cleanerBy: "Enzo Makenzy", dateAndTimeOfCleaning: "04/08/2025 às 15:30" }
-  ])
+  const [cleanRooms, setCleanRooms] = useState<CleanRoomProps[]>(cleanRoomsData)
 
   return (
     <Container>
