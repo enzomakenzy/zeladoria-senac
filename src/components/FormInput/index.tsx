@@ -1,18 +1,19 @@
+import { TextInputProps } from "react-native";
 import { InputFormContainer, InputNameText, Input } from "./styles" 
 
-type Props = {
+type Props = TextInputProps & {
   inputName: string;
-  inputInfo: string;
+  inputInfo?: string;
 }
 
-export function FormInput({ inputName, inputInfo }: Props) {
+export function FormInput({ inputName, inputInfo, ...rest }: Props) {
   return (
     <InputFormContainer>
       <InputNameText>{inputName}</InputNameText>
 
       <Input 
+        {...rest}
         value={inputInfo} 
-        editable={false}
       />
     </InputFormContainer>
   );

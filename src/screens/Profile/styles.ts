@@ -48,3 +48,33 @@ export const InputInfoContainer = styled.View`
   gap: 10px;
   margin-bottom: 24px;
 `;
+
+// Modal Styles
+
+export const ModalContainer = styled.View`
+  flex: 1;
+  background-color: #00000079;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ModalDetailsContainer = styled.View`
+  width: 90%;
+  padding: 10px;
+  background-color: ${({ theme }) => theme.COLORS.WHITE.TRANSPARENCE_100};
+  border-radius: 6px;
+  gap: 12px;
+`;
+
+export const ModalChangePasswordTitle = styled.Text`
+  ${({ theme }) => css`
+    font-family: ${theme.FONTS.SEMI_BOLD};
+    color: ${theme.COLORS.BLUE};
+  `}
+  font-size: 20px;
+  text-align: center;
+`;
+
+export const ModalContentContainer = styled.View`
+  gap: 5px;
+`;
