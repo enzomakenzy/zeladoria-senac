@@ -1,12 +1,13 @@
+import { TouchableOpacityProps } from "react-native";
 import { ButtonDetails, ButtonText, CardContainer, RoomInfo, RoomInfoContainer, RoomName } from "./styles"
 
-export type CleanRoomProps = {
+export type CleanRoomProps = TouchableOpacityProps & {
   roomName: string;
   cleanerBy: string;
   dateAndTimeOfCleaning: string
 }
 
-export function CleanRoomCard({ roomName, cleanerBy, dateAndTimeOfCleaning }: CleanRoomProps) {
+export function CleanRoomCard({ roomName, cleanerBy, dateAndTimeOfCleaning, ...rest }: CleanRoomProps) {
   return (
     <CardContainer>
       <RoomInfoContainer>
@@ -15,7 +16,7 @@ export function CleanRoomCard({ roomName, cleanerBy, dateAndTimeOfCleaning }: Cl
         <RoomInfo>Data e hora da limpeza: {dateAndTimeOfCleaning}</RoomInfo>
       </RoomInfoContainer>
 
-      <ButtonDetails>
+      <ButtonDetails {...rest}>
         <ButtonText>Ver mais</ButtonText>
       </ButtonDetails>
     </CardContainer>
