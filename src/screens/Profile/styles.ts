@@ -28,6 +28,7 @@ export const ImgNameContainer = styled.View`
   gap: 12px;
   align-items: center;
   justify-content: center;
+  margin-bottom: 12px;
 `;
 
 export const UserNameText = styled.Text`
@@ -38,4 +39,8 @@ export const UserNameText = styled.Text`
   font-size: 20px;
   width: 50%;
   text-align: center;
+`;
+
+export const InputInfoContainer = styled.View`
+  gap: 10px;
 `;
