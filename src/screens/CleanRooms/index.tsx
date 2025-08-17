@@ -6,16 +6,12 @@ import { Header } from "@components/Header";
 import { SearchInput } from "@components/SearchInput";
 import { CleanRoomCard } from "@components/CleanRoomCard";
 import { CleanRoomProps } from "@components/CleanRoomCard";
-import { FlatList, Modal, Pressable, Text, View } from "react-native";
+import { FlatList, Modal } from "react-native";
 import { cleanRoomsData } from "@utils/dataTest";
 
 export function CleanRooms() {
   const [cleanRooms, setCleanRooms] = useState<CleanRoomProps[]>(cleanRoomsData)
   const [modalVisible, setModalVisible] = useState(false);
-
-  function handleTest() {
-    console.log("disparou")
-  }
 
   return (
     <Container>
