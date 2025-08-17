@@ -12,8 +12,11 @@ export const Container = styled(SafeAreaView).attrs({
 export const Main = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.COLORS.WHITE.TRANSPARENCE_100};
-  padding: 15px 15px 0px 15px;
+  padding: 15px;
+  justify-content: space-between;
 `;
+
+export const ContentContainer = styled.View``;
 
 export const ScreenTitle = styled.Text`
   ${({ theme }) => css`
@@ -43,4 +46,5 @@ export const UserNameText = styled.Text`
 
 export const InputInfoContainer = styled.View`
   gap: 10px;
+  margin-bottom: 24px;
 `;

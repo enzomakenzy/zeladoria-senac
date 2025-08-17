@@ -1,10 +1,11 @@
 import { Image } from "react-native";
-import { Container, ImgNameContainer, InputInfoContainer, Main, ScreenTitle, UserNameText } from "./styles";
+import { Container, ContentContainer, ImgNameContainer, InputInfoContainer, Main, ScreenTitle, UserNameText } from "./styles";
 
 import { Header } from "@components/Header";
 
 import ImageProfile from "@assets/profile-img.png";
 import { FormInput } from "@components/FormInput";
+import { LargeButton } from "@components/LargeButton";
 
 export function Profile() {
   return (
@@ -12,20 +13,26 @@ export function Profile() {
       <Header />
 
       <Main>
-        <ScreenTitle>Perfil</ScreenTitle>
+        <ContentContainer>
+          <ScreenTitle>Perfil</ScreenTitle>
 
-        <ImgNameContainer>
-          <Image 
-            source={ImageProfile}
-            style={{ width: 100, height: 100 }}
-          />
-          <UserNameText>Enzo Makenzy de Queiroz Bezerra</UserNameText>
-        </ImgNameContainer>
+          <ImgNameContainer>
+            <Image 
+              source={ImageProfile}
+              style={{ width: 100, height: 100 }}
+            />
+            <UserNameText>Enzo Makenzy de Queiroz Bezerra</UserNameText>
+          </ImgNameContainer>
 
-        <InputInfoContainer>
-          <FormInput inputName="Email (opcional)" inputInfo="enzo@email.com" />
-          <FormInput inputName="Senha" inputInfo="*********" />
-        </InputInfoContainer>
+          <InputInfoContainer>
+            <FormInput inputName="Email (opcional)" inputInfo="enzo@email.com" />
+            <FormInput inputName="Senha" inputInfo="*********" />
+          </InputInfoContainer>
+
+          <LargeButton textButton="Trocar senha" primary />
+        </ContentContainer>
+        
+        <LargeButton textButton="Sair" />
       </Main>
     </Container>
   )
