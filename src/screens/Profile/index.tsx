@@ -1,18 +1,29 @@
+import { useState } from "react";
 import { Image, Modal } from "react-native";
+
+import { Controller, useForm } from "react-hook-form";
+
 import { Container, ContentContainer, ImgNameContainer, InputInfoContainer, Main, ModalChangePasswordTitle, ModalContainer, ModalContentContainer, ModalDetailsContainer, ScreenTitle, UserNameText } from "./styles";
 
 import { Header } from "@components/Header";
-
-import ImageProfile from "@assets/profile-img.png";
 import { FormInput } from "@components/FormInput";
 import { LargeButton } from "@components/LargeButton";
-import { useState } from "react";
+
+import ImageProfile from "@assets/profile-img.png";
+
+type FormChangePasswordProps = {
+  currentPassword: string;
+  newPassword: string;
+  confirmNewPassword: string
+}
 
 export function Profile() {
   const [modalVisible, setModalVisible] = useState(false);
+  const { control, handleSubmit } = useForm<FormChangePasswordProps>();
 
-  function handleChangePassword() {
-    setModalVisible(false)
+  function handleChangePassword({ currentPassword, newPassword, confirmNewPassword }: FormChangePasswordProps) {
+    setModalVisible(false);
+    console.log({ currentPassword, newPassword, confirmNewPassword });
   }
 
   return (
@@ -31,29 +42,52 @@ export function Profile() {
             </ModalChangePasswordTitle>
 
             <ModalContentContainer>
-              <FormInput 
-                editable={true} 
-                inputName="Senha atual" 
-                placeholder="Senha atual"
+              <Controller 
+                control={control}
+                name="currentPassword"
+                render={(({ field: {onChange, value} }) => (
+                  <FormInput 
+                    editable={true} 
+                    inputName="Senha atual" 
+                    placeholder="Senha atual"
+                    value={value}
+                    onChangeText={onChange}
+                  />
+                ))}
               />
 
-              <FormInput 
-                editable={true} 
-                inputName="Nova senha" 
-                placeholder="Nova senha"
+              <Controller 
+                control={control}
+                name="newPassword"
+                render={(({ field: { onChange, value } }) => (
+                  <FormInput 
+                    editable={true} 
+                    inputName="Nova senha" 
+                    placeholder="Nova senha"
+                    value={value}
+                    onChangeText={onChange}
+                  />
+                ))}
               />
 
-              <FormInput 
-                editable={true} 
-                inputName="Confirmar nova senha" 
-                placeholder="Confirmar nova senha" 
+              <Controller 
+                control={control}
+                name="confirmNewPassword"
+                render={(({ field: { onChange, value } }) => (
+                  <FormInput 
+                    editable={true} 
+                    inputName="Confirmar nova senha" 
+                    placeholder="Confirmar nova senha" 
+                    />
+                ))}
               />
+
             </ModalContentContainer>
 
             <LargeButton 
               textButton="Salvar" 
               primary 
-              onPress={handleChangePassword} 
+              onPress={handleSubmit(handleChangePassword)} 
             />
           </ModalDetailsContainer>
         </ModalContainer>
