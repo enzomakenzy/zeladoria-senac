@@ -6,9 +6,17 @@ import { useState } from "react";
 import { FlatList } from "react-native";
 import { RoomCardHome } from "@components/RoomCardHome";
 import { allRoomsData } from "@utils/dataTest";
+import { useNavigation } from "@react-navigation/native";
+import { HomeStackNavigationProps } from "@routes/stacks/home-stack.routes";
 
 export function Home() {
-  const [rooms, setRooms] = useState(allRoomsData)
+  const [rooms, setRooms] = useState(allRoomsData);
+
+  const navigation = useNavigation<HomeStackNavigationProps>();
+
+  function handleGoToDetailsRoom() {
+    navigation.navigate("roomDetails")
+  }
 
   return (
     <Container>
@@ -31,6 +39,7 @@ export function Home() {
               roomCapacity={item.roomCapaticy} 
               roomLocation={item.roomLocation} 
               roomStatus={item.roomStatus} 
+              onPress={handleGoToDetailsRoom}
             />
           )}
         />

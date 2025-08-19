@@ -14,6 +14,8 @@ import { useTheme } from "styled-components/native";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { HomeStackRoutes } from "./stacks/home-stack.routes";
+
 type BottomAppProps = {
   home: undefined;
   cleanRooms: undefined;
@@ -47,7 +49,7 @@ export function BottomAppRoutes() {
     >
       <Screen 
         name="home"
-        component={Home}
+        component={HomeStackRoutes}
         options={{
           tabBarIcon: ({ focused }) => <HomeIcon height={30} width={30} fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} />
         }}
