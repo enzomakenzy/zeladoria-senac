@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Image, Modal } from "react-native";
+import { Image, Modal, Text } from "react-native";
 
 import { Controller, useForm } from "react-hook-form";
 
@@ -11,19 +11,46 @@ import { LargeButton } from "@components/LargeButton";
 
 import ImageProfile from "@assets/profile-img.png";
 
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 type FormChangePasswordProps = {
   currentPassword: string;
   newPassword: string;
   confirmNewPassword: string
 }
 
+const changePasswordFormSchema = z.object({
+  currentPassword: z
+    .string("Informe a senha atual"),
+  newPassword: z
+    .string("Informe a nova senha")
+    .min(8, { error: "A senha deve ter no mínimo 8 caracteres" }),
+  confirmNewPassword: z
+    .string("Confirma a sua senha" )
+    .min(8, { error: "A senha deve ter no mínimo 8 caracteres" })
+}).refine(({ newPassword, confirmNewPassword }) => newPassword === confirmNewPassword, {
+  error: "As senhas não coincidem", 
+  path: ["confirmNewPassword"]
+})
+
+type ChangePasswordFormData = z.infer<typeof changePasswordFormSchema>
+
 export function Profile() {
   const [modalVisible, setModalVisible] = useState(false);
-  const { control, handleSubmit } = useForm<FormChangePasswordProps>();
+  const { control, handleSubmit, formState: { errors }, reset } = useForm<ChangePasswordFormData>({
+    resolver: zodResolver(changePasswordFormSchema)
+  });
 
   function handleChangePassword({ currentPassword, newPassword, confirmNewPassword }: FormChangePasswordProps) {
-    setModalVisible(false);
     console.log({ currentPassword, newPassword, confirmNewPassword });
+    setModalVisible(false);
+    reset();
+  }
+
+  function handleCancelChangePassword() {
+    setModalVisible(false);
+    reset();
   }
 
   return (
@@ -52,6 +79,7 @@ export function Profile() {
                     placeholder="Senha atual"
                     value={value}
                     onChangeText={onChange}
+                    errorMessage={errors.currentPassword?.message}
                   />
                 ))}
               />
@@ -66,6 +94,7 @@ export function Profile() {
                     placeholder="Nova senha"
                     value={value}
                     onChangeText={onChange}
+                    errorMessage={errors.newPassword?.message}
                   />
                 ))}
               />
@@ -78,16 +107,24 @@ export function Profile() {
                     editable={true} 
                     inputName="Confirmar nova senha" 
                     placeholder="Confirmar nova senha" 
-                    />
+                    value={value}
+                    onChangeText={onChange}
+                    errorMessage={errors.confirmNewPassword?.message}
+                  />
                 ))}
               />
-
             </ModalContentContainer>
 
             <LargeButton 
               textButton="Salvar" 
               primary 
               onPress={handleSubmit(handleChangePassword)} 
+            />
+
+            <LargeButton 
+              textButton="Cancelar" 
+              primary 
+              onPress={handleCancelChangePassword} 
             />
           </ModalDetailsContainer>
         </ModalContainer>
