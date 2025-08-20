@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { CardContainer, InfoRoomContainer, RoomName, RoomInfo, RoomStatus, CircleIcon, StatusRoomContainer } from "./styles"
+import { TouchableOpacityProps } from "react-native";
 
-type Props = {
+type Props = TouchableOpacityProps & {
   roomName: string;
   roomCapacity: string;
   roomLocation: string;
   roomStatus: boolean;
 }
 
-export function RoomCardHome({ roomName, roomCapacity, roomLocation, roomStatus }: Props) {
+export function RoomCardHome({ roomName, roomCapacity, roomLocation, roomStatus, ...rest }: Props) {
   const [roomStatusName, setRoomStatusName] = useState<"Limpa" | "Limpeza Pendente">();
   
   useEffect(() => {
@@ -16,7 +17,7 @@ export function RoomCardHome({ roomName, roomCapacity, roomLocation, roomStatus 
   }, [roomStatus]);
 
   return (
-    <CardContainer>
+    <CardContainer {...rest}>
       <InfoRoomContainer>
         <RoomName>{roomName}</RoomName>
         <RoomInfo>Capacidade: {roomCapacity}</RoomInfo>

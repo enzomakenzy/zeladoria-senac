@@ -8,6 +8,7 @@ import { CleanRoomCard } from "@components/CleanRoomCard";
 import { CleanRoomProps } from "@components/CleanRoomCard";
 import { FlatList, Modal } from "react-native";
 import { cleanRoomsData } from "@utils/dataTest";
+import { CustomModal } from "@components/CustomModal";
 
 export function CleanRooms() {
   const [cleanRooms, setCleanRooms] = useState<CleanRoomProps[]>(cleanRoomsData)
@@ -15,55 +16,45 @@ export function CleanRooms() {
 
   return (
     <Container>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        navigationBarTranslucent
-        statusBarTranslucent
-      >
-        <ModalContainer>
-          <ModalDetailsContainer>
-            <ModalRoomNameTitle>Laboratório 2</ModalRoomNameTitle>
+      <CustomModal modalVisible={modalVisible}>
+        <ModalRoomNameTitle>Laboratório 2</ModalRoomNameTitle>
 
-            <ModalContentContainer>
-                <ModalInfoText>
-                  <ModalCategoryText>Limpado por: </ModalCategoryText>
-                  Enzo Makenzy
-                </ModalInfoText>
-                
-                <ModalInfoText>
-                  <ModalCategoryText>Data e hora da limpeza: </ModalCategoryText>
-                  04/08/2025 às 15:30
-                </ModalInfoText>
-                
-                <ModalInfoText>
-                  <ModalCategoryText>Capacidade: </ModalCategoryText>
-                  15
-                </ModalInfoText>
+        <ModalContentContainer>
+            <ModalInfoText>
+              <ModalCategoryText>Limpado por: </ModalCategoryText>
+              Enzo Makenzy
+            </ModalInfoText>
+            
+            <ModalInfoText>
+              <ModalCategoryText>Data e hora da limpeza: </ModalCategoryText>
+              04/08/2025 às 15:30
+            </ModalInfoText>
+            
+            <ModalInfoText>
+              <ModalCategoryText>Capacidade: </ModalCategoryText>
+              15
+            </ModalInfoText>
 
-                <ModalInfoText>
-                  <ModalCategoryText>Localização: </ModalCategoryText>
-                  Bloco A
-                </ModalInfoText>
-                
-                <ModalInfoText areGreen>
-                  <ModalCategoryText>Status: </ModalCategoryText>
-                  Limpa
-                </ModalInfoText>
+            <ModalInfoText>
+              <ModalCategoryText>Localização: </ModalCategoryText>
+              Bloco A
+            </ModalInfoText>
+            
+            <ModalInfoText areGreen>
+              <ModalCategoryText>Status: </ModalCategoryText>
+              Limpa
+            </ModalInfoText>
 
-                <ModalInfoText>
-                  <ModalCategoryText>Observações: </ModalCategoryText>
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
-                </ModalInfoText>
-            </ModalContentContainer>
+            <ModalInfoText>
+              <ModalCategoryText>Observações: </ModalCategoryText>
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
+            </ModalInfoText>
+        </ModalContentContainer>
 
-            <ModalCloseButton onPress={() => setModalVisible(false)}>
-              <ModalCloseTextButton>Voltar</ModalCloseTextButton>
-            </ModalCloseButton>
-          </ModalDetailsContainer>
-        </ModalContainer>
-      </Modal>
+        <ModalCloseButton onPress={() => setModalVisible(false)}>
+          <ModalCloseTextButton>Voltar</ModalCloseTextButton>
+        </ModalCloseButton>
+      </CustomModal>
 
       <Header />
 
