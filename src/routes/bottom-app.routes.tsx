@@ -2,9 +2,9 @@ import { TouchableOpacity } from "react-native";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { Home } from "@screens/Home";
+import { HomeStackRoutes } from "./stacks/home-stack.routes";
 import { CleanRooms } from "@screens/CleanRooms";
-import { Profile } from "@screens/Profile";
+import { ProfileStackRoutes } from "./stacks/profile-stack.routes";
 
 import HomeIcon from "@assets/home.svg";
 import CleanIcon from "@assets/clean.svg";
@@ -14,12 +14,10 @@ import { useTheme } from "styled-components/native";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { HomeStackRoutes } from "./stacks/home-stack.routes";
-
 type BottomAppProps = {
-  home: undefined;
+  homeStack: undefined;
   cleanRooms: undefined;
-  profile: undefined;
+  profileStack: undefined;
 }
 
 const { Navigator, Screen } = createBottomTabNavigator<BottomAppProps>(); 
@@ -48,10 +46,16 @@ export function BottomAppRoutes() {
       }}
     >
       <Screen 
-        name="home"
+        name="homeStack"
         component={HomeStackRoutes}
         options={{
-          tabBarIcon: ({ focused }) => <HomeIcon height={30} width={30} fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} />
+          tabBarIcon: ({ focused }) => (
+            <HomeIcon 
+              height={30} 
+              width={30} 
+              fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} 
+            />
+          )
         }}
       />
 
@@ -59,15 +63,27 @@ export function BottomAppRoutes() {
         name="cleanRooms"
         component={CleanRooms}
         options={{
-          tabBarIcon: ({ focused }) => <CleanIcon height={26} width={26} fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} />
+          tabBarIcon: ({ focused }) => (
+            <CleanIcon 
+              height={26} 
+              width={26} 
+              fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} 
+            />
+          )
         }}
       />
 
       <Screen 
-        name="profile"
-        component={Profile}
+        name="profileStack"
+        component={ProfileStackRoutes}
         options={{
-          tabBarIcon: ({ focused }) => <ProfileIcon height={34} width={34} fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} />
+          tabBarIcon: ({ focused }) => (
+            <ProfileIcon 
+              height={34} 
+              width={34} 
+              fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} 
+            />
+          )
         }}
       />
     </Navigator>

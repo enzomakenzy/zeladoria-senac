@@ -19,6 +19,7 @@ type CleanRoomFormData = z.infer<typeof cleanRoomFormSchema>;
 
 export function RoomDetails() {
   const [modalVisible, setModalVisible] = useState(false);
+
   const { control, handleSubmit } = useForm<CleanRoomFormData>({
     resolver: zodResolver(cleanRoomFormSchema)
   });
@@ -106,6 +107,11 @@ export function RoomDetails() {
 
           <InfoRoomText>
             <InfoRoomText textStyle="medium">Descrição: </InfoRoomText>
+             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an.
+          </InfoRoomText>
+
+          <InfoRoomText>
+            <InfoRoomText textStyle="medium">Observação da limpeza: </InfoRoomText>
              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an.
           </InfoRoomText>
         </InfoRoomContainer>
