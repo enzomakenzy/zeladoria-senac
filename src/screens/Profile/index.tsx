@@ -13,6 +13,7 @@ import ImageProfile from "@assets/profile-img.png";
 
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CustomModal } from "@components/CustomModal";
 
 type FormChangePasswordProps = {
   currentPassword: string;
@@ -55,80 +56,70 @@ export function Profile() {
 
   return (
     <Container>
-      <Modal 
-        animationType="fade"
-        transparent
-        visible={modalVisible}
-        navigationBarTranslucent
-        statusBarTranslucent
-      >
-        <ModalContainer>
-          <ModalDetailsContainer>
-            <ModalChangePasswordTitle>
-              Trocar senha
-            </ModalChangePasswordTitle>
+      <CustomModal modalVisible={modalVisible}>
+        <ModalChangePasswordTitle>
+          Trocar senha
+        </ModalChangePasswordTitle>
 
-            <ModalContentContainer>
-              <Controller 
-                control={control}
-                name="currentPassword"
-                render={(({ field: {onChange, value} }) => (
-                  <FormInput 
-                    editable={true} 
-                    inputName="Senha atual" 
-                    placeholder="Senha atual"
-                    value={value}
-                    onChangeText={onChange}
-                    errorMessage={errors.currentPassword?.message}
-                  />
-                ))}
+        <ModalContentContainer>
+          <Controller 
+            control={control}
+            name="currentPassword"
+            render={(({ field: {onChange, value} }) => (
+              <FormInput 
+                editable={true} 
+                inputName="Senha atual" 
+                placeholder="Senha atual"
+                value={value}
+                onChangeText={onChange}
+                errorMessage={errors.currentPassword?.message}
               />
+            ))}
+          />
 
-              <Controller 
-                control={control}
-                name="newPassword"
-                render={(({ field: { onChange, value } }) => (
-                  <FormInput 
-                    editable={true} 
-                    inputName="Nova senha" 
-                    placeholder="Nova senha"
-                    value={value}
-                    onChangeText={onChange}
-                    errorMessage={errors.newPassword?.message}
-                  />
-                ))}
+          <Controller 
+            control={control}
+            name="newPassword"
+            render={(({ field: { onChange, value } }) => (
+              <FormInput 
+                editable={true} 
+                inputName="Nova senha" 
+                placeholder="Nova senha"
+                value={value}
+                onChangeText={onChange}
+                errorMessage={errors.newPassword?.message}
               />
+            ))}
+          />
 
-              <Controller 
-                control={control}
-                name="confirmNewPassword"
-                render={(({ field: { onChange, value } }) => (
-                  <FormInput 
-                    editable={true} 
-                    inputName="Confirmar nova senha" 
-                    placeholder="Confirmar nova senha" 
-                    value={value}
-                    onChangeText={onChange}
-                    errorMessage={errors.confirmNewPassword?.message}
-                  />
-                ))}
+          <Controller 
+            control={control}
+            name="confirmNewPassword"
+            render={(({ field: { onChange, value } }) => (
+              <FormInput 
+                editable={true} 
+                inputName="Confirmar nova senha" 
+                placeholder="Confirmar nova senha" 
+                value={value}
+                onChangeText={onChange}
+                errorMessage={errors.confirmNewPassword?.message}
               />
-            </ModalContentContainer>
+            ))}
+          />
+        </ModalContentContainer>
 
-            <LargeButton 
-              textButton="Salvar" 
-              primary 
-              onPress={handleSubmit(handleChangePassword)} 
-            />
+        <LargeButton 
+          textButton="Salvar" 
+          primary 
+          onPress={handleSubmit(handleChangePassword)} 
+        />
 
-            <LargeButton 
-              textButton="Cancelar" 
-              primary 
-              onPress={handleCancelChangePassword} 
-            />
-          </ModalDetailsContainer>
-        </ModalContainer>
-      </Modal> 
+        <LargeButton 
+          textButton="Cancelar" 
+          primary 
+          onPress={handleCancelChangePassword} 
+        />
+      </CustomModal>
 
       <Header />
 
