@@ -1,19 +1,24 @@
 import { useState } from "react";
-import { Button, Icon } from "./styles";
+import { Button, FilterName, Icon } from "./styles";
+import { TouchableOpacityProps } from "react-native";
 
-export function FilterButton() {
-  const [isPressed, setIsPressed] = useState<boolean>(false);
+type Props = TouchableOpacityProps & {
+  contentType?: "name" | "icon";
+  isPressed: boolean 
+  name?: string;
+}
 
-  function handlePressButton() {
-    isPressed ? setIsPressed(false) : setIsPressed(true);
-  }
-
+export function FilterButton({ contentType = "name", name, isPressed, ...rest }: Props) {
   return (
     <Button
-      onPress={handlePressButton}
+      {...rest}
       pressed={isPressed}
     >
-      <Icon pressed={isPressed} />
+      { name ? 
+        <FilterName pressed={isPressed}>{name}</FilterName>
+        :
+        <Icon pressed={isPressed} />
+      }
     </Button>
   );
 }

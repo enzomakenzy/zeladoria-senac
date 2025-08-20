@@ -19,8 +19,7 @@ export function HomeStackRoutes() {
   return (
     <Navigator 
       screenOptions={{
-        headerShown: false,
-        animation: "none"
+        headerShown: false
       }}
     >
       <Screen 
