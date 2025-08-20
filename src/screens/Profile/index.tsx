@@ -15,11 +15,6 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomModal } from "@components/CustomModal";
 
-type FormChangePasswordProps = {
-  currentPassword: string;
-  newPassword: string;
-  confirmNewPassword: string
-}
 
 const changePasswordFormSchema = z.object({
   currentPassword: z
@@ -43,7 +38,7 @@ export function Profile() {
     resolver: zodResolver(changePasswordFormSchema)
   });
 
-  function handleChangePassword({ currentPassword, newPassword, confirmNewPassword }: FormChangePasswordProps) {
+  function handleChangePassword({ currentPassword, newPassword, confirmNewPassword }: ChangePasswordFormData) {
     console.log({ currentPassword, newPassword, confirmNewPassword });
     setModalVisible(false);
     reset();

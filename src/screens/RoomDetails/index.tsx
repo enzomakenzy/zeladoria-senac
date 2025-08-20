@@ -1,10 +1,70 @@
+import { Container, InfoRoomContainer, InfoRoomText, Line, Main, ModalButtonsContainer, ModalInfoContainer, ModalTitle, RoomNameText, ScreenTitle} from "./styles";
+
 import { Header } from "@components/Header";
-import { Container, InfoRoomContainer, InfoRoomText, Line, Main, RoomNameText, ScreenTitle, StatusRoomContainer, StatusRoomText } from "./styles";
+import { FormInput } from "@components/FormInput";
+import { CustomModal } from "@components/CustomModal";
 import { LargeButton } from "@components/LargeButton";
 
+import { useState } from "react";
+
+import { Controller, useForm } from "react-hook-form";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const cleanRoomFormSchema = z.object({
+  observations: z.string().optional()
+})
+
+type CleanRoomFormData = z.infer<typeof cleanRoomFormSchema>;
+
 export function RoomDetails() {
+  const [modalVisible, setModalVisible] = useState(false);
+  const { control, handleSubmit } = useForm<CleanRoomFormData>({
+    resolver: zodResolver(cleanRoomFormSchema)
+  });
+
+  function handleCleanRoom({ observations }: CleanRoomFormData) {
+    setModalVisible(false);
+    console.log({ observations });
+  }
+  
   return (
     <Container>
+      <CustomModal modalVisible={modalVisible}>
+        <ModalTitle>Marcar sala como limpa</ModalTitle>
+
+        <ModalInfoContainer>
+          <Controller 
+            control={control}
+            name="observations"
+            render={(({ field: { onChange, value } }) => (
+              <FormInput 
+                inputName="Adicionar observação (opcional)" 
+                placeholder="Observações" 
+                editable
+                value={value}
+                onChangeText={onChange}
+              />
+            ))}
+          />
+        </ModalInfoContainer>
+
+        <ModalButtonsContainer>
+          <LargeButton 
+            textButton="Limpar" 
+            primary 
+            onPress={handleSubmit(handleCleanRoom)} 
+          />
+
+          <LargeButton 
+            textButton="Cancelar" 
+            primary 
+            onPress={() => setModalVisible(false)} 
+          />
+        </ModalButtonsContainer>
+
+      </CustomModal>
+
       <Header name="Enzo Makenzy" />
 
       <Main>
@@ -50,7 +110,7 @@ export function RoomDetails() {
           </InfoRoomText>
         </InfoRoomContainer>
 
-        <LargeButton primary textButton="Marcar sala como limpa"  />
+        <LargeButton primary textButton="Marcar sala como limpa" onPress={() => setModalVisible(true)} />
       </Main>
     </Container>
   )

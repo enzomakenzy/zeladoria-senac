@@ -79,3 +79,22 @@ export const StatusRoomText = styled.Text<RoomProps>`
 export const StatusRoomIcon = styled(Circle)<RoomProps>`
   background-color: ${({ theme, status }) => status ? theme.COLORS.GREEN : theme.COLORS.ORANGE};
 `;
+
+// Colocar Modal Visible 
+
+export const ModalTitle = styled.Text`
+  ${({ theme }) => css`
+    color: ${theme.COLORS.BLUE};
+    font-family: ${theme.FONTS.SEMI_BOLD};
+  `}
+  font-size: 18px;
+  text-align: center; 
+`;
+
+export const ModalInfoContainer = styled.View`
+  margin-bottom: 20px;
+`;
+
+export const ModalButtonsContainer = styled.View`
+  gap: 12px;
+`;
