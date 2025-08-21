@@ -63,4 +63,4 @@ export const Line = styled.View`
 export const LocationFilterList = styled.FlatList`
   flex-direction: row;
   gap: 10px;
-`
+`;

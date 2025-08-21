@@ -44,14 +44,14 @@ export const StatusRoomContainer = styled.View`
 
 export const RoomStatus = styled.Text<StatusProp>`
   ${({ theme, roomStatus }) => css`
-    color: ${roomStatus? theme.COLORS.GREEN : theme.COLORS.ORANGE};
+    color: ${roomStatus? theme.COLORS.GREEN : theme.COLORS.ORANGE.MAIN};
     font-size: ${theme.FONTS.MEDIUM};
   `}
   font-size: 18px;
 `;
 
 export const CircleIcon = styled(CircleSvg).attrs<StatusProp>(({ theme, roomStatus }) => ({
-  fill: roomStatus ? theme.COLORS.GREEN : theme.COLORS.ORANGE,
+  fill: roomStatus ? theme.COLORS.GREEN : theme.COLORS.ORANGE.MAIN,
   height: 14,
   width: 14
 }))``

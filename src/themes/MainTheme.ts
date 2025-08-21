@@ -15,8 +15,11 @@ export default {
 
     BLUE: "#004A8D",
     
-    ORANGE: "#F68E11",
-
+    ORANGE: {
+      MAIN: "#F68E11",
+      PRESSED: "#FDC180"
+    },
+    
     RED: "#F85956",
 
     GREEN: "#5CE839"

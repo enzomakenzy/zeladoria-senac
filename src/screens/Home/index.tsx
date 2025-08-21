@@ -12,6 +12,7 @@ import { allRoomsData } from "@utils/dataTest";
 
 import { useNavigation } from "@react-navigation/native";
 import { HomeStackNavigationProps } from "@routes/stacks/home-stack.routes";
+import { AdminButton } from "@components/AdminButton";
 
 export function Home() {
   const [rooms, setRooms] = useState(allRoomsData);
@@ -86,6 +87,8 @@ export function Home() {
             />
           )}
         />
+
+        <AdminButton name="Criar nova sala" screen="createRoom" icon="create" />
       </Main>
     </Container>
   )

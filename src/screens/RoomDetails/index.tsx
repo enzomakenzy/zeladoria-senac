@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AdminButton } from "@components/AdminButton";
 
 const cleanRoomFormSchema = z.object({
   observations: z.string().optional()
@@ -117,6 +118,8 @@ export function RoomDetails() {
         </InfoRoomContainer>
 
         <LargeButton primary textButton="Marcar sala como limpa" onPress={() => setModalVisible(true)} />
+
+        <AdminButton name="Editar sala" screen="editRoom" icon="edit" /> 
       </Main>
     </Container>
   )
