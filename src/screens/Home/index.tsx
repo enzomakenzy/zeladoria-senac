@@ -28,6 +28,7 @@ export function Home() {
 
   function handlePressButton() {
     filterActivity ? setFilterActivity(false) : setFilterActivity(true);
+    console.log(filterActivity)
   }
 
   return (
@@ -39,32 +40,36 @@ export function Home() {
         
         <OptionsRoomsContainer>
           <SearchFilterContainer>
-            <FilterButton isPressed={filterActivity} onPress={handlePressButton} />
+            <FilterButton isActive={filterActivity} onPress={handlePressButton} />
             <SearchInput flex />
           </SearchFilterContainer>
 
-          <FiltersContainer>
-            <FilterText>Filtrar por: </FilterText>
+          {
+            filterActivity &&
+            <FiltersContainer>
+              <FilterText>Filtrar por: </FilterText>
 
-            <ListFilterContainer>
-              <FilterButton isPressed={filterActivity} name="Campus/Bloco" />
-              <FilterButton isPressed={filterActivity} name="Status" />
-              <FilterButton isPressed={filterActivity} name="Últimas limpas" />
-            </ListFilterContainer>
+              <ListFilterContainer>
+                <FilterButton name="Campus/Bloco" />
+                <FilterButton name="Status" />
+                <FilterButton name="Últimas limpas" />
+              </ListFilterContainer>
 
-            <Line />
+              <Line />
 
-            <LocationFilterList 
-              data={locationList}
-              keyExtractor={item => item as string}
-              renderItem={({ item }) => (
-                <FilterButton isPressed={filterActivity} name={item as string} />
-              )}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-            />
-          </FiltersContainer>
+              <LocationFilterList 
+                data={locationList}
+                keyExtractor={item => item as string}
+                renderItem={({ item }) => (
+                  <FilterButton name={item as string} />
+                )}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
+              />
+            </FiltersContainer>
+          }
+
         </OptionsRoomsContainer>
 
         <FlatList 
