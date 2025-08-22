@@ -18,12 +18,12 @@ import { ProfileStackNavigationProps } from "@routes/stacks/profile-stack.routes
 
 const changePasswordFormSchema = z.object({
   currentPassword: z
-    .string("Informe a senha atual"),
+    .string("Campo vazio"),
   newPassword: z
-    .string("Informe a nova senha")
+    .string("Campo vazio")
     .min(8, { error: "A senha deve ter no mínimo 8 caracteres" }),
   confirmNewPassword: z
-    .string("Confirma a sua senha" )
+    .string("Campo vazio")
     .min(8, { error: "A senha deve ter no mínimo 8 caracteres" })
 }).refine(({ newPassword, confirmNewPassword }) => newPassword === confirmNewPassword, {
   error: "As senhas não coincidem", 
