@@ -104,13 +104,12 @@ export function Profile() {
 
         <LargeButton 
           textButton="Salvar" 
-          primary 
           onPress={handleSubmit(handleChangePassword)} 
         />
 
         <LargeButton 
           textButton="Cancelar" 
-          primary 
+          primary="red"
           onPress={handleCancelChangePassword} 
         />
       </CustomModal>
@@ -144,13 +143,15 @@ export function Profile() {
           </InputInfoContainer>
 
           <LargeButton 
-            textButton="Trocar senha" 
-            primary 
+            textButton="Trocar senha"  
             onPress={() => setModalVisible(true)} 
           />
         </ContentContainer>
 
-        <LargeButton textButton="Sair" />
+        <LargeButton 
+          textButton="Sair" 
+          primary="red"
+        />
       </Main>
     </Container>
   )

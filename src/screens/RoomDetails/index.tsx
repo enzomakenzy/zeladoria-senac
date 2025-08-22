@@ -54,13 +54,12 @@ export function RoomDetails() {
         <ModalButtonsContainer>
           <LargeButton 
             textButton="Limpar" 
-            primary 
             onPress={handleSubmit(handleCleanRoom)} 
           />
 
           <LargeButton 
             textButton="Cancelar" 
-            primary 
+            primary="red"
             onPress={() => setModalVisible(false)} 
           />
         </ModalButtonsContainer>
@@ -117,7 +116,7 @@ export function RoomDetails() {
           </InfoRoomText>
         </InfoRoomContainer>
 
-        <LargeButton primary textButton="Marcar sala como limpa" onPress={() => setModalVisible(true)} />
+        <LargeButton textButton="Marcar sala como limpa" onPress={() => setModalVisible(true)} />
 
         <AdminButton name="Editar sala" screen="editRoom" icon="edit" /> 
       </Main>

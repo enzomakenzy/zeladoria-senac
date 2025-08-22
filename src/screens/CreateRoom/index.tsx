@@ -1,16 +1,20 @@
+import { useState } from "react";
+
 import { Container, FormContainer, Main, ModalContentContainer, ModalCreateRoomTitle, ScreenTitle } from "./styles";
 
 import { Header } from "@components/Header";
 import { FormInput } from "@components/FormInput";
 import { LargeButton } from "@components/LargeButton";
+import { CustomModal } from "@components/CustomModal";
 
 import z from "zod";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { CustomModal } from "@components/CustomModal";
 
 import Checked from "@assets/checked.svg";
+
+import { HomeStackNavigationProps } from "@routes/stacks/home-stack.routes";
+import { useNavigation } from "@react-navigation/native";
 
 const createNewRoomFormSchema = z.object({
   roomName: z
@@ -28,6 +32,8 @@ type createNewRoomFormData = z.infer<typeof createNewRoomFormSchema>;
 export function CreateRoom() {
   const [modalVisible, setModalVisible] = useState(false);
 
+  const navigation = useNavigation<HomeStackNavigationProps>();
+
   const { control, handleSubmit, formState: { errors }, reset } = useForm<createNewRoomFormData>({
     resolver: zodResolver(createNewRoomFormSchema)
   });
@@ -38,8 +44,8 @@ export function CreateRoom() {
 
     setTimeout(() => {
       setModalVisible(false);
+      navigation.goBack();
     }, 2000)
-
   }
 
   return (
