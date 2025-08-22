@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components/native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
+import Checkbox from "expo-checkbox";
 
 export const Container = styled(SafeAreaView).attrs({
   edges: ["right", "left", "top"]
@@ -32,6 +33,25 @@ export const FormContainer = styled.View`
 export const ButtonsContainer = styled.View`
   gap: 10px;
 `;
+
+export const CheckBoxContainer = styled.View`
+  flex-direction: row;
+  gap: 12px;
+  margin-left: auto;
+  margin-bottom: 20px;
+`;
+
+export const CheckBoxText = styled.Text`
+  ${({ theme }) => css`
+    font-family: ${theme.FONTS.REGULAR};
+    color: ${theme.COLORS.BLUE};
+  `}
+  font-size: 18px;
+`
+
+export const StyledCheckBox = styled(Checkbox).attrs(({ theme }) => ({
+  color: theme.COLORS.BLUE
+}))``;
 
 // modal styles
 

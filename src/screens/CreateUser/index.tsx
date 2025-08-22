@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { ButtonsContainer, Container, FormContainer, Main, ModalContentContainer, ModalCreateRoomTitle, ScreenTitle } from "./styles";
+import { ButtonsContainer, CheckBoxContainer, CheckBoxText, Container, FormContainer, Main, ModalContentContainer, ModalCreateRoomTitle, ScreenTitle, StyledCheckBox } from "./styles";
 
 import { Header } from "@components/Header";
 import { FormInput } from "@components/FormInput";
@@ -21,11 +21,11 @@ const createUserFormSchema = z.object({
   email: z
     .email("Formato do e-mail inválido"),
   password: z
-    .string("Campo vazio")
-    .min(8, "A senha deve ter no mínimo 8 caracteres"),
+    .string("Campo vazio"),
   confirmPassword: z
-    .string("Campo vazio")
-    .min(8, "A senha deve ter no mínimo 8 caracteres")
+    .string("Campo vazio"),
+  isAdmin: z
+    .boolean()
 }).refine(({ password, confirmPassword }) => password === confirmPassword, {
   error: "As senhas não coincidem",
   path: ["confirmPassword"]
@@ -35,16 +35,22 @@ type CreateUserFormData = z.infer<typeof createUserFormSchema>;
 
 export function CreateUser() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   const navigation = useNavigation<ProfileStackNavigationProps>();
 
+  console.log(isChecked);
+
   const { control, handleSubmit, formState: { errors }, reset } = useForm<CreateUserFormData>({
-    resolver: zodResolver(createUserFormSchema)
+    resolver: zodResolver(createUserFormSchema),
+    defaultValues: {
+      isAdmin: false
+    }
   });
 
-  function handleCreateUser({ name, email, password, confirmPassword }: CreateUserFormData) {
+  function handleCreateUser({ name, email, password, confirmPassword, isAdmin }: CreateUserFormData) {
     setModalVisible(true);
-    console.log({ name, email, password, confirmPassword });
+    console.log({ name, email, password, confirmPassword, isAdmin });
 
     setTimeout(() => {
       setModalVisible(false)
@@ -132,6 +138,21 @@ export function CreateUser() {
             ))}
           />
         </FormContainer>
+
+        <CheckBoxContainer>
+          <CheckBoxText>Administrador</CheckBoxText>
+
+          <Controller 
+            control={control}
+            name="isAdmin"
+            render={(({ field: { onChange, value } }) => (
+              <StyledCheckBox 
+                value={value} 
+                onValueChange={onChange} 
+              />
+            ))}
+          />
+        </CheckBoxContainer>
 
         <ButtonsContainer>
           <LargeButton 
