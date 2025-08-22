@@ -1,20 +1,18 @@
 import { useState } from "react";
-import { Image, Modal, Text } from "react-native";
+import { Image } from "react-native";
 
-import { Controller, useForm } from "react-hook-form";
-
-import { Container, ContentContainer, ImgNameContainer, InputInfoContainer, Main, ModalChangePasswordTitle, ModalContainer, ModalContentContainer, ModalDetailsContainer, ScreenTitle, UserNameText } from "./styles";
+import { Container, ContentContainer, ImgNameContainer, InputInfoContainer, Main, ModalChangePasswordTitle, ModalContentContainer, ScreenTitle, UserNameText } from "./styles";
 
 import { Header } from "@components/Header";
 import { FormInput } from "@components/FormInput";
 import { LargeButton } from "@components/LargeButton";
+import { CustomModal } from "@components/CustomModal";
 
 import ImageProfile from "@assets/profile-img.png";
 
 import z from "zod";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CustomModal } from "@components/CustomModal";
-
 
 const changePasswordFormSchema = z.object({
   currentPassword: z
@@ -28,12 +26,13 @@ const changePasswordFormSchema = z.object({
 }).refine(({ newPassword, confirmNewPassword }) => newPassword === confirmNewPassword, {
   error: "As senhas não coincidem", 
   path: ["confirmNewPassword"]
-})
+});
 
-type ChangePasswordFormData = z.infer<typeof changePasswordFormSchema>
+type ChangePasswordFormData = z.infer<typeof changePasswordFormSchema>;
 
 export function Profile() {
   const [modalVisible, setModalVisible] = useState(false);
+  
   const { control, handleSubmit, formState: { errors }, reset } = useForm<ChangePasswordFormData>({
     resolver: zodResolver(changePasswordFormSchema)
   });

@@ -9,7 +9,7 @@ export const ModalContainer = styled.View`
 
 export const ModalBoxContainer = styled.View`
   width: 90%;
-  padding: 10px 10px 20px 10px;
+  padding: 15px;
   background-color: ${({ theme }) => theme.COLORS.WHITE.TRANSPARENCE_100};
   border-radius: 6px;
   gap: 5px;

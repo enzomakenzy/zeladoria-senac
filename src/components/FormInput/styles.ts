@@ -19,7 +19,7 @@ export const InputNameText = styled.Text`
 export const Input = styled.TextInput.attrs(({ theme }) => ({
   placeholderTextColor: theme.COLORS.BLACK.TRANSPARENCE_30
 }))<ErrorInputProp>`
-  ${({ theme, editable, error }) => css`
+  ${({ theme, editable = true, error }) => css`
     color: ${editable ? theme.COLORS.BLUE : theme.COLORS.BLACK.TRANSPARENCE_39};
     font-family: ${theme.FONTS.REGULAR};
     background-color: ${theme.COLORS.BLACK.TRANSPARENCE_4};

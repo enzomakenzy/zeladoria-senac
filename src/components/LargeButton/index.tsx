@@ -8,7 +8,7 @@ type Props = ButtonColorProp & TouchableOpacityProps & {
   textButton: string
 }
 
-export function LargeButton({ textButton, primary = false, ...rest }: Props) {
+export function LargeButton({ textButton, primary = true, ...rest }: Props) {
   return (
     <Button primary={primary} {...rest}>
       <ButtonText>
