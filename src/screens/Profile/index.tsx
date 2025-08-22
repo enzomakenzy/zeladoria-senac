@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Image } from "react-native";
 
-import { Container, ContentContainer, ImgNameContainer, InputInfoContainer, Main, ModalChangePasswordTitle, ModalContentContainer, ScreenTitle, UserNameText } from "./styles";
+import { ButtonsContainer, Container, ContentContainer, ImgNameContainer, InputInfoContainer, Line, Main, ModalChangePasswordTitle, ModalContentContainer, ScreenTitle, UserNameText } from "./styles";
 
 import { Header } from "@components/Header";
 import { FormInput } from "@components/FormInput";
@@ -13,6 +13,8 @@ import ImageProfile from "@assets/profile-img.png";
 import z from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigation } from "@react-navigation/native";
+import { ProfileStackNavigationProps } from "@routes/stacks/profile-stack.routes";
 
 const changePasswordFormSchema = z.object({
   currentPassword: z
@@ -32,6 +34,8 @@ type ChangePasswordFormData = z.infer<typeof changePasswordFormSchema>;
 
 export function Profile() {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const navigation = useNavigation<ProfileStackNavigationProps>();
   
   const { control, handleSubmit, formState: { errors }, reset } = useForm<ChangePasswordFormData>({
     resolver: zodResolver(changePasswordFormSchema)
@@ -146,6 +150,24 @@ export function Profile() {
             textButton="Trocar senha"  
             onPress={() => setModalVisible(true)} 
           />
+
+          <Line />
+
+          <ButtonsContainer>
+            <LargeButton 
+              textButton="Criar novo usuário" 
+              primary="orange"
+              onPress={() => navigation.navigate("createUser")}
+              style={{ width: "48%" }} 
+            />
+            
+            <LargeButton 
+              textButton="Listar usuários" 
+              primary="orange"
+              onPress={() => navigation.navigate("usersList")}
+              style={{ width: "48%" }} 
+            />
+          </ButtonsContainer>
         </ContentContainer>
 
         <LargeButton 

@@ -49,6 +49,18 @@ export const InputInfoContainer = styled.View`
   margin-bottom: 24px;
 `;
 
+export const Line = styled.View`
+  height: 1px;
+  width: 100%;
+  background-color: ${({ theme }) => theme.COLORS.BLACK.TRANSPARENCE_6};
+  margin: 16px 0px;
+`;
+
+export const ButtonsContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
 // Modal Styles
 
 export const ModalChangePasswordTitle = styled.Text`
@@ -62,4 +74,5 @@ export const ModalChangePasswordTitle = styled.Text`
 
 export const ModalContentContainer = styled.View`
   gap: 5px;
+  margin-bottom: 20px;
 `;
