@@ -1,11 +1,14 @@
 import styled, { css } from "styled-components/native";
+
+import UserIcon from "@assets/user.svg";
+import LockIcon from "@assets/lock.svg";
  
 type ErrorInputProp = {
   error: boolean;
 }
 
 export const InputFormContainer = styled.View`
-  gap: 5px;
+  gap: 4px;
 `;
 
 export const InputNameText = styled.Text`
@@ -16,19 +19,29 @@ export const InputNameText = styled.Text`
   font-size: 14px;
 `;
 
+export const InputIconContainer = styled.View<ErrorInputProp>`
+  flex-direction: row;
+  gap: 5px;
+    ${({ theme, error }) => css`
+    background-color: ${theme.COLORS.BLACK.TRANSPARENCE_4};
+    border-color: ${error ? theme.COLORS.RED : theme.COLORS.BLACK.TRANSPARENCE_4};
+  `}
+  border-width: 1px;
+  border-radius: 6px;
+  padding: 2px 8px;
+  align-items: center;
+`;
+
 export const Input = styled.TextInput.attrs(({ theme }) => ({
   placeholderTextColor: theme.COLORS.BLACK.TRANSPARENCE_30
 }))<ErrorInputProp>`
   ${({ theme, editable = true, error }) => css`
-    color: ${editable ? theme.COLORS.BLUE : theme.COLORS.BLACK.TRANSPARENCE_39};
-    font-family: ${theme.FONTS.REGULAR};
-    background-color: ${theme.COLORS.BLACK.TRANSPARENCE_4};
-    border-color: ${error ? theme.COLORS.RED : theme.COLORS.BLACK.TRANSPARENCE_4};
+  color: ${editable ? theme.COLORS.BLUE : theme.COLORS.BLACK.TRANSPARENCE_39};
+  font-family: ${theme.FONTS.REGULAR};
   `}
-  padding: 8px 12px;
+  width: 88%;
   font-size: 16px;
-  border-radius: 6px;
-  border-width: 1px;
+  align-items: center;
 `;
 
 export const ErrorInputText = styled.Text<ErrorInputProp>`
@@ -38,3 +51,11 @@ export const ErrorInputText = styled.Text<ErrorInputProp>`
   `}
   font-size: 12px;
 `;
+
+export const StyledUserIcon = styled(UserIcon).attrs<ErrorInputProp>(({ theme, error }) => ({
+  fill: error ? theme.COLORS.RED : theme.COLORS.BLUE
+}))``;
+
+export const StyledLockIcon = styled(LockIcon).attrs<ErrorInputProp>(({ theme, error }) => ({
+  fill: error ? theme.COLORS.RED : theme.COLORS.BLUE
+}))``;
