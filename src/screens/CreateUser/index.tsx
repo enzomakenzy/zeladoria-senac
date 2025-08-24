@@ -29,17 +29,14 @@ const createUserFormSchema = z.object({
 }).refine(({ password, confirmPassword }) => password === confirmPassword, {
   error: "As senhas não coincidem",
   path: ["confirmPassword"]
-})
+});
 
 type CreateUserFormData = z.infer<typeof createUserFormSchema>;
 
 export function CreateUser() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
 
   const navigation = useNavigation<ProfileStackNavigationProps>();
-
-  console.log(isChecked);
 
   const { control, handleSubmit, formState: { errors }, reset } = useForm<CreateUserFormData>({
     resolver: zodResolver(createUserFormSchema),
@@ -53,7 +50,7 @@ export function CreateUser() {
     console.log({ name, email, password, confirmPassword, isAdmin });
 
     setTimeout(() => {
-      setModalVisible(false)
+      setModalVisible(false);
       navigation.goBack();
     }, 1500)
   }
