@@ -3,9 +3,11 @@ import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-na
 import { CreateRoom } from "@screens/CreateRoom";
 import { EditRoom } from "@screens/EditRoom";
 import { Home } from "@screens/Home";
+import { Login } from "@screens/Login";
 import { RoomDetails } from "@screens/RoomDetails";
 
 export type HomeStackProps = {
+  login: undefined;
   home: undefined;
   roomDetails: undefined;
   createRoom: undefined;
@@ -24,8 +26,8 @@ export function HomeStackRoutes() {
       }}
     >
       <Screen 
-        name="home"
-        component={Home}
+        name="login"
+        component={Login}
       />
 
       <Screen 

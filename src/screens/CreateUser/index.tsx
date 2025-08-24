@@ -38,7 +38,7 @@ export function CreateUser() {
 
   const navigation = useNavigation<ProfileStackNavigationProps>();
 
-  const { control, handleSubmit, formState: { errors }, reset } = useForm<CreateUserFormData>({
+  const { control, handleSubmit, formState: { errors } } = useForm<CreateUserFormData>({
     resolver: zodResolver(createUserFormSchema),
     defaultValues: {
       isAdmin: false
