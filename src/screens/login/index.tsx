@@ -1,4 +1,4 @@
-import { Image } from "react-native";
+import { Alert, Image } from "react-native";
 import { Container, DescriptionText, FormContainer, Title } from "./styles";
 
 import SenacLogoImg from "@assets/senac-logo-login.png";
@@ -10,6 +10,8 @@ import z from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { api } from "@services/api";
+import axios from "axios";
 
 const signInFormSchema = z.object({
   indentifier: z
@@ -25,8 +27,15 @@ export function Login() {
     resolver: zodResolver(signInFormSchema)
   });
 
-  function handleSignIn({ indentifier, password }: SignInFormData) {
-    console.log({ indentifier, password });
+  async function handleSignIn({ indentifier, password }: SignInFormData) {
+    try {
+      const response = await api.post("/accounts/login/", { username: indentifier, password });
+      console.log(response.data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        Alert.alert(error.response?.data.non_field_errors[0])
+      }
+    }
   }
 
   return (
