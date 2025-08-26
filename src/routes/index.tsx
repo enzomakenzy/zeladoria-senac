@@ -2,14 +2,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { BottomAppRoutes } from "./bottom-app.routes";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import * as NavigationBar from 'expo-navigation-bar';
-import { AuthContext } from "@contexts/AuthController";
+import { useAuth } from "@hooks/useAuth";
 
 export function Routes() {
-  const contextData = useContext(AuthContext);
+  const { user } = useAuth();
 
-  console.log("Usuário Logado => ", contextData);
+  console.log("Usuário Logado => ", user);
 
   useEffect(() => {
     NavigationBar.setButtonStyleAsync('light');

@@ -1,5 +1,6 @@
-import { Alert, Image } from "react-native";
+import { Image } from "react-native";
 import { Container, DescriptionText, FormContainer, Title } from "./styles";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import SenacLogoImg from "@assets/senac-logo-login.png";
 
@@ -9,12 +10,11 @@ import { LargeButton } from "@components/LargeButton";
 import z from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { api } from "@services/api";
-import axios from "axios";
+
+import { useAuth } from "@hooks/useAuth";
 
 const signInFormSchema = z.object({
-  indentifier: z
+  username: z
     .string("Campo vazio"),
   password: z
     .string("Campo vazio")
@@ -26,16 +26,11 @@ export function Login() {
   const { control, handleSubmit, formState: { errors } } = useForm<SignInFormData>({
     resolver: zodResolver(signInFormSchema)
   });
+  
+  const { signIn } = useAuth();
 
-  async function handleSignIn({ indentifier, password }: SignInFormData) {
-    try {
-      const response = await api.post("/accounts/login/", { username: indentifier, password });
-      console.log(response.data);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        Alert.alert(error.response?.data.non_field_errors[0])
-      }
-    }
+  async function handleSignIn({ username, password }: SignInFormData) {
+    signIn(username, password);
   }
 
   return (
@@ -60,7 +55,7 @@ export function Login() {
         <FormContainer>
           <Controller 
             control={control}
-            name="indentifier"
+            name="username"
             render={(({ field: { onChange, value } }) => (
               <FormInput 
                 inputName="Usuário, Matrícula ou CPF" 
@@ -68,7 +63,7 @@ export function Login() {
                 icon="user"
                 value={value}
                 onChangeText={onChange}
-                errorMessage={errors.indentifier?.message}
+                errorMessage={errors.username?.message}
               />  
             ))}
           />
