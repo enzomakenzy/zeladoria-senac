@@ -5,11 +5,10 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useEffect } from "react";
 import * as NavigationBar from 'expo-navigation-bar';
 import { useAuth } from "@hooks/useAuth";
+import { Login } from "@screens/Login";
 
 export function Routes() {
   const { user } = useAuth();
-
-  console.log("Usuário Logado => ", user);
 
   useEffect(() => {
     NavigationBar.setButtonStyleAsync('light');
@@ -18,7 +17,7 @@ export function Routes() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <BottomAppRoutes />
+        {user.id ? <BottomAppRoutes /> : <Login />}
       </NavigationContainer>
     </SafeAreaProvider>
   )

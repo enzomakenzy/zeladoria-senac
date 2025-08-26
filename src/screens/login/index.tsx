@@ -1,6 +1,6 @@
-import { Image } from "react-native";
+import { Image, KeyboardAvoidingView, Platform } from "react-native";
+
 import { Container, DescriptionText, FormContainer, Title } from "./styles";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import SenacLogoImg from "@assets/senac-logo-login.png";
 
@@ -12,6 +12,8 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useAuth } from "@hooks/useAuth";
+import { AppError } from "@utils/AppError";
+import Toast from "react-native-toast-message";
 
 const signInFormSchema = z.object({
   username: z
@@ -30,13 +32,31 @@ export function Login() {
   const { signIn } = useAuth();
 
   async function handleSignIn({ username, password }: SignInFormData) {
-    signIn(username, password);
+    try {
+      await signIn(username, password);
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+
+      const errorMessage = isAppError ? error.message : "Não foi possível entrar. Tente novamente mais tarde"
+
+      Toast.show({
+        type: "error",
+        text1: "Erro",
+        text2: errorMessage,
+        text1Style: {
+          fontSize: 18
+        },
+        text2Style: {
+          fontSize: 16
+        }
+      })
+    } 
   }
 
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={{ flexGrow: 1 }}
-      keyboardShouldPersistTaps="handled"
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
     >
       <Container>
         <Image 
@@ -92,6 +112,6 @@ export function Login() {
           onPress={handleSubmit(handleSignIn)}
         />
       </Container>
-    </KeyboardAwareScrollView>
+    </KeyboardAvoidingView>
   )
 }
