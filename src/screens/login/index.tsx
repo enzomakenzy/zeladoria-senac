@@ -1,4 +1,5 @@
-import { Alert, Image } from "react-native";
+import { Image, KeyboardAvoidingView, Platform } from "react-native";
+
 import { Container, DescriptionText, FormContainer, Title } from "./styles";
 
 import SenacLogoImg from "@assets/senac-logo-login.png";
@@ -9,12 +10,13 @@ import { LargeButton } from "@components/LargeButton";
 import z from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { api } from "@services/api";
-import axios from "axios";
+
+import { useAuth } from "@hooks/useAuth";
+import { AppError } from "@utils/AppError";
+import Toast from "react-native-toast-message";
 
 const signInFormSchema = z.object({
-  indentifier: z
+  username: z
     .string("Campo vazio"),
   password: z
     .string("Campo vazio")
@@ -26,22 +28,35 @@ export function Login() {
   const { control, handleSubmit, formState: { errors } } = useForm<SignInFormData>({
     resolver: zodResolver(signInFormSchema)
   });
+  
+  const { signIn } = useAuth();
 
-  async function handleSignIn({ indentifier, password }: SignInFormData) {
+  async function handleSignIn({ username, password }: SignInFormData) {
     try {
-      const response = await api.post("/accounts/login/", { username: indentifier, password });
-      console.log(response.data);
+      await signIn(username, password);
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        Alert.alert(error.response?.data.non_field_errors[0])
-      }
-    }
+      const isAppError = error instanceof AppError;
+
+      const errorMessage = isAppError ? error.message : "Não foi possível entrar. Tente novamente mais tarde"
+
+      Toast.show({
+        type: "error",
+        text1: "Erro",
+        text2: errorMessage,
+        text1Style: {
+          fontSize: 18
+        },
+        text2Style: {
+          fontSize: 16
+        }
+      })
+    } 
   }
 
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={{ flexGrow: 1 }}
-      keyboardShouldPersistTaps="handled"
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
     >
       <Container>
         <Image 
@@ -60,7 +75,7 @@ export function Login() {
         <FormContainer>
           <Controller 
             control={control}
-            name="indentifier"
+            name="username"
             render={(({ field: { onChange, value } }) => (
               <FormInput 
                 inputName="Usuário, Matrícula ou CPF" 
@@ -68,7 +83,7 @@ export function Login() {
                 icon="user"
                 value={value}
                 onChangeText={onChange}
-                errorMessage={errors.indentifier?.message}
+                errorMessage={errors.username?.message}
               />  
             ))}
           />
@@ -97,6 +112,6 @@ export function Login() {
           onPress={handleSubmit(handleSignIn)}
         />
       </Container>
-    </KeyboardAwareScrollView>
+    </KeyboardAvoidingView>
   )
 }

@@ -13,7 +13,6 @@ import ProfileIcon from "@assets/profile.svg";
 import { useTheme } from "styled-components/native";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Login } from "@screens/Login";
 
 type BottomAppProps = {
   homeStack: undefined;
@@ -48,7 +47,7 @@ export function BottomAppRoutes() {
     >
       <Screen 
         name="homeStack"
-        component={Login}
+        component={HomeStackRoutes}
         options={{
           tabBarIcon: ({ focused }) => (
             <HomeIcon 

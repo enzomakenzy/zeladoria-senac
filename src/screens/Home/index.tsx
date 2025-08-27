@@ -13,8 +13,11 @@ import { allRoomsData } from "@utils/dataTest";
 import { useNavigation } from "@react-navigation/native";
 import { HomeStackNavigationProps } from "@routes/stacks/home-stack.routes";
 import { AdminButton } from "@components/AdminButton";
+import { useAuth } from "@hooks/useAuth";
 
 export function Home() {
+  const { user } = useAuth();
+
   const [rooms, setRooms] = useState(allRoomsData);
   const [filterActivity, setFilterActivity] = useState(false);
   const [locationList, setLocationList] = useState([
@@ -34,7 +37,7 @@ export function Home() {
 
   return (
     <Container>
-      <Header name="Enzo Makenzy" />
+      <Header name={user.username} />
       
       <Main>
         <ScreenTitle>Todas as salas</ScreenTitle>

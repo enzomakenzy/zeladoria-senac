@@ -15,6 +15,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigation } from "@react-navigation/native";
 import { ProfileStackNavigationProps } from "@routes/stacks/profile-stack.routes";
+import { useAuth } from "@hooks/useAuth";
 
 const changePasswordFormSchema = z.object({
   currentPassword: z
@@ -33,6 +34,8 @@ const changePasswordFormSchema = z.object({
 type ChangePasswordFormData = z.infer<typeof changePasswordFormSchema>;
 
 export function Profile() {
+  const { signOut } = useAuth();
+
   const [modalVisible, setModalVisible] = useState(false);
 
   const navigation = useNavigation<ProfileStackNavigationProps>();
@@ -173,6 +176,7 @@ export function Profile() {
         <LargeButton 
           textButton="Sair" 
           primary="red"
+          onPress={signOut}
         />
       </Main>
     </Container>
