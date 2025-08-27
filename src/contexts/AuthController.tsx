@@ -1,11 +1,16 @@
-import { UserDTO } from "@dtos/UserDTO";
-import { api } from "@services/api";
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { storageUserGet, storageUserSave } from "src/storage/storageUser";
+
+import { UserDTO } from "@dtos/UserDTO";
+
+import { api } from "@services/api";
+
+import { storageUserGet, storageUserSave, storageUserRemove } from "@storage/storageUser";
+import { storageAuthTokenSave } from "@storage/storageAuthToken";
 
 export type AuthContextDataProps = {
   user: UserDTO;
   signIn: (username: string, password: string) => Promise<void>;
+  signOut: () => Promise<void>;
 }
 
 export type AuthContextProviderProps = {
@@ -17,27 +22,34 @@ export const AuthContext = createContext<AuthContextDataProps>({} as AuthContext
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<UserDTO>({} as UserDTO);
 
+  async function storageUserAndToken(userData: UserDTO, token: string) {
+    try {
+      api.defaults.headers.common["Authorization"] = `Token ${token}`;
+
+      await storageUserSave(userData);
+      await storageAuthTokenSave(token);
+      setUser(userData)
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async function signIn(username: string, password: string) {
     try {
       const { data } = await api.post("/accounts/login/", { username: username, password });
       
       if (data) {
-        setUser({
-          id: data.user_data.id, 
-          username: data.username,
-          email: data.user_data.email,
-          is_staff: data.is_staff,
-          is_superuser: data.is_superuser
-        })
+        storageUserAndToken(data.user_data, data.token);
+      } 
+    } catch (error) {
+      throw error;
+    }
+  }
 
-        storageUserSave({
-          id: data.user_data.id, 
-          username: data.username,
-          email: data.user_data.email,
-          is_staff: data.is_staff,
-          is_superuser: data.is_superuser
-        })
-      }
+  async function signOut() {
+    try {
+      setUser({} as UserDTO);
+      await storageUserRemove();
     } catch (error) {
       throw error;
     }
@@ -56,7 +68,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user: user, signIn }}>
+    <AuthContext.Provider value={{ user: user, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   )
