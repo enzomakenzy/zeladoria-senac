@@ -34,8 +34,8 @@ export function Home() {
 
   const navigation = useNavigation<HomeStackNavigationProps>();
 
-  function handleGoToDetailsRoom() {
-    navigation.navigate("roomDetails")
+  function handleGoToDetailsRoom(id: number) {
+    navigation.navigate("roomDetails", { id: id })
   }
 
   function handlePressButton() {
@@ -43,14 +43,14 @@ export function Home() {
     console.log(filterActivity)
   }
 
-  async function fetchGroups() {
+  async function fetchRooms() {
     try {
-      const response = await api.get("/salas/");
+      const { data } = await api.get("/salas/");
 
-      setRooms(response.data) 
+      setRooms(data) 
     } catch (error) {
       const isAppError = error instanceof AppError;
-      const errorMessage = isAppError ? error.message : "Não foi possível entrar os grupos musculares"
+      const errorMessage = isAppError ? error.message : "Não foi possível resgatar as salas";
 
       Toast.show({
         type: "error",
@@ -67,7 +67,7 @@ export function Home() {
   }
 
   useEffect(() => {
-    fetchGroups();
+    fetchRooms();
   }, [])
 
   return (
@@ -121,7 +121,7 @@ export function Home() {
               roomCapacity={item.capacidade} 
               roomLocation={item.localizacao} 
               roomStatus={item.status_limpeza} 
-              onPress={handleGoToDetailsRoom}
+              onPress={() => handleGoToDetailsRoom(item.id)}
             />
           )}
         />

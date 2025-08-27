@@ -5,12 +5,21 @@ import { FormInput } from "@components/FormInput";
 import { CustomModal } from "@components/CustomModal";
 import { LargeButton } from "@components/LargeButton";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AdminButton } from "@components/AdminButton";
+
+import { api } from "@services/api";
+import { AppError } from "@utils/AppError";
+import Toast from "react-native-toast-message";
+
+import { HomeStackProps } from "@routes/stacks/home-stack.routes";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+
+type RoomDetailsScreenProps = NativeStackScreenProps<HomeStackProps, "roomDetails">;
 
 const cleanRoomFormSchema = z.object({
   observations: z.string().optional()
@@ -18,17 +27,44 @@ const cleanRoomFormSchema = z.object({
 
 type CleanRoomFormData = z.infer<typeof cleanRoomFormSchema>;
 
-export function RoomDetails() {
+export function RoomDetails({ route }: RoomDetailsScreenProps) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const { control, handleSubmit } = useForm<CleanRoomFormData>({
     resolver: zodResolver(cleanRoomFormSchema)
   });
 
+  const { id } = route.params;
+
   function handleCleanRoom({ observations }: CleanRoomFormData) {
     setModalVisible(false);
     console.log({ observations });
   }
+
+  async function fetchDetailRoom() {
+    try {
+      const { data } = await api.get(`/salas/${id}`);
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const errorMessage = isAppError ? error.message : "Não foi possível visualizar a sala"
+
+      Toast.show({
+        type: "error",
+        text1: "Erro",
+        text2: errorMessage,
+        text1Style: {
+          fontSize: 18
+        },
+        text2Style: {
+          fontSize: 16
+        }
+      })
+    }
+  }
+
+  useEffect(() => {
+    fetchDetailRoom();
+  }, []);
   
   return (
     <Container>

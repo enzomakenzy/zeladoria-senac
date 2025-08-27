@@ -7,7 +7,9 @@ import { RoomDetails } from "@screens/RoomDetails";
 
 export type HomeStackProps = {
   home: undefined;
-  roomDetails: undefined;
+  roomDetails: {
+    id: number;
+  };
   createRoom: undefined;
   editRoom: undefined;
 }
