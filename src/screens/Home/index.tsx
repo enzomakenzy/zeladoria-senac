@@ -21,11 +21,16 @@ import { RoomDTO } from "@dtos/RoomDTO";
 export function Home() {
   const { user } = useAuth();
 
-  const [rooms, setRooms] = useState<RoomDTO[]>({} as RoomDTO[]);
+  const [rooms, setRooms] = useState<RoomDTO[]>([] as RoomDTO[]);
   const [filterActivity, setFilterActivity] = useState(false);
   const [locationList, setLocationList] = useState([
     "Bloco A", "Bloco B", "Bloco C", "Bloco D", "Bloco E", "Bloco F", "Bloco G" 
   ]);
+  const [search, setSearch] = useState("");
+
+  const filteredRooms = rooms.filter(room => (
+    room.nome_numero.toLowerCase().includes(search.toLowerCase())
+  ))
 
   const navigation = useNavigation<HomeStackNavigationProps>();
 
@@ -75,7 +80,7 @@ export function Home() {
         <OptionsRoomsContainer>
           <SearchFilterContainer>
             <FilterButton isActive={filterActivity} onPress={handlePressButton} />
-            <SearchInput flex />
+            <SearchInput flex value={search} onChangeText={setSearch} />
           </SearchFilterContainer>
 
           {
@@ -107,7 +112,7 @@ export function Home() {
         </OptionsRoomsContainer>
 
         <FlatList 
-          data={rooms}
+          data={filteredRooms}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (

@@ -21,6 +21,7 @@ export const Input = styled.TextInput.attrs(({ theme }) => ({
   `}
   padding: 8px 12px;
   font-size: 16px;
+  width: 85%;
 `;
 
 export const SearchIcon = styled(Search).attrs(({ theme }) => ({
