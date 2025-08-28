@@ -129,7 +129,10 @@ export function Home() {
           )}
         />
 
-        <AdminButton name="Criar nova sala" screen="createRoom" icon="create" />
+        {
+          user.is_superuser &&
+          <AdminButton name="Criar nova sala" screen="createRoom" icon="create" />
+        }
       </Main>
     </Container>
   )

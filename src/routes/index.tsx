@@ -10,6 +10,8 @@ import { Login } from "@screens/Login";
 export function Routes() {
   const { user } = useAuth();
 
+  console.log(user);
+
   useEffect(() => {
     NavigationBar.setButtonStyleAsync('light');
   }, []);

@@ -192,7 +192,10 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
           <LargeButton textButton="Marcar sala como limpa" onPress={() => setModalVisible(true)} />
         }
 
-        <AdminButton name="Editar sala" screen="editRoom" icon="edit" roomId={room as RoomDTO} /> 
+        {
+          user.is_superuser &&
+          <AdminButton name="Editar sala" screen="editRoom" icon="edit" roomId={room as RoomDTO} /> 
+        }
       </Main>
     </Container>
   )

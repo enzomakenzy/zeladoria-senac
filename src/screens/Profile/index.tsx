@@ -34,7 +34,7 @@ const changePasswordFormSchema = z.object({
 type ChangePasswordFormData = z.infer<typeof changePasswordFormSchema>;
 
 export function Profile() {
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -154,23 +154,29 @@ export function Profile() {
             onPress={() => setModalVisible(true)} 
           />
 
-          <Line />
 
-          <ButtonsContainer>
-            <LargeButton 
-              textButton="Criar novo usuário" 
-              primary="orange"
-              onPress={() => navigation.navigate("createUser")}
-              style={{ width: "48%" }} 
-            />
+          {
+            user.is_superuser &&
+            <>
+            <Line />
             
-            <LargeButton 
-              textButton="Listar usuários" 
-              primary="orange"
-              onPress={() => navigation.navigate("usersList")}
-              style={{ width: "48%" }} 
-            />
-          </ButtonsContainer>
+            <ButtonsContainer>
+              <LargeButton 
+                textButton="Criar novo usuário" 
+                primary="orange"
+                onPress={() => navigation.navigate("createUser")}
+                style={{ width: "48%" }} 
+              />
+              
+              <LargeButton 
+                textButton="Listar usuários" 
+                primary="orange"
+                onPress={() => navigation.navigate("usersList")}
+                style={{ width: "48%" }} 
+              />
+            </ButtonsContainer>
+            </>
+          }
         </ContentContainer>
 
         <LargeButton 
