@@ -67,26 +67,23 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
     }
   }
 
-  useEffect(() => {
-    fetchDetailRoom();
-  }, [room]);
-
+  
   async function handleSetRoomClean({ observations }: CleanRoomFormData) {
     try {
       await api.post(`/salas/${id}/marcar_como_limpa/`, {
         observacoes: observations
       });
-
+      
       navigation.reset({
         index: 0,
         routes: [{ name: "home" }]
       })
-
+      
       setModalVisible(false);
     } catch (error) {
       const isAppError = error instanceof AppError;
       const errorMessage = isAppError ? error.message : "Não foi possível marcar a sala como limpa";
-
+      
       Toast.show({
         type: "error",
         text1: "Erro",
@@ -100,10 +97,10 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
       })
     }
   }
-
+  
   useEffect(() => {
     fetchDetailRoom();
-  }, []);
+  }, [room]);
   
   return (
     <Container>

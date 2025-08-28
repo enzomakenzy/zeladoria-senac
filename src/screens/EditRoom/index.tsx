@@ -87,19 +87,41 @@ export function EditRoom({ route }: EditRoomScreenProps) {
     } 
   }
 
-  function handleDeleteRoom() {
-    console.log("Sala apagada");
-    setDeleteRoom(true);
+  async function handleDeleteRoom() {
+    try {
+      setDeleteRoom(true);
+      
+      setTimeout(async () => {
+        setModalVisibleDelete(false);
+        
+        navigation.reset({
+          index: 0,
+          routes: [
+            { name: "home" }
+          ]
+        })
 
-    setTimeout(() => {
+        await api.delete(`/salas/${room.id}/`);
+      }, 1500);
+
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const errorMessage = isAppError ? error.message : "Não foi possível marcar a sala como limpa";
+      
       setModalVisibleDelete(false);
-      navigation.reset({
-        index: 0,
-        routes: [
-          { name: "home" }
-        ]
+
+      Toast.show({
+        type: "error",
+        text1: "Erro",
+        text2: errorMessage,
+        text1Style: {
+          fontSize: 18
+        },
+        text2Style: {
+          fontSize: 16
+        }
       })
-    }, 1500);
+    }
   }
 
   return (
