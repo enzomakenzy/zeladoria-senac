@@ -47,7 +47,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     try {
       setIsLoadingUserStorageData(true);
       const { data } = await api.post("/accounts/login/", { username: username, password });
-      
+      console.log(data);
+
       if (data) {
         await userAndTokenStorageSave(data.user_data, data.token);
         userAndTokenUpdate(data.user_data, data.token);
@@ -64,6 +65,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       setUser({} as UserDTO);
       await storageUserRemove();
       await storageAuthTokenRemove();
+      delete api.defaults.headers.common["Authorization"];
     } catch (error) {
       throw error;
     }

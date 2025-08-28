@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image } from "react-native";
 
-import { ButtonsContainer, Container, ContentContainer, ImgNameContainer, InputInfoContainer, Line, Main, ModalChangePasswordTitle, ModalContentContainer, ScreenTitle, UserNameText } from "./styles";
+import { ButtonsContainer, Container, ContentContainer, ImgNameContainer, Line, Main, ModalChangePasswordTitle, ModalContentContainer, ScreenTitle, UserNameText } from "./styles";
 
 import { Header } from "@components/Header";
 import { FormInput } from "@components/FormInput";
@@ -13,11 +13,15 @@ import ImageProfile from "@assets/profile-img.png";
 import z from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { useNavigation } from "@react-navigation/native";
 import { ProfileStackNavigationProps } from "@routes/stacks/profile-stack.routes";
+
 import { useAuth } from "@hooks/useAuth";
 import { AppError } from "@utils/AppError";
+
 import Toast from "react-native-toast-message";
+import { api } from "@services/api";
 
 const changePasswordFormSchema = z.object({
   currentPassword: z
@@ -46,24 +50,37 @@ export function Profile() {
     resolver: zodResolver(changePasswordFormSchema)
   });
 
-  function handleChangePassword({ currentPassword, newPassword, confirmNewPassword }: ChangePasswordFormData) {
+  async function handleChangePassword({ currentPassword, newPassword, confirmNewPassword }: ChangePasswordFormData) {
     try {
-      
+      const { data } = await api.post("/accounts/change_password/", {
+        old_password: currentPassword,
+        new_password: newPassword, 
+        confirm_new_password: confirmNewPassword
+      }) 
+
+      console.log(data);
+
+      await signOut();
     } catch (error) {
       const isAppError = error instanceof AppError;
-      const errorMessage = isAppError ? error.message : "Não foi possível resgatar as salas";
+      const errorMessage = isAppError ? error.message : "Não foi possível alterar a senha";
 
-      Toast.show({
-        type: "error",
-        text1: "Erro",
-        text2: errorMessage,
-        text1Style: {
-          fontSize: 18
-        },
-        text2Style: {
-          fontSize: 16
-        }
-      });
+      console.log(errorMessage)
+
+      if (errorMessage !== "Token inválido.") {
+        Toast.show({
+          type: "error",
+          text1: "Erro",
+          text2: errorMessage,
+          text1Style: {
+            fontSize: 18
+          },
+          text2Style: {
+            fontSize: 16
+          }
+        });
+      }
+
     }
     setModalVisible(false);
     reset();
@@ -93,6 +110,7 @@ export function Profile() {
                 value={value}
                 onChangeText={onChange}
                 errorMessage={errors.currentPassword?.message}
+                autoCapitalize="none"
               />
             ))}
           />
@@ -108,6 +126,7 @@ export function Profile() {
                 value={value}
                 onChangeText={onChange}
                 errorMessage={errors.newPassword?.message}
+                autoCapitalize="none"
               />
             ))}
           />
@@ -123,6 +142,7 @@ export function Profile() {
                 value={value}
                 onChangeText={onChange}
                 errorMessage={errors.confirmNewPassword?.message}
+                autoCapitalize="none"
               />
             ))}
           />

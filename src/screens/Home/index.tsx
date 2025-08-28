@@ -55,17 +55,19 @@ export function Home() {
       const isAppError = error instanceof AppError;
       const errorMessage = isAppError ? error.message : "Não foi possível resgatar as salas";
 
-      Toast.show({
-        type: "error",
-        text1: "Erro",
-        text2: errorMessage,
-        text1Style: {
-          fontSize: 18
-        },
-        text2Style: {
-          fontSize: 16
-        }
-      });
+      if (errorMessage !== "Token inválido.") {
+        Toast.show({
+          type: "error",
+          text1: "Erro",
+          text2: errorMessage,
+          text1Style: {
+            fontSize: 18
+          },
+          text2Style: {
+            fontSize: 16
+          }
+        });
+      }
     }
   }
 
@@ -75,7 +77,7 @@ export function Home() {
 
   return (
     <Container>
-      <Header name={user.username} />
+      <Header />
       
       <Main>
         <ScreenTitle>Todas as salas</ScreenTitle>

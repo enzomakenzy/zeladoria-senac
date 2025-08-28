@@ -102,6 +102,7 @@ export function Login() {
                 returnKeyType="send"
                 secureTextEntry
                 errorMessage={errors.password?.message}
+                autoCapitalize="none"
               />
             ))}
           />

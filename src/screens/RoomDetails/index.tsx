@@ -141,7 +141,7 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
 
       </CustomModal>
 
-      <Header name={user.username} />
+      <Header />
 
       <Main>
         <ScreenTitle>
