@@ -38,12 +38,12 @@ export function Home() {
   const navigation = useNavigation<HomeStackNavigationProps>();
 
   function handleGoToDetailsRoom(id: number) {
-    navigation.navigate("roomDetails", { id: id })
+    navigation.navigate("roomDetails", { id: id });
   }
 
   function handlePressButton() {
     filterActivity ? setFilterActivity(false) : setFilterActivity(true);
-    console.log(filterActivity)
+    console.log(filterActivity);
   }
 
   async function fetchRooms() {
@@ -65,7 +65,7 @@ export function Home() {
         text2Style: {
           fontSize: 16
         }
-      })
+      });
     }
   }
 

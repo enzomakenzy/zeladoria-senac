@@ -1,54 +1,84 @@
-import { useState } from "react";
+import { FlatList } from "react-native";
+import { useEffect, useState } from "react";
 
-import { Container, Main, ModalCategoryText, ModalCloseButton, ModalCloseTextButton, ModalContainer, ModalContentContainer, ModalDetailsContainer, ModalInfoText, ModalRoomNameTitle, ScreenTitle } from "./styles";
+import { Container, Main, ModalCategoryText, ModalCloseButton, ModalCloseTextButton, ModalContentContainer, ModalInfoText, ModalRoomNameTitle, ScreenTitle } from "./styles";
 
 import { Header } from "@components/Header";
 import { SearchInput } from "@components/SearchInput";
 import { CleanRoomCard } from "@components/CleanRoomCard";
-import { CleanRoomProps } from "@components/CleanRoomCard";
-import { FlatList, Modal } from "react-native";
-import { cleanRoomsData } from "@utils/dataTest";
 import { CustomModal } from "@components/CustomModal";
 
+import Toast from "react-native-toast-message";
+
+import { api } from "@services/api";
+import { AppError } from "@utils/AppError";
+import { CleanRoomDTO } from "@dtos/CleanRoomDTO";
+
 export function CleanRooms() {
-  const [cleanRooms, setCleanRooms] = useState<CleanRoomProps[]>(cleanRoomsData)
+  const [cleanRoomsList, setCleanRoomsList] = useState<CleanRoomDTO[]>([] as CleanRoomDTO[]);
+  const [cleanRoom, setCleanRoom] = useState<CleanRoomDTO>({} as CleanRoomDTO);
   const [modalVisible, setModalVisible] = useState(false);
+  const [search, setSearch] = useState("");
+
+  const filteredRooms = cleanRoomsList.filter(cleanRoom => (
+    cleanRoom.sala_nome.toLowerCase().includes(search.toLowerCase())
+  ));
+
+  async function fetchListCleanRooms() {
+    try {
+      const { data } = await api.get("/limpezas/");
+    
+      setCleanRoomsList(data)
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const errorMessage = isAppError ? error.message : "Não foi possível resgatar as salas";
+
+      Toast.show({
+        type: "error",
+        text1: "Erro",
+        text2: errorMessage,
+        text1Style: {
+          fontSize: 18
+        },
+        text2Style: {
+          fontSize: 16
+        }
+      });
+    }
+  }
+
+  function handleShowDetails(item: CleanRoomDTO) {
+    setModalVisible(true);
+    setCleanRoom(item);
+  }
+
+  useEffect(() => {
+    fetchListCleanRooms();
+  }, [cleanRoomsList]);
 
   return (
     <Container>
       <CustomModal modalVisible={modalVisible}>
-        <ModalRoomNameTitle>Laboratório 2</ModalRoomNameTitle>
+        <ModalRoomNameTitle>{cleanRoom.sala_nome}</ModalRoomNameTitle>
 
         <ModalContentContainer>
             <ModalInfoText>
               <ModalCategoryText>Limpado por: </ModalCategoryText>
-              Enzo Makenzy
+              {cleanRoom.funcionario_responsavel?.username}
             </ModalInfoText>
             
             <ModalInfoText>
               <ModalCategoryText>Data e hora da limpeza: </ModalCategoryText>
-              04/08/2025 às 15:30
-            </ModalInfoText>
-            
-            <ModalInfoText>
-              <ModalCategoryText>Capacidade: </ModalCategoryText>
-              15
+              {cleanRoom.data_hora_limpeza}
             </ModalInfoText>
 
-            <ModalInfoText>
-              <ModalCategoryText>Localização: </ModalCategoryText>
-              Bloco A
-            </ModalInfoText>
-            
-            <ModalInfoText areGreen>
-              <ModalCategoryText>Status: </ModalCategoryText>
-              Limpa
-            </ModalInfoText>
-
-            <ModalInfoText>
-              <ModalCategoryText>Observações: </ModalCategoryText>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
-            </ModalInfoText>
+            {
+              cleanRoom.observacoes &&
+              <ModalInfoText>
+                <ModalCategoryText>Observações: </ModalCategoryText>
+                {cleanRoom.observacoes}
+              </ModalInfoText>
+            }
         </ModalContentContainer>
 
         <ModalCloseButton onPress={() => setModalVisible(false)}>
@@ -59,21 +89,20 @@ export function CleanRooms() {
       <Header />
 
       <Main>
-        <ScreenTitle>Suas salas limpas</ScreenTitle>
+        <ScreenTitle>Registros de limpeza</ScreenTitle>
         
-        <SearchInput />
+        <SearchInput value={search} onChangeText={setSearch} />
         
         <FlatList 
-          data={cleanRooms}
-          keyExtractor={item => item.roomName}
+          data={filteredRooms}
+          keyExtractor={item => item.id.toString()}
           showsVerticalScrollIndicator={false}
           style={{ marginTop: 20 }}
           renderItem={({ item }) => (
             <CleanRoomCard 
-              roomName={item.roomName} 
-              cleanerBy={item.cleanerBy} 
-              dateAndTimeOfCleaning={item.dateAndTimeOfCleaning} 
-              onPress={() => setModalVisible(true)}
+              roomName={item.sala_nome} 
+              cleanerBy={item.funcionario_responsavel.username} 
+              onPress={() => handleShowDetails(item)}
             />
           )}
         />
