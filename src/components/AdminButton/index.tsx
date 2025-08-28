@@ -25,7 +25,7 @@ export function AdminButton({ name, screen, icon, roomId }: Props) {
   function handleGoToScreen(screen: keyof HomeStackProps, room: RoomDTO) {
     if (screen === "editRoom") {
       navigation.navigate(screen, {room: room});
-    } else if (screen === "home") {
+    } else if (screen === "createRoom") {
       navigation.navigate(screen);
     }
   }

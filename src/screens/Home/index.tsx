@@ -14,9 +14,12 @@ import { AdminButton } from "@components/AdminButton";
 import { useAuth } from "@hooks/useAuth";
 
 import { api } from "@services/api";
-import { AppError } from "@utils/AppError";
-import Toast from "react-native-toast-message";
 import { RoomDTO } from "@dtos/RoomDTO";
+
+import { AppError } from "@utils/AppError";
+
+import Toast from "react-native-toast-message";
+
 
 export function Home() {
   const { user } = useAuth();
