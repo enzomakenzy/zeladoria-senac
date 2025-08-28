@@ -91,7 +91,11 @@ export function CleanRooms() {
       <Main>
         <ScreenTitle>Registros de limpeza</ScreenTitle>
         
-        <SearchInput value={search} onChangeText={setSearch} />
+        <SearchInput 
+          value={search} 
+          onChangeText={setSearch} 
+          placeholder="Nome da sala"
+        />
         
         <FlatList 
           data={filteredRooms}

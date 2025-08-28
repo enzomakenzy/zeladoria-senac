@@ -83,7 +83,12 @@ export function Home() {
         <OptionsRoomsContainer>
           <SearchFilterContainer>
             <FilterButton isActive={filterActivity} onPress={handlePressButton} />
-            <SearchInput flex value={search} onChangeText={setSearch} />
+            <SearchInput 
+              flex 
+              value={search} 
+              onChangeText={setSearch} 
+              placeholder="Nome da sala"
+            />
           </SearchFilterContainer>
 
           {

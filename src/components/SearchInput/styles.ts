@@ -12,7 +12,6 @@ export const InputContainer = styled.View<SeachInputProps>`
 `;
 
 export const Input = styled.TextInput.attrs(({ theme }) => ({
-  placeholder: "Nome da sala",
   placeholderTextColor: theme.COLORS.BLACK.TRANSPARENCE_30
 }))`
   ${({ theme }) => css`

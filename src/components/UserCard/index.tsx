@@ -4,14 +4,29 @@ import UserAdminIcon from "@assets/user-admin.svg";
 import UserStaffIcon from "@assets/profile.svg";
 
 import { useTheme } from "styled-components/native";
+import { useEffect, useState } from "react";
 
-export type UserCardProps = {
+type UserCardProps = {
   userName: string;
-  userType: "Administrador" | "Funcionario";
+  isAdmin: boolean;
 }
 
-export function UserCard({ userName, userType }: UserCardProps) {
+export function UserCard({ userName, isAdmin }: UserCardProps) {
+  const [userTypeName, setUserTypeName] = useState<"Administrador" | "Colaborador">();
+
   const theme = useTheme();
+
+  function showUserTypeName() {
+    if (isAdmin) {
+      setUserTypeName("Administrador")
+    } else {
+      setUserTypeName("Colaborador")
+    }
+  }
+
+  useEffect(() => {
+    showUserTypeName();
+  }, []);
 
   return (
     <CardContainer>
@@ -21,12 +36,12 @@ export function UserCard({ userName, userType }: UserCardProps) {
         </UserNameText>
 
         <UserTypeText>
-          {userType}
+          {userTypeName}
         </UserTypeText>
       </UserInfoContainer>
 
       {
-        userType === "Administrador" ?
+        isAdmin ?
           <UserAdminIcon />
         :
           <UserStaffIcon fill={theme.COLORS.BLUE} />
