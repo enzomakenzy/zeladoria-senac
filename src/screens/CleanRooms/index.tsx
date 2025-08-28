@@ -13,6 +13,7 @@ import Toast from "react-native-toast-message";
 import { api } from "@services/api";
 import { AppError } from "@utils/AppError";
 import { CleanRoomDTO } from "@dtos/CleanRoomDTO";
+import { transformUtcToParseISO } from "@utils/transformUtcToParseISO";
 
 export function CleanRooms() {
   const [cleanRoomsList, setCleanRoomsList] = useState<CleanRoomDTO[]>([] as CleanRoomDTO[]);
@@ -69,7 +70,7 @@ export function CleanRooms() {
             
             <ModalInfoText>
               <ModalCategoryText>Data e hora da limpeza: </ModalCategoryText>
-              {cleanRoom.data_hora_limpeza}
+              {transformUtcToParseISO(cleanRoom.data_hora_limpeza)}
             </ModalInfoText>
 
             {

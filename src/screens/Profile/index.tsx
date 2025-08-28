@@ -171,7 +171,7 @@ export function Profile() {
               source={ImageProfile}
               style={{ width: 100, height: 100 }}
             />
-            <UserNameText>Enzo Makenzy de Queiroz Bezerra</UserNameText>
+            <UserNameText>{user.username}</UserNameText>
           </ImgNameContainer>
 
           {

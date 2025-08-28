@@ -4,13 +4,13 @@ import { Header } from "@components/Header";
 import { FormInput } from "@components/FormInput";
 import { CustomModal } from "@components/CustomModal";
 import { LargeButton } from "@components/LargeButton";
+import { AdminButton } from "@components/AdminButton";
 
 import { useEffect, useState } from "react";
 
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AdminButton } from "@components/AdminButton";
 
 import { api } from "@services/api";
 import { AppError } from "@utils/AppError";
@@ -18,9 +18,12 @@ import Toast from "react-native-toast-message";
 
 import { HomeStackNavigationProps, HomeStackProps } from "@routes/stacks/home-stack.routes";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
+
 import { RoomDTO } from "@dtos/RoomDTO";
 import { useAuth } from "@hooks/useAuth";
-import { useNavigation } from "@react-navigation/native";
+
+import { transformUtcToParseISO } from "@utils/transformUtcToParseISO";
 
 type RoomDetailsScreenProps = NativeStackScreenProps<HomeStackProps, "roomDetails">;
 
@@ -44,6 +47,8 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
 
   const { id } = route.params;
 
+
+
   async function fetchDetailRoom() {
     try {
       const { data } = await api.get(`/salas/${id}/`);
@@ -66,7 +71,6 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
       })
     }
   }
-
   
   async function handleSetRoomClean({ observations }: CleanRoomFormData) {
     try {
@@ -169,7 +173,7 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
 
           <InfoRoomText>
             <InfoRoomText textStyle="medium">Última limpeza: </InfoRoomText>
-            {room.ultima_limpeza_data_hora}
+            {transformUtcToParseISO(room.ultima_limpeza_data_hora)}
           </InfoRoomText>
 
           <InfoRoomText>
