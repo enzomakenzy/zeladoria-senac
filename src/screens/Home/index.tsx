@@ -7,12 +7,12 @@ import { Header } from "@components/Header";
 import { SearchInput } from "@components/SearchInput";
 import { RoomCardHome } from "@components/RoomCardHome";
 import { FilterButton } from "@components/FilterButton";
+import { AdminButton } from "@components/AdminButton";
 
 import { useNavigation } from "@react-navigation/native";
 import { HomeStackNavigationProps } from "@routes/stacks/home-stack.routes";
-import { AdminButton } from "@components/AdminButton";
-import { useAuth } from "@hooks/useAuth";
 
+import { useAuth } from "@hooks/useAuth";
 import { api } from "@services/api";
 import { RoomDTO } from "@dtos/RoomDTO";
 

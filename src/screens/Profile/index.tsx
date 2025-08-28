@@ -16,6 +16,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigation } from "@react-navigation/native";
 import { ProfileStackNavigationProps } from "@routes/stacks/profile-stack.routes";
 import { useAuth } from "@hooks/useAuth";
+import { AppError } from "@utils/AppError";
+import Toast from "react-native-toast-message";
 
 const changePasswordFormSchema = z.object({
   currentPassword: z
@@ -45,7 +47,24 @@ export function Profile() {
   });
 
   function handleChangePassword({ currentPassword, newPassword, confirmNewPassword }: ChangePasswordFormData) {
-    console.log({ currentPassword, newPassword, confirmNewPassword });
+    try {
+      
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const errorMessage = isAppError ? error.message : "Não foi possível resgatar as salas";
+
+      Toast.show({
+        type: "error",
+        text1: "Erro",
+        text2: errorMessage,
+        text1Style: {
+          fontSize: 18
+        },
+        text2Style: {
+          fontSize: 16
+        }
+      });
+    }
     setModalVisible(false);
     reset();
   }
@@ -135,46 +154,41 @@ export function Profile() {
             <UserNameText>Enzo Makenzy de Queiroz Bezerra</UserNameText>
           </ImgNameContainer>
 
-          <InputInfoContainer>
+          {
+            user.email &&
             <FormInput 
               editable={false} 
-              inputName="Email (opcional)" 
-              value="enzo@email.com" 
+              inputName="Email" 
+              value={user.email} 
             />
-
-            <FormInput 
-              editable={false} 
-              inputName="Senha" 
-              value="*********" 
-            />
-          </InputInfoContainer>
+          }
 
           <LargeButton 
             textButton="Trocar senha"  
             onPress={() => setModalVisible(true)} 
+            style={{ marginTop: 20 }}
           />
-
 
           {
             user.is_superuser &&
             <>
-            <Line />
-            
-            <ButtonsContainer>
-              <LargeButton 
-                textButton="Criar novo usuário" 
-                primary="orange"
-                onPress={() => navigation.navigate("createUser")}
-                style={{ width: "48%" }} 
-              />
+              <Line />
               
-              <LargeButton 
-                textButton="Listar usuários" 
-                primary="orange"
-                onPress={() => navigation.navigate("usersList")}
-                style={{ width: "48%" }} 
-              />
-            </ButtonsContainer>
+              <ButtonsContainer>
+                <LargeButton 
+                  textButton="Criar novo usuário" 
+                  primary="orange"
+                  onPress={() => navigation.navigate("createUser")}
+                  style={{ width: "48%" }} 
+                />
+                
+                <LargeButton 
+                  textButton="Listar usuários" 
+                  primary="orange"
+                  onPress={() => navigation.navigate("usersList")}
+                  style={{ width: "48%" }} 
+                />
+              </ButtonsContainer>
             </>
           }
         </ContentContainer>
