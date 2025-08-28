@@ -67,6 +67,10 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
     }
   }
 
+  useEffect(() => {
+    fetchDetailRoom();
+  }, [room]);
+
   async function handleSetRoomClean({ observations }: CleanRoomFormData) {
     try {
       await api.post(`/salas/${id}/marcar_como_limpa/`, {
@@ -182,18 +186,13 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
               {room.descricao}
             </InfoRoomText>
           }
-
-          {/* <InfoRoomText>
-            <InfoRoomText textStyle="medium">Observação da limpeza: </InfoRoomText>
-             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an.
-          </InfoRoomText> */}
         </InfoRoomContainer>
 
         { room.status_limpeza === "Limpeza Pendente" &&
           <LargeButton textButton="Marcar sala como limpa" onPress={() => setModalVisible(true)} />
         }
 
-        <AdminButton name="Editar sala" screen="editRoom" icon="edit" /> 
+        <AdminButton name="Editar sala" screen="editRoom" icon="edit" roomId={room as RoomDTO} /> 
       </Main>
     </Container>
   )

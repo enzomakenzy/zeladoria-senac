@@ -1,3 +1,4 @@
+import { RoomDTO } from "@dtos/RoomDTO";
 import { createNativeStackNavigator, NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { CreateRoom } from "@screens/CreateRoom";
@@ -11,7 +12,9 @@ export type HomeStackProps = {
     id: number;
   };
   createRoom: undefined;
-  editRoom: undefined;
+  editRoom: {
+    room: RoomDTO;
+  }
 }
 
 export type HomeStackNavigationProps = NativeStackNavigationProp<HomeStackProps>; 

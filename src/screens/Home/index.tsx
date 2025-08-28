@@ -68,7 +68,7 @@ export function Home() {
 
   useEffect(() => {
     fetchRooms();
-  }, [])
+  }, [rooms]);
 
   return (
     <Container>

@@ -139,13 +139,13 @@ export function Profile() {
             <FormInput 
               editable={false} 
               inputName="Email (opcional)" 
-              inputInfo="enzo@email.com" 
+              value="enzo@email.com" 
             />
 
             <FormInput 
               editable={false} 
               inputName="Senha" 
-              inputInfo="*********" 
+              value="*********" 
             />
           </InputInfoContainer>
 

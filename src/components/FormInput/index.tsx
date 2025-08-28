@@ -5,11 +5,10 @@ import { InputFormContainer, InputNameText, Input, ErrorInputText, InputIconCont
 type Props = TextInputProps & {
   inputName: string;
   errorMessage?: string;
-  inputInfo?: string;
   icon?: "user" | "lock";
 }
 
-export function FormInput({ inputName, inputInfo, errorMessage, icon, ...rest }: Props) {
+export function FormInput({ inputName, errorMessage, icon, ...rest }: Props) {
   const isInvalid = !!errorMessage;
 
   return (
@@ -19,14 +18,12 @@ export function FormInput({ inputName, inputInfo, errorMessage, icon, ...rest }:
       <InputIconContainer error={isInvalid}>
         {icon === "user" && <StyledUserIcon error={isInvalid} />}
         {icon === "lock" && <StyledLockIcon error={isInvalid} />}
-      
+
         <Input 
           {...rest}
           error={isInvalid}
-          value={inputInfo} 
         />
       </InputIconContainer>
-
 
       { 
         isInvalid &&
