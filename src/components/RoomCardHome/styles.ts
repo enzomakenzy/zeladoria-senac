@@ -16,7 +16,9 @@ export const CardContainer = styled.TouchableOpacity.attrs({
   margin-bottom: 14px;
 `;
 
-export const InfoRoomContainer = styled.View``;
+export const InfoRoomContainer = styled.View`
+  max-width: 50%;
+`;
 
 export const RoomName = styled.Text`
   ${({ theme }) => css`
