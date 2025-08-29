@@ -25,6 +25,7 @@ import { useAuth } from "@hooks/useAuth";
 
 import { transformUtcToParseISO } from "@utils/transformUtcToParseISO";
 import { useFocusScreen } from "@hooks/useFocusScreen";
+import { Loading } from "@components/Loading";
 
 type RoomDetailsScreenProps = NativeStackScreenProps<HomeStackProps, "roomDetails">;
 
@@ -35,6 +36,7 @@ const cleanRoomFormSchema = z.object({
 type CleanRoomFormData = z.infer<typeof cleanRoomFormSchema>;
 
 export function RoomDetails({ route }: RoomDetailsScreenProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [room, setRoom] = useState<RoomDTO>({} as RoomDTO);
 
@@ -50,6 +52,7 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
 
   async function fetchDetailRoom() {
     try {
+      setIsLoading(true);
       const { data } = await api.get(`/salas/${id}/`);
 
       setRoom(data)
@@ -68,6 +71,8 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
           fontSize: 16
         }
       })
+    } finally {
+      setIsLoading(false);
     }
   }
   
@@ -149,52 +154,57 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
         </ScreenTitle>
 
         <Line />
+        { isLoading ? (
+          <Loading />
+        )
+        :
+        <>    
+          <RoomNameText>
+            {room.nome_numero}
+          </RoomNameText>
 
-        <RoomNameText>
-          {room.nome_numero}
-        </RoomNameText>
-
-        <InfoRoomContainer>
-          <InfoRoomText>
-            <InfoRoomText textStyle="medium">Capacidade: </InfoRoomText>
-            {room.capacidade}
-          </InfoRoomText>
-
-          <InfoRoomText>
-            <InfoRoomText textStyle="medium">Status da limpeza: </InfoRoomText>
-            {room.status_limpeza}
-          </InfoRoomText>
-
-          <InfoRoomText>
-            <InfoRoomText textStyle="medium">Localização: </InfoRoomText>
-            {room.localizacao}
-          </InfoRoomText>
-
-          <InfoRoomText>
-            <InfoRoomText textStyle="medium">Última limpeza: </InfoRoomText>
-            {transformUtcToParseISO(room.ultima_limpeza_data_hora)}
-          </InfoRoomText>
-
-          <InfoRoomText>
-            <InfoRoomText textStyle="medium">Último funcionário a limpar: </InfoRoomText>
-            {room.ultima_limpeza_funcionario}
-          </InfoRoomText>
-
-          { room.descricao &&
+          <InfoRoomContainer>
             <InfoRoomText>
-              <InfoRoomText textStyle="medium">Descrição: </InfoRoomText>
-              {room.descricao}
+              <InfoRoomText textStyle="medium">Capacidade: </InfoRoomText>
+              {room.capacidade}
             </InfoRoomText>
+
+            <InfoRoomText>
+              <InfoRoomText textStyle="medium">Status da limpeza: </InfoRoomText>
+              {room.status_limpeza}
+            </InfoRoomText>
+
+            <InfoRoomText>
+              <InfoRoomText textStyle="medium">Localização: </InfoRoomText>
+              {room.localizacao}
+            </InfoRoomText>
+
+            <InfoRoomText>
+              <InfoRoomText textStyle="medium">Última limpeza: </InfoRoomText>
+              {transformUtcToParseISO(room.ultima_limpeza_data_hora)}
+            </InfoRoomText>
+
+            <InfoRoomText>
+              <InfoRoomText textStyle="medium">Último funcionário a limpar: </InfoRoomText>
+              {room.ultima_limpeza_funcionario}
+            </InfoRoomText>
+
+            { room.descricao &&
+              <InfoRoomText>
+                <InfoRoomText textStyle="medium">Descrição: </InfoRoomText>
+                {room.descricao}
+              </InfoRoomText>
+            }
+          </InfoRoomContainer>
+
+          { room.status_limpeza === "Limpeza Pendente" &&
+            <LargeButton textButton="Marcar sala como limpa" onPress={() => setModalVisible(true)} />
           }
-        </InfoRoomContainer>
 
-        { room.status_limpeza === "Limpeza Pendente" &&
-          <LargeButton textButton="Marcar sala como limpa" onPress={() => setModalVisible(true)} />
-        }
-
-        {
-          user.is_superuser &&
-          <AdminButton name="Editar sala" screen="editRoom" icon="edit" roomId={room as RoomDTO} /> 
+          { user.is_superuser &&
+            <AdminButton name="Editar sala" screen="editRoom" icon="edit" roomId={room as RoomDTO} /> 
+          }
+        </>
         }
       </Main>
     </Container>

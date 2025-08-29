@@ -20,15 +20,16 @@ import { AppError } from "@utils/AppError";
 
 import Toast from "react-native-toast-message";
 import { useFocusScreen } from "@hooks/useFocusScreen";
+import { Loading } from "@components/Loading";
 
 export function Home() {
   const { user } = useAuth();
 
   const navigation = useNavigation<HomeStackNavigationProps>();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [rooms, setRooms] = useState<RoomDTO[]>([] as RoomDTO[]);
   const [search, setSearch] = useState("");
-
   const [filterActivity, setFilterActivity] = useState(false);
   const [cleanFilterActivity, setCleanFilterActivity] = useState(false);
   const [pendingCleaningFilterActivity, setPendingCleaningFilterActivity] = useState(false);
@@ -64,10 +65,9 @@ export function Home() {
     setCleanFilterActivity(false);
   }
 
-
-
   async function fetchRooms() {
     try {
+      setIsLoading(true);
       const { data } = await api.get("/salas/");
 
       setRooms(data) 
@@ -88,6 +88,8 @@ export function Home() {
           }
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -126,14 +128,14 @@ export function Home() {
                 showsHorizontalScrollIndicator={false}
               >
                 <FilterButton 
-                  name="Limpas" 
+                  name="Limpa" 
                   isActive={cleanFilterActivity}
                   onPress={handlePressFilterCleanButton}
                   style={{ marginRight: 10 }}
                 />
 
                 <FilterButton 
-                  name="Limpeza pendente" 
+                  name="Limpeza Pendente" 
                   isActive={pendingCleaningFilterActivity}
                   onPress={handlePressFilterPendingCleaningButton}
                 />
@@ -143,20 +145,25 @@ export function Home() {
 
         </OptionsRoomsContainer>
 
-        <FlatList 
-          data={filteredRooms}
-          keyExtractor={(item) => item.id.toString()}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <RoomCardHome 
-              roomName={item.nome_numero} 
-              roomCapacity={item.capacidade} 
-              roomLocation={item.localizacao} 
-              roomStatus={item.status_limpeza} 
-              onPress={() => handleGoToDetailsRoom(item.id)}
-            />
-          )}
-        />
+        { isLoading ? (
+          <Loading />
+        )
+        :
+          <FlatList 
+            data={filteredRooms}
+            keyExtractor={(item) => item.id.toString()}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <RoomCardHome 
+                roomName={item.nome_numero} 
+                roomCapacity={item.capacidade} 
+                roomLocation={item.localizacao} 
+                roomStatus={item.status_limpeza} 
+                onPress={() => handleGoToDetailsRoom(item.id)}
+              />
+            )}
+          />
+        }
 
         {
           user.is_superuser &&

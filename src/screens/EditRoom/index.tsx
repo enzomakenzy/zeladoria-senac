@@ -153,7 +153,7 @@ export function EditRoom({ route }: EditRoomScreenProps) {
             </ModalCreateRoomTitle>
 
             <ModalCreateRoomDescription>
-              Deseja mesmo apagar a sala "nome da sala"?
+              Deseja mesmo apagar a sala {room.nome_numero}?
             </ModalCreateRoomDescription>
 
             <ModalContentContainer>

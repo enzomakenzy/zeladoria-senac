@@ -15,8 +15,10 @@ import { AppError } from "@utils/AppError";
 import { CleanRoomDTO } from "@dtos/CleanRoomDTO";
 import { transformUtcToParseISO } from "@utils/transformUtcToParseISO";
 import { useFocusScreen } from "@hooks/useFocusScreen";
+import { Loading } from "@components/Loading";
 
 export function CleanRooms() {
+  const [isLoading, setIsLoading] = useState(false);
   const [cleanRoomsList, setCleanRoomsList] = useState<CleanRoomDTO[]>([] as CleanRoomDTO[]);
   const [cleanRoom, setCleanRoom] = useState<CleanRoomDTO>({} as CleanRoomDTO);
   const [modalVisible, setModalVisible] = useState(false);
@@ -28,6 +30,7 @@ export function CleanRooms() {
 
   async function fetchListCleanRooms() {
     try {
+      setIsLoading(true);
       const { data } = await api.get("/limpezas/");
     
       setCleanRoomsList(data)
@@ -46,6 +49,8 @@ export function CleanRooms() {
           fontSize: 16
         }
       });
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -98,20 +103,25 @@ export function CleanRooms() {
           onChangeText={setSearch} 
           placeholder="Nome da sala"
         />
+        { isLoading ? (
+          <Loading />
+        )
+        :
+          <FlatList 
+            data={filteredRooms}
+            keyExtractor={item => item.id.toString()}
+            showsVerticalScrollIndicator={false}
+            style={{ marginTop: 20 }}
+            renderItem={({ item }) => (
+              <CleanRoomCard 
+                roomName={item.sala_nome} 
+                cleanerBy={item.funcionario_responsavel.username} 
+                onPress={() => handleShowDetails(item)}
+              />
+            )}
+          />
+        }
         
-        <FlatList 
-          data={filteredRooms}
-          keyExtractor={item => item.id.toString()}
-          showsVerticalScrollIndicator={false}
-          style={{ marginTop: 20 }}
-          renderItem={({ item }) => (
-            <CleanRoomCard 
-              roomName={item.sala_nome} 
-              cleanerBy={item.funcionario_responsavel.username} 
-              onPress={() => handleShowDetails(item)}
-            />
-          )}
-        />
       </Main>
     </Container>
   )

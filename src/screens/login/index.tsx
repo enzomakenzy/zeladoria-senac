@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@hooks/useAuth";
 import { AppError } from "@utils/AppError";
 import Toast from "react-native-toast-message";
+import { useState } from "react";
 
 const signInFormSchema = z.object({
   username: z
@@ -25,6 +26,7 @@ const signInFormSchema = z.object({
 type SignInFormData = z.infer<typeof signInFormSchema>;
 
 export function Login() {
+  const [isLoading, setIsLoading] = useState(false);
   const { control, handleSubmit, formState: { errors } } = useForm<SignInFormData>({
     resolver: zodResolver(signInFormSchema)
   });
@@ -33,6 +35,7 @@ export function Login() {
 
   async function handleSignIn({ username, password }: SignInFormData) {
     try {
+      setIsLoading(true)
       await signIn(username, password);
     } catch (error) {
       const isAppError = error instanceof AppError;
@@ -50,7 +53,9 @@ export function Login() {
           fontSize: 16
         }
       })
-    } 
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -111,6 +116,7 @@ export function Login() {
         <LargeButton 
           textButton="Entrar" 
           onPress={handleSubmit(handleSignIn)}
+          isLoading={isLoading}
         />
       </Container>
     </KeyboardAvoidingView>

@@ -26,9 +26,11 @@ const createUserFormSchema = z.object({
   email: z
     .email("Formato do e-mail inválido"),
   password: z
-    .string("Campo vazio"),
+    .string("Campo vazio")
+    .min(8, { error: "A senha deve ter no mínimo 8 caracteres" }),
   confirmPassword: z
-    .string("Campo vazio"),
+    .string("Campo vazio")
+    .min(8, { error: "A senha deve ter no mínimo 8 caracteres" }),
   isAdmin: z
     .boolean()
 }).refine(({ password, confirmPassword }) => password === confirmPassword, {

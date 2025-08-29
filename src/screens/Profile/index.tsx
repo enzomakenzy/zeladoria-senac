@@ -111,6 +111,7 @@ export function Profile() {
                 onChangeText={onChange}
                 errorMessage={errors.currentPassword?.message}
                 autoCapitalize="none"
+                secureTextEntry
               />
             ))}
           />
@@ -127,6 +128,7 @@ export function Profile() {
                 onChangeText={onChange}
                 errorMessage={errors.newPassword?.message}
                 autoCapitalize="none"
+                secureTextEntry
               />
             ))}
           />
@@ -143,6 +145,7 @@ export function Profile() {
                 onChangeText={onChange}
                 errorMessage={errors.confirmNewPassword?.message}
                 autoCapitalize="none"
+                secureTextEntry
               />
             ))}
           />
