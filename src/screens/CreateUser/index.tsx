@@ -9,11 +9,16 @@ import { CustomModal } from "@components/CustomModal";
 
 import z from "zod";
 import { Controller, useForm } from "react-hook-form";
-import { useNavigation } from "@react-navigation/native";
-import { ProfileStackNavigationProps } from "@routes/stacks/profile-stack.routes";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useNavigation } from "@react-navigation/native";
+import { ProfileStackNavigationProps } from "@routes/stacks/profile-stack.routes";
+
 import Checked from "@assets/checked.svg";
+
+import { AppError } from "@utils/AppError";
+import Toast from "react-native-toast-message";
+import { api } from "@services/api";
 
 const createUserFormSchema = z.object({
   name: z
@@ -21,9 +26,11 @@ const createUserFormSchema = z.object({
   email: z
     .email("Formato do e-mail inválido"),
   password: z
-    .string("Campo vazio"),
+    .string("Campo vazio")
+    .min(8, { error: "A senha deve ter no mínimo 8 caracteres" }),
   confirmPassword: z
-    .string("Campo vazio"),
+    .string("Campo vazio")
+    .min(8, { error: "A senha deve ter no mínimo 8 caracteres" }),
   isAdmin: z
     .boolean()
 }).refine(({ password, confirmPassword }) => password === confirmPassword, {
@@ -45,14 +52,42 @@ export function CreateUser() {
     }
   });
 
-  function handleCreateUser({ name, email, password, confirmPassword, isAdmin }: CreateUserFormData) {
-    setModalVisible(true);
-    console.log({ name, email, password, confirmPassword, isAdmin });
+  async function handleCreateUser({ name, email, password, confirmPassword, isAdmin }: CreateUserFormData) {
+    try {
+      const { data } = await api.post("/accounts/create_user/", {
+        username: name,
+        password: password,
+        confirm_password: confirmPassword,
+        email: email,
+        is_staff: isAdmin,
+        is_superuser: isAdmin,
+      });
+      
+      setModalVisible(true);
+      console.log(data);
 
-    setTimeout(() => {
+      setTimeout(() => {
+        setModalVisible(false);
+        navigation.goBack();
+      }, 1500)
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const errorMessage = isAppError ? error.message : "Não foi possível resgatar as salas";
+      
       setModalVisible(false);
-      navigation.goBack();
-    }, 1500)
+
+      Toast.show({
+        type: "error",
+        text1: "Erro",
+        text2: errorMessage,
+        text1Style: {
+          fontSize: 18
+        },
+        text2Style: {
+          fontSize: 16
+        }
+      });
+    }
   }
 
   return (
@@ -101,6 +136,7 @@ export function CreateUser() {
                 value={value}
                 onChangeText={onChange}
                 errorMessage={errors.email?.message}
+                autoCapitalize="none"
               />
             ))}
           />
@@ -116,6 +152,8 @@ export function CreateUser() {
                 value={value}
                 onChangeText={onChange}
                 errorMessage={errors.password?.message}
+                autoCapitalize="none"
+                secureTextEntry
               />
             ))}
           />
@@ -131,6 +169,8 @@ export function CreateUser() {
                 value={value}
                 onChangeText={onChange}
                 errorMessage={errors.confirmPassword?.message}
+                autoCapitalize="none"
+                secureTextEntry
               />
             ))}
           />

@@ -4,11 +4,7 @@ import { HeaderContainer, HiText, NavContainer, NotificationButton, Notification
 
 import SenacLogoImage from "@assets/senac-logo.png";
 
-type Props = {
-  name?: string;
-}
-
-export function Header({ name }: Props) {
+export function Header() {
   return (
     <HeaderContainer>
       <Image 
@@ -18,18 +14,6 @@ export function Header({ name }: Props) {
       />
 
       <NavContainer>
-        {
-          name && 
-          <TextContainer>
-            <HiText>
-              Olá,
-            </HiText>
-
-            <StaffName>
-              {name}!
-            </StaffName>
-          </TextContainer>
-        }
         
         <NotificationButton>
           <NotificationIcon />

@@ -14,7 +14,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Checked from "@assets/checked.svg";
 import { useNavigation } from "@react-navigation/native";
 
-import { HomeStackNavigationProps } from "@routes/stacks/home-stack.routes";
+import { HomeStackNavigationProps, HomeStackProps } from "@routes/stacks/home-stack.routes";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { AppError } from "@utils/AppError";
+import Toast from "react-native-toast-message";
+import { api } from "@services/api";
+
+type EditRoomScreenProps = NativeStackScreenProps<HomeStackProps, "editRoom">
 
 const editRoomFormSchema = z.object({
   roomName: z
@@ -29,40 +35,93 @@ const editRoomFormSchema = z.object({
 
 type editRoomFormData = z.infer<typeof editRoomFormSchema>;
 
-export function EditRoom() {
+export function EditRoom({ route }: EditRoomScreenProps) {
   const [modalVisibleEdit, setModalVisibleEdit] = useState(false);
   const [modalVisibleDelete, setModalVisibleDelete] = useState(false);
   const [deleteRoom, setDeleteRoom] = useState(false);
   
   const navigation = useNavigation<HomeStackNavigationProps>();
+  const { room } = route.params;
 
-  const { control, handleSubmit, formState: { errors }, reset } = useForm<editRoomFormData>({
-    resolver: zodResolver(editRoomFormSchema)
-  })
+  const { control, handleSubmit, formState: { errors } } = useForm<editRoomFormData>({
+    resolver: zodResolver(editRoomFormSchema),
+    defaultValues: {
+      roomName: room.nome_numero,
+      capacity: room.capacidade.toString(),
+      location: room.localizacao,
+      description: room.descricao
+    }
+  });
 
-  function handleEditNewRoom({ roomName, capacity, location, description }: editRoomFormData) {
-    setModalVisibleEdit(true);
-    console.log({ roomName, capacity, location, description });
+  async function handleEditNewRoom({ roomName, capacity, location, description }: editRoomFormData) {
+    try {
+      setModalVisibleEdit(true);
+      
+      const response = await api.put(`/salas/${room.id}/`, {
+        nome_numero: roomName,
+        capacidade: capacity,
+        descricao: description,
+        localizacao: location
+      });
+      console.log(response.data);
 
-    setTimeout(() => {
-      setModalVisibleEdit(false);
-      navigation.goBack();
-    }, 2000)
+      setTimeout(() => {
+        setModalVisibleEdit(false);
+        navigation.goBack();
+      }, 2000);
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const errorMessage = isAppError ? error.message : "Não foi possível marcar a sala como limpa";
+
+      Toast.show({
+        type: "error",
+        text1: "Erro",
+        text2: errorMessage,
+        text1Style: {
+          fontSize: 18
+        },
+        text2Style: {
+          fontSize: 16
+        }
+      })
+    } 
   }
 
-  function handleDeleteRoom() {
-    console.log("Sala apagada");
-    setDeleteRoom(true);
+  async function handleDeleteRoom() {
+    try {
+      setDeleteRoom(true);
+      
+      setTimeout(async () => {
+        setModalVisibleDelete(false);
+        
+        navigation.reset({
+          index: 0,
+          routes: [
+            { name: "home" }
+          ]
+        })
 
-    setTimeout(() => {
+        await api.delete(`/salas/${room.id}/`);
+      }, 1500);
+
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const errorMessage = isAppError ? error.message : "Não foi possível marcar a sala como limpa";
+      
       setModalVisibleDelete(false);
-      navigation.reset({
-        index: 0,
-        routes: [
-          { name: "home" }
-        ]
+
+      Toast.show({
+        type: "error",
+        text1: "Erro",
+        text2: errorMessage,
+        text1Style: {
+          fontSize: 18
+        },
+        text2Style: {
+          fontSize: 16
+        }
       })
-    }, 1500);
+    }
   }
 
   return (
@@ -94,7 +153,7 @@ export function EditRoom() {
             </ModalCreateRoomTitle>
 
             <ModalCreateRoomDescription>
-              Deseja mesmo apagar a sala "nome da sala"?
+              Deseja mesmo apagar a sala {room.nome_numero}?
             </ModalCreateRoomDescription>
 
             <ModalContentContainer>
@@ -140,8 +199,8 @@ export function EditRoom() {
             name="capacity"
             render={(({ field: {onChange, value} }) => (
               <FormInput 
-                inputName="Nome da sala" 
-                placeholder="Digite o nome da sala"
+                inputName="Capacidade" 
+                placeholder="Digite a capacidade da sala"
                 value={value}
                 onChangeText={onChange}
                 errorMessage={errors.capacity?.message}
@@ -154,8 +213,8 @@ export function EditRoom() {
             name="location"
             render={(({ field: {onChange, value} }) => (
               <FormInput 
-                inputName="Nome da sala" 
-                placeholder="Digite o nome da sala"
+                inputName="Localização" 
+                placeholder="Digite onde fica a sala"
                 value={value}
                 onChangeText={onChange}
                 errorMessage={errors.location?.message}
@@ -168,8 +227,8 @@ export function EditRoom() {
             name="description"
             render={(({ field: {onChange, value} }) => (
               <FormInput 
-                inputName="Capacidade" 
-                placeholder="Digite a capacidade da sala"
+                inputName="Descrição" 
+                placeholder="Descreva a sala"
                 value={value}
                 onChangeText={onChange}
                 errorMessage={errors.description?.message}

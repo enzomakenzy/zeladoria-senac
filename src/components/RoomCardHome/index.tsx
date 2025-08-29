@@ -4,16 +4,16 @@ import { TouchableOpacityProps } from "react-native";
 
 type Props = TouchableOpacityProps & {
   roomName: string;
-  roomCapacity: string;
+  roomCapacity: number;
   roomLocation: string;
-  roomStatus: boolean;
+  roomStatus: "Limpa" | "Limpeza Pendente";
 }
 
-export function RoomCardHome({ roomName, roomCapacity, roomLocation, roomStatus, ...rest }: Props) {
+export function RoomCardHome({ id, roomName, roomCapacity, roomLocation, roomStatus, ...rest }: Props) {
   const [roomStatusName, setRoomStatusName] = useState<"Limpa" | "Limpeza Pendente">();
   
   useEffect(() => {
-    roomStatus ? setRoomStatusName("Limpa") : setRoomStatusName("Limpeza Pendente");
+    roomStatus == "Limpa" ? setRoomStatusName("Limpa") : setRoomStatusName("Limpeza Pendente");
   }, [roomStatus]);
 
   return (
@@ -21,7 +21,6 @@ export function RoomCardHome({ roomName, roomCapacity, roomLocation, roomStatus,
       <InfoRoomContainer>
         <RoomName>{roomName}</RoomName>
         <RoomInfo>Capacidade: {roomCapacity}</RoomInfo>
-        <RoomInfo>Localização: {roomLocation}</RoomInfo>
       </InfoRoomContainer>
       
       <StatusRoomContainer>

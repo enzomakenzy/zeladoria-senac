@@ -1,13 +1,14 @@
+import { TextInputProps } from "react-native";
 import { Input, InputContainer, SearchIcon } from "./styles";
 
-export type SeachInputProps = {
+type SeachInputProps = TextInputProps & {
   flex?: boolean
 }
 
-export function SearchInput({ flex }: SeachInputProps) {
+export function SearchInput({ flex, ...rest }: SeachInputProps) {
   return (
     <InputContainer flex={flex}>
-      <Input />
+      <Input {...rest} />
       <SearchIcon />
     </InputContainer>
   )

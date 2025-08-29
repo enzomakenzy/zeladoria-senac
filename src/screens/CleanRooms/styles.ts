@@ -2,10 +2,6 @@ import styled, { css } from "styled-components/native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
-type ColorCleanRoomProp = {
-  areGreen?: boolean;
-}
-
 export const Container = styled(SafeAreaView).attrs({
   edges: ["right", "left", "top"]
 })`
@@ -28,21 +24,6 @@ export const ScreenTitle = styled.Text`
   margin-bottom: 12px;
 `; 
 
-export const ModalContainer = styled.View`
-  flex: 1;
-  background-color: #00000079;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const ModalDetailsContainer = styled.View`
-  width: 90%;
-  padding: 10px;
-  background-color: ${({ theme }) => theme.COLORS.WHITE.TRANSPARENCE_100};
-  border-radius: 6px;
-  gap: 5px;
-`;
-
 export const ModalRoomNameTitle = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.FONTS.SEMI_BOLD};
@@ -54,6 +35,7 @@ export const ModalRoomNameTitle = styled.Text`
 
 export const ModalContentContainer = styled.View`
   gap: 5px;
+  margin-bottom: 10px;
 `;
 
 export const ModalCategoryText = styled.Text`
@@ -64,10 +46,10 @@ export const ModalCategoryText = styled.Text`
   font-size: 16px;
 `
 
-export const ModalInfoText = styled.Text<ColorCleanRoomProp>`
-  ${({ theme, areGreen }) => css`
-    font-family: ${areGreen ? theme.FONTS.MEDIUM : theme.FONTS.REGULAR};
-    color: ${areGreen ? theme.COLORS.GREEN : theme.COLORS.BLACK.TRANSPARENCE_100};
+export const ModalInfoText = styled.Text`
+  ${({ theme }) => css`
+    font-family: ${theme.FONTS.REGULAR};
+    color: ${theme.COLORS.BLACK.TRANSPARENCE_100};
   `}  
   font-size: 16px;
 `

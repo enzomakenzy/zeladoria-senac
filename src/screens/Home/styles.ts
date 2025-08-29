@@ -49,18 +49,8 @@ export const FilterText = styled.Text`
   margin-left: 10px;
 `;
 
-export const ListFilterContainer = styled.View`
-  flex-direction: row;
-  gap: 10px;
-`
-
 export const Line = styled.View`
   width: 100%;
   background-color: ${({ theme }) => theme.COLORS.BLACK.TRANSPARENCE_6};
   height: 1px;
-`;
-
-export const LocationFilterList = styled.FlatList`
-  flex-direction: row;
-  gap: 10px;
 `;

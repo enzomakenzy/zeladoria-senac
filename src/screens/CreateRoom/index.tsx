@@ -15,6 +15,9 @@ import Checked from "@assets/checked.svg";
 
 import { HomeStackNavigationProps } from "@routes/stacks/home-stack.routes";
 import { useNavigation } from "@react-navigation/native";
+import { AppError } from "@utils/AppError";
+import Toast from "react-native-toast-message";
+import { api } from "@services/api";
 
 const createNewRoomFormSchema = z.object({
   roomName: z
@@ -38,14 +41,39 @@ export function CreateRoom() {
     resolver: zodResolver(createNewRoomFormSchema)
   });
 
-  function handleCreateNewRoom({ roomName, capacity, location, description }: createNewRoomFormData) {
-    setModalVisible(true);
-    console.log({ roomName, capacity, location, description });
+  async function handleCreateNewRoom({ roomName, capacity, location, description }: createNewRoomFormData) {
+    try {
+      setModalVisible(true);
+      
+      const response = await api.post(`/salas/`, {
+        nome_numero: roomName,
+        capacidade: Number(capacity),
+        descricao: description,
+        localizacao: location
+      })
 
-    setTimeout(() => {
+      setTimeout(() => {
+        setModalVisible(false);
+        navigation.goBack();
+      }, 2000);
+      
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const errorMessage = isAppError ? error.message : "Não foi possível resgatar as salas";
+
+      Toast.show({
+        type: "error",
+        text1: "Erro",
+        text2: errorMessage,
+        text1Style: {
+          fontSize: 18
+        },
+        text2Style: {
+          fontSize: 16
+        }
+      })       
       setModalVisible(false);
-      navigation.goBack();
-    }, 2000)
+    } 
   }
 
   return (
@@ -85,11 +113,12 @@ export function CreateRoom() {
             name="capacity"
             render={(({ field: {onChange, value} }) => (
               <FormInput 
-                inputName="Nome da sala" 
-                placeholder="Digite o nome da sala"
+                inputName="Capacidade" 
+                placeholder="Digite a capacidade da sala"
                 value={value}
                 onChangeText={onChange}
                 errorMessage={errors.capacity?.message}
+                keyboardType="numeric"
               />
             ))}
           />
@@ -99,8 +128,8 @@ export function CreateRoom() {
             name="location"
             render={(({ field: {onChange, value} }) => (
               <FormInput 
-                inputName="Nome da sala" 
-                placeholder="Digite o nome da sala"
+                inputName="Localização" 
+                placeholder="Digite onde fica a sala"
                 value={value}
                 onChangeText={onChange}
                 errorMessage={errors.location?.message}
@@ -113,8 +142,8 @@ export function CreateRoom() {
             name="description"
             render={(({ field: {onChange, value} }) => (
               <FormInput 
-                inputName="Capacidade" 
-                placeholder="Digite a capacidade da sala"
+                inputName="Descrição" 
+                placeholder="Descreva a sala"
                 value={value}
                 onChangeText={onChange}
                 errorMessage={errors.description?.message}

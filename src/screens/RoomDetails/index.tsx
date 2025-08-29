@@ -4,13 +4,30 @@ import { Header } from "@components/Header";
 import { FormInput } from "@components/FormInput";
 import { CustomModal } from "@components/CustomModal";
 import { LargeButton } from "@components/LargeButton";
+import { AdminButton } from "@components/AdminButton";
 
 import { useState } from "react";
 
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AdminButton } from "@components/AdminButton";
+
+import { api } from "@services/api";
+import { AppError } from "@utils/AppError";
+import Toast from "react-native-toast-message";
+
+import { HomeStackNavigationProps, HomeStackProps } from "@routes/stacks/home-stack.routes";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useNavigation } from "@react-navigation/native";
+
+import { RoomDTO } from "@dtos/RoomDTO";
+import { useAuth } from "@hooks/useAuth";
+
+import { transformUtcToParseISO } from "@utils/transformUtcToParseISO";
+import { useFocusScreen } from "@hooks/useFocusScreen";
+import { Loading } from "@components/Loading";
+
+type RoomDetailsScreenProps = NativeStackScreenProps<HomeStackProps, "roomDetails">;
 
 const cleanRoomFormSchema = z.object({
   observations: z.string().optional()
@@ -18,17 +35,80 @@ const cleanRoomFormSchema = z.object({
 
 type CleanRoomFormData = z.infer<typeof cleanRoomFormSchema>;
 
-export function RoomDetails() {
+export function RoomDetails({ route }: RoomDetailsScreenProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [room, setRoom] = useState<RoomDTO>({} as RoomDTO);
+
+  const navigation = useNavigation<HomeStackNavigationProps>()
+
+  const { user } = useAuth();
 
   const { control, handleSubmit } = useForm<CleanRoomFormData>({
     resolver: zodResolver(cleanRoomFormSchema)
   });
 
-  function handleCleanRoom({ observations }: CleanRoomFormData) {
-    setModalVisible(false);
-    console.log({ observations });
+  const { id } = route.params;
+
+  async function fetchDetailRoom() {
+    try {
+      setIsLoading(true);
+      const { data } = await api.get(`/salas/${id}/`);
+
+      setRoom(data)
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const errorMessage = isAppError ? error.message : "Não foi possível visualizar a sala"
+
+      Toast.show({
+        type: "error",
+        text1: "Erro",
+        text2: errorMessage,
+        text1Style: {
+          fontSize: 18
+        },
+        text2Style: {
+          fontSize: 16
+        }
+      })
+    } finally {
+      setIsLoading(false);
+    }
   }
+  
+  async function handleSetRoomClean({ observations }: CleanRoomFormData) {
+    try {
+      await api.post(`/salas/${id}/marcar_como_limpa/`, {
+        observacoes: observations
+      });
+      
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "home" }]
+      })
+      
+      setModalVisible(false);
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const errorMessage = isAppError ? error.message : "Não foi possível marcar a sala como limpa";
+      
+      Toast.show({
+        type: "error",
+        text1: "Erro",
+        text2: errorMessage,
+        text1Style: {
+          fontSize: 18
+        },
+        text2Style: {
+          fontSize: 16
+        }
+      })
+    }
+  }
+  
+  useFocusScreen(() => {
+    fetchDetailRoom();
+  });
   
   return (
     <Container>
@@ -54,7 +134,7 @@ export function RoomDetails() {
         <ModalButtonsContainer>
           <LargeButton 
             textButton="Limpar" 
-            onPress={handleSubmit(handleCleanRoom)} 
+            onPress={handleSubmit(handleSetRoomClean)} 
           />
 
           <LargeButton 
@@ -66,7 +146,7 @@ export function RoomDetails() {
 
       </CustomModal>
 
-      <Header name="Enzo Makenzy" />
+      <Header />
 
       <Main>
         <ScreenTitle>
@@ -74,51 +154,58 @@ export function RoomDetails() {
         </ScreenTitle>
 
         <Line />
+        { isLoading ? (
+          <Loading />
+        )
+        :
+        <>    
+          <RoomNameText>
+            {room.nome_numero}
+          </RoomNameText>
 
-        <RoomNameText>
-          Laboratório 3
-        </RoomNameText>
+          <InfoRoomContainer>
+            <InfoRoomText>
+              <InfoRoomText textStyle="medium">Capacidade: </InfoRoomText>
+              {room.capacidade}
+            </InfoRoomText>
 
-        <InfoRoomContainer>
-          <InfoRoomText>
-            <InfoRoomText textStyle="medium">Capacidade: </InfoRoomText>
-            30
-          </InfoRoomText>
+            <InfoRoomText>
+              <InfoRoomText textStyle="medium">Status da limpeza: </InfoRoomText>
+              {room.status_limpeza}
+            </InfoRoomText>
 
-          <InfoRoomText>
-            <InfoRoomText textStyle="medium">Status da limpeza: </InfoRoomText>
-            30
-          </InfoRoomText>
+            <InfoRoomText>
+              <InfoRoomText textStyle="medium">Localização: </InfoRoomText>
+              {room.localizacao}
+            </InfoRoomText>
 
-          <InfoRoomText>
-            <InfoRoomText textStyle="medium">Localização: </InfoRoomText>
-            Bloco A
-          </InfoRoomText>
+            <InfoRoomText>
+              <InfoRoomText textStyle="medium">Última limpeza: </InfoRoomText>
+              {transformUtcToParseISO(room.ultima_limpeza_data_hora)}
+            </InfoRoomText>
 
-          <InfoRoomText>
-            <InfoRoomText textStyle="medium">Última limpeza: </InfoRoomText>
-            02/08/2025 às 12:00
-          </InfoRoomText>
+            <InfoRoomText>
+              <InfoRoomText textStyle="medium">Último funcionário a limpar: </InfoRoomText>
+              {room.ultima_limpeza_funcionario}
+            </InfoRoomText>
 
-          <InfoRoomText>
-            <InfoRoomText textStyle="medium">Último funcionário a limpar: </InfoRoomText>
-            Enzo Makenzy
-          </InfoRoomText>
+            { room.descricao &&
+              <InfoRoomText>
+                <InfoRoomText textStyle="medium">Descrição: </InfoRoomText>
+                {room.descricao}
+              </InfoRoomText>
+            }
+          </InfoRoomContainer>
 
-          <InfoRoomText>
-            <InfoRoomText textStyle="medium">Descrição: </InfoRoomText>
-             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an.
-          </InfoRoomText>
+          { room.status_limpeza === "Limpeza Pendente" &&
+            <LargeButton textButton="Marcar sala como limpa" onPress={() => setModalVisible(true)} />
+          }
 
-          <InfoRoomText>
-            <InfoRoomText textStyle="medium">Observação da limpeza: </InfoRoomText>
-             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an.
-          </InfoRoomText>
-        </InfoRoomContainer>
-
-        <LargeButton textButton="Marcar sala como limpa" onPress={() => setModalVisible(true)} />
-
-        <AdminButton name="Editar sala" screen="editRoom" icon="edit" /> 
+          { user.is_superuser &&
+            <AdminButton name="Editar sala" screen="editRoom" icon="edit" roomId={room as RoomDTO} /> 
+          }
+        </>
+        }
       </Main>
     </Container>
   )

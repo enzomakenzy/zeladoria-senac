@@ -1,51 +1,121 @@
 import { useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, ScrollView } from "react-native";
 
-import { Container, FiltersContainer, FilterText, Line, ListFilterContainer, LocationFilterList, Main, OptionsRoomsContainer, ScreenTitle, SearchFilterContainer } from "./styles";
+import { Container, FiltersContainer, FilterText, Main, OptionsRoomsContainer, ScreenTitle, SearchFilterContainer } from "./styles";
 
 import { Header } from "@components/Header";
 import { SearchInput } from "@components/SearchInput";
 import { RoomCardHome } from "@components/RoomCardHome";
 import { FilterButton } from "@components/FilterButton";
-
-import { allRoomsData } from "@utils/dataTest";
+import { AdminButton } from "@components/AdminButton";
 
 import { useNavigation } from "@react-navigation/native";
 import { HomeStackNavigationProps } from "@routes/stacks/home-stack.routes";
-import { AdminButton } from "@components/AdminButton";
+
 import { useAuth } from "@hooks/useAuth";
+import { api } from "@services/api";
+import { RoomDTO } from "@dtos/RoomDTO";
+
+import { AppError } from "@utils/AppError";
+
+import Toast from "react-native-toast-message";
+import { useFocusScreen } from "@hooks/useFocusScreen";
+import { Loading } from "@components/Loading";
 
 export function Home() {
   const { user } = useAuth();
 
-  const [rooms, setRooms] = useState(allRoomsData);
-  const [filterActivity, setFilterActivity] = useState(false);
-  const [locationList, setLocationList] = useState([
-    "Bloco A", "Bloco B", "Bloco C", "Bloco D", "Bloco E", "Bloco F", "Bloco G" 
-  ]);
-
   const navigation = useNavigation<HomeStackNavigationProps>();
 
-  function handleGoToDetailsRoom() {
-    navigation.navigate("roomDetails")
+  const [isLoading, setIsLoading] = useState(false);
+  const [rooms, setRooms] = useState<RoomDTO[]>([] as RoomDTO[]);
+  const [search, setSearch] = useState("");
+  const [filterActivity, setFilterActivity] = useState(false);
+  const [cleanFilterActivity, setCleanFilterActivity] = useState(false);
+  const [pendingCleaningFilterActivity, setPendingCleaningFilterActivity] = useState(false);
+  
+  function handleGoToDetailsRoom(id: number) {
+    navigation.navigate("roomDetails", { id: id });
   }
 
-  function handlePressButton() {
-    filterActivity ? setFilterActivity(false) : setFilterActivity(true);
-    console.log(filterActivity)
+  const filteredRooms = rooms.filter((room) => {
+    const matchName = room.nome_numero.toLowerCase().includes(search.toLowerCase());
+
+    const matchStatus =
+    (cleanFilterActivity && room.status_limpeza === "Limpa") ||
+    (pendingCleaningFilterActivity && room.status_limpeza === "Limpeza Pendente") ||
+    (!cleanFilterActivity && !pendingCleaningFilterActivity); 
+
+    return matchName && matchStatus;
+  });
+  
+  function handlePressFilterButton() {
+    setFilterActivity(prev => !prev);
+    setCleanFilterActivity(false);
+    setPendingCleaningFilterActivity(false);
   }
+  
+  function handlePressFilterCleanButton() {
+    setCleanFilterActivity(prev => !prev);
+    setPendingCleaningFilterActivity(false);
+  }
+
+  function handlePressFilterPendingCleaningButton() {
+    setPendingCleaningFilterActivity(prev => !prev);
+    setCleanFilterActivity(false);
+  }
+
+  async function fetchRooms() {
+    try {
+      setIsLoading(true);
+      const { data } = await api.get("/salas/");
+
+      setRooms(data) 
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const errorMessage = isAppError ? error.message : "Não foi possível resgatar as salas";
+
+      if (errorMessage !== "Token inválido.") {
+        Toast.show({
+          type: "error",
+          text1: "Erro",
+          text2: errorMessage,
+          text1Style: {
+            fontSize: 18
+          },
+          text2Style: {
+            fontSize: 16
+          }
+        });
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  useFocusScreen(() => {
+    fetchRooms();
+  });
 
   return (
     <Container>
-      <Header name={user.username} />
+      <Header />
       
       <Main>
         <ScreenTitle>Todas as salas</ScreenTitle>
         
         <OptionsRoomsContainer>
           <SearchFilterContainer>
-            <FilterButton isActive={filterActivity} onPress={handlePressButton} />
-            <SearchInput flex />
+            <FilterButton 
+              isActive={filterActivity} 
+              onPress={handlePressFilterButton} 
+            />
+            <SearchInput 
+              flex 
+              value={search} 
+              onChangeText={setSearch} 
+              placeholder="Nome da sala"
+            />
           </SearchFilterContainer>
 
           {
@@ -53,45 +123,52 @@ export function Home() {
             <FiltersContainer>
               <FilterText>Filtrar por: </FilterText>
 
-              <ListFilterContainer>
-                <FilterButton name="Campus/Bloco" />
-                <FilterButton name="Status" />
-                <FilterButton name="Últimas limpas" />
-              </ListFilterContainer>
-
-              <Line />
-
-              <LocationFilterList 
-                data={locationList}
-                keyExtractor={item => item as string}
-                renderItem={({ item }) => (
-                  <FilterButton name={item as string} />
-                )}
+              <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-              />
+              >
+                <FilterButton 
+                  name="Limpa" 
+                  isActive={cleanFilterActivity}
+                  onPress={handlePressFilterCleanButton}
+                  style={{ marginRight: 10 }}
+                />
+
+                <FilterButton 
+                  name="Limpeza Pendente" 
+                  isActive={pendingCleaningFilterActivity}
+                  onPress={handlePressFilterPendingCleaningButton}
+                />
+              </ScrollView>
             </FiltersContainer>
           }
 
         </OptionsRoomsContainer>
 
-        <FlatList 
-          data={rooms}
-          keyExtractor={item => item.roomName}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <RoomCardHome 
-              roomName={item.roomName} 
-              roomCapacity={item.roomCapaticy} 
-              roomLocation={item.roomLocation} 
-              roomStatus={item.roomStatus} 
-              onPress={handleGoToDetailsRoom}
-            />
-          )}
-        />
+        { isLoading ? (
+          <Loading />
+        )
+        :
+          <FlatList 
+            data={filteredRooms}
+            keyExtractor={(item) => item.id.toString()}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => (
+              <RoomCardHome 
+                roomName={item.nome_numero} 
+                roomCapacity={item.capacidade} 
+                roomLocation={item.localizacao} 
+                roomStatus={item.status_limpeza} 
+                onPress={() => handleGoToDetailsRoom(item.id)}
+              />
+            )}
+          />
+        }
 
-        <AdminButton name="Criar nova sala" screen="createRoom" icon="create" />
+        {
+          user.is_superuser &&
+          <AdminButton name="Criar nova sala" screen="createRoom" icon="create" />
+        }
       </Main>
     </Container>
   )

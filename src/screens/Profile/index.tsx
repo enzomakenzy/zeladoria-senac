@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image } from "react-native";
 
-import { ButtonsContainer, Container, ContentContainer, ImgNameContainer, InputInfoContainer, Line, Main, ModalChangePasswordTitle, ModalContentContainer, ScreenTitle, UserNameText } from "./styles";
+import { ButtonsContainer, Container, ContentContainer, ImgNameContainer, Line, Main, ModalChangePasswordTitle, ModalContentContainer, ScreenTitle, UserNameText } from "./styles";
 
 import { Header } from "@components/Header";
 import { FormInput } from "@components/FormInput";
@@ -13,9 +13,15 @@ import ImageProfile from "@assets/profile-img.png";
 import z from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { useNavigation } from "@react-navigation/native";
 import { ProfileStackNavigationProps } from "@routes/stacks/profile-stack.routes";
+
 import { useAuth } from "@hooks/useAuth";
+import { AppError } from "@utils/AppError";
+
+import Toast from "react-native-toast-message";
+import { api } from "@services/api";
 
 const changePasswordFormSchema = z.object({
   currentPassword: z
@@ -34,7 +40,7 @@ const changePasswordFormSchema = z.object({
 type ChangePasswordFormData = z.infer<typeof changePasswordFormSchema>;
 
 export function Profile() {
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
 
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -44,8 +50,38 @@ export function Profile() {
     resolver: zodResolver(changePasswordFormSchema)
   });
 
-  function handleChangePassword({ currentPassword, newPassword, confirmNewPassword }: ChangePasswordFormData) {
-    console.log({ currentPassword, newPassword, confirmNewPassword });
+  async function handleChangePassword({ currentPassword, newPassword, confirmNewPassword }: ChangePasswordFormData) {
+    try {
+      const { data } = await api.post("/accounts/change_password/", {
+        old_password: currentPassword,
+        new_password: newPassword, 
+        confirm_new_password: confirmNewPassword
+      }) 
+
+      console.log(data);
+
+      await signOut();
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const errorMessage = isAppError ? error.message : "Não foi possível alterar a senha";
+
+      console.log(errorMessage)
+
+      if (errorMessage !== "Token inválido.") {
+        Toast.show({
+          type: "error",
+          text1: "Erro",
+          text2: errorMessage,
+          text1Style: {
+            fontSize: 18
+          },
+          text2Style: {
+            fontSize: 16
+          }
+        });
+      }
+
+    }
     setModalVisible(false);
     reset();
   }
@@ -74,6 +110,8 @@ export function Profile() {
                 value={value}
                 onChangeText={onChange}
                 errorMessage={errors.currentPassword?.message}
+                autoCapitalize="none"
+                secureTextEntry
               />
             ))}
           />
@@ -89,6 +127,8 @@ export function Profile() {
                 value={value}
                 onChangeText={onChange}
                 errorMessage={errors.newPassword?.message}
+                autoCapitalize="none"
+                secureTextEntry
               />
             ))}
           />
@@ -104,6 +144,8 @@ export function Profile() {
                 value={value}
                 onChangeText={onChange}
                 errorMessage={errors.confirmNewPassword?.message}
+                autoCapitalize="none"
+                secureTextEntry
               />
             ))}
           />
@@ -132,45 +174,46 @@ export function Profile() {
               source={ImageProfile}
               style={{ width: 100, height: 100 }}
             />
-            <UserNameText>Enzo Makenzy de Queiroz Bezerra</UserNameText>
+            <UserNameText>{user.username}</UserNameText>
           </ImgNameContainer>
 
-          <InputInfoContainer>
+          {
+            user.email &&
             <FormInput 
               editable={false} 
-              inputName="Email (opcional)" 
-              inputInfo="enzo@email.com" 
+              inputName="Email" 
+              value={user.email} 
             />
-
-            <FormInput 
-              editable={false} 
-              inputName="Senha" 
-              inputInfo="*********" 
-            />
-          </InputInfoContainer>
+          }
 
           <LargeButton 
             textButton="Trocar senha"  
             onPress={() => setModalVisible(true)} 
+            style={{ marginTop: 20 }}
           />
 
-          <Line />
-
-          <ButtonsContainer>
-            <LargeButton 
-              textButton="Criar novo usuário" 
-              primary="orange"
-              onPress={() => navigation.navigate("createUser")}
-              style={{ width: "48%" }} 
-            />
-            
-            <LargeButton 
-              textButton="Listar usuários" 
-              primary="orange"
-              onPress={() => navigation.navigate("usersList")}
-              style={{ width: "48%" }} 
-            />
-          </ButtonsContainer>
+          {
+            user.is_superuser &&
+            <>
+              <Line />
+              
+              <ButtonsContainer>
+                <LargeButton 
+                  textButton="Criar novo usuário" 
+                  primary="orange"
+                  onPress={() => navigation.navigate("createUser")}
+                  style={{ width: "48%" }} 
+                />
+                
+                <LargeButton 
+                  textButton="Listar usuários" 
+                  primary="orange"
+                  onPress={() => navigation.navigate("usersList")}
+                  style={{ width: "48%" }} 
+                />
+              </ButtonsContainer>
+            </>
+          }
         </ContentContainer>
 
         <LargeButton 

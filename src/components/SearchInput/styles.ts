@@ -12,7 +12,6 @@ export const InputContainer = styled.View<SeachInputProps>`
 `;
 
 export const Input = styled.TextInput.attrs(({ theme }) => ({
-  placeholder: "Nome da sala",
   placeholderTextColor: theme.COLORS.BLACK.TRANSPARENCE_30
 }))`
   ${({ theme }) => css`
@@ -21,6 +20,7 @@ export const Input = styled.TextInput.attrs(({ theme }) => ({
   `}
   padding: 8px 12px;
   font-size: 16px;
+  width: 85%;
 `;
 
 export const SearchIcon = styled(Search).attrs(({ theme }) => ({

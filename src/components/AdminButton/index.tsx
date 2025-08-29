@@ -8,20 +8,26 @@ import DoorOpenIcon from "@assets/door-open.svg";
 import { useNavigation } from "@react-navigation/native";
 import { HomeStackProps } from "@routes/stacks/home-stack.routes";
 import { HomeStackNavigationProps } from "@routes/stacks/home-stack.routes";
+import { RoomDTO } from "@dtos/RoomDTO";
 
 type Props = {
   name: string;
   screen: keyof HomeStackProps;
   icon: "edit" | "create";
+  roomId?: RoomDTO;
 }
 
-export function AdminButton({ name, screen, icon }: Props) {
+export function AdminButton({ name, screen, icon, roomId }: Props) {
   const navigation = useNavigation<HomeStackNavigationProps>();
 
   const theme = useTheme();
 
-  function handleGoToScreen(screen: keyof HomeStackProps) {
-    navigation.navigate(screen)
+  function handleGoToScreen(screen: keyof HomeStackProps, room: RoomDTO) {
+    if (screen === "editRoom") {
+      navigation.navigate(screen, {room: room});
+    } else if (screen === "createRoom") {
+      navigation.navigate(screen);
+    }
   }
 
   return (
@@ -32,7 +38,7 @@ export function AdminButton({ name, screen, icon }: Props) {
         :
         theme.COLORS.ORANGE.MAIN
       })}
-      onPress={() => handleGoToScreen(screen)}
+      onPress={() => handleGoToScreen(screen, roomId as RoomDTO)}
     >
       <ButtonText>{name}</ButtonText>
       

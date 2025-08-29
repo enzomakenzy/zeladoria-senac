@@ -13,6 +13,7 @@ import ProfileIcon from "@assets/profile.svg";
 import { useTheme } from "styled-components/native";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useAuth } from "@hooks/useAuth";
 
 type BottomAppProps = {
   homeStack: undefined;
@@ -25,6 +26,7 @@ const { Navigator, Screen } = createBottomTabNavigator<BottomAppProps>();
 export function BottomAppRoutes() {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
+  const { user } = useAuth();
 
   return (
     <Navigator
@@ -59,19 +61,21 @@ export function BottomAppRoutes() {
         }}
       />
 
-      <Screen 
-        name="cleanRooms"
-        component={CleanRooms}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <CleanIcon 
-              height={26} 
-              width={26} 
-              fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} 
-            />
-          )
-        }}
-      />
+      { user.is_superuser &&
+        <Screen 
+          name="cleanRooms"
+          component={CleanRooms}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <CleanIcon 
+                height={26} 
+                width={26} 
+                fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} 
+              />
+            )
+          }}
+        />
+      }
 
       <Screen 
         name="profileStack"
