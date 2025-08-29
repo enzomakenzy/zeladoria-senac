@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FlatList, View } from "react-native";
 
 import { Container, Main, ScreenTitle } from "./styles";
@@ -12,6 +12,7 @@ import { AppError } from "@utils/AppError";
 import { api } from "@services/api";
 
 import Toast from "react-native-toast-message";
+import { useFocusScreen } from "@hooks/useFocusScreen";
 
 export function UsersList() {
   const [userList, setUserList] = useState<UserDTO[]>([] as UserDTO[]);
@@ -44,9 +45,9 @@ export function UsersList() {
     }
   }
 
-  useEffect(() => {
+  useFocusScreen(() => {
     fetchUsersList();
-  }, [userList])
+  })
   
   return (
     <Container>

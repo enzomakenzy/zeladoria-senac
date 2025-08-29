@@ -8,22 +8,16 @@ type Props = TouchableOpacityProps & {
   name?: string;
 }
 
-export function FilterButton({ contentType = "name", name, isActive, ...rest }: Props) {
-  const [isPressed, setIsPressed] = useState(false);
-  
-  function handlePressButton() {
-    isPressed ? setIsPressed(false) : setIsPressed(true);
-  }
-
+export function FilterButton({ contentType = "name", name, isActive = false, ...rest }: Props) {
   return (
     <Button
       {...rest}
-      pressed={isPressed}
+      pressed={isActive}
     >
       { name ? 
-        <FilterName pressed={isPressed}>{name}</FilterName>
+        <FilterName pressed={isActive}>{name}</FilterName>
         :
-        <Icon pressed={isPressed} />
+        <Icon pressed={isActive} />
       }
     </Button>
   );

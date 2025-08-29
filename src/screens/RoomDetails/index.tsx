@@ -6,7 +6,7 @@ import { CustomModal } from "@components/CustomModal";
 import { LargeButton } from "@components/LargeButton";
 import { AdminButton } from "@components/AdminButton";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
@@ -24,6 +24,7 @@ import { RoomDTO } from "@dtos/RoomDTO";
 import { useAuth } from "@hooks/useAuth";
 
 import { transformUtcToParseISO } from "@utils/transformUtcToParseISO";
+import { useFocusScreen } from "@hooks/useFocusScreen";
 
 type RoomDetailsScreenProps = NativeStackScreenProps<HomeStackProps, "roomDetails">;
 
@@ -46,8 +47,6 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
   });
 
   const { id } = route.params;
-
-
 
   async function fetchDetailRoom() {
     try {
@@ -102,9 +101,9 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
     }
   }
   
-  useEffect(() => {
+  useFocusScreen(() => {
     fetchDetailRoom();
-  }, [room]);
+  });
   
   return (
     <Container>

@@ -1,5 +1,5 @@
 import { FlatList } from "react-native";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Container, Main, ModalCategoryText, ModalCloseButton, ModalCloseTextButton, ModalContentContainer, ModalInfoText, ModalRoomNameTitle, ScreenTitle } from "./styles";
 
@@ -14,6 +14,7 @@ import { api } from "@services/api";
 import { AppError } from "@utils/AppError";
 import { CleanRoomDTO } from "@dtos/CleanRoomDTO";
 import { transformUtcToParseISO } from "@utils/transformUtcToParseISO";
+import { useFocusScreen } from "@hooks/useFocusScreen";
 
 export function CleanRooms() {
   const [cleanRoomsList, setCleanRoomsList] = useState<CleanRoomDTO[]>([] as CleanRoomDTO[]);
@@ -53,9 +54,9 @@ export function CleanRooms() {
     setCleanRoom(item);
   }
 
-  useEffect(() => {
+  useFocusScreen(() => {
     fetchListCleanRooms();
-  }, [cleanRoomsList]);
+  })
 
   return (
     <Container>

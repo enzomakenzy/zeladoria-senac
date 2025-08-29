@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { FlatList, View } from "react-native";
+import { useState } from "react";
+import { FlatList, ScrollView } from "react-native";
 
-import { Container, FiltersContainer, FilterText, Line, ListFilterContainer, LocationFilterList, Main, OptionsRoomsContainer, ScreenTitle, SearchFilterContainer } from "./styles";
+import { Container, FiltersContainer, FilterText, Main, OptionsRoomsContainer, ScreenTitle, SearchFilterContainer } from "./styles";
 
 import { Header } from "@components/Header";
 import { SearchInput } from "@components/SearchInput";
@@ -19,32 +19,52 @@ import { RoomDTO } from "@dtos/RoomDTO";
 import { AppError } from "@utils/AppError";
 
 import Toast from "react-native-toast-message";
-
+import { useFocusScreen } from "@hooks/useFocusScreen";
 
 export function Home() {
   const { user } = useAuth();
 
-  const [rooms, setRooms] = useState<RoomDTO[]>([] as RoomDTO[]);
-  const [filterActivity, setFilterActivity] = useState(false);
-  const [locationList, setLocationList] = useState([
-    "Bloco A", "Bloco B", "Bloco C", "Bloco D", "Bloco E", "Bloco F", "Bloco G" 
-  ]);
-  const [search, setSearch] = useState("");
-
-  const filteredRooms = rooms.filter(room => (
-    room.nome_numero.toLowerCase().includes(search.toLowerCase())
-  ))
-
   const navigation = useNavigation<HomeStackNavigationProps>();
 
+  const [rooms, setRooms] = useState<RoomDTO[]>([] as RoomDTO[]);
+  const [search, setSearch] = useState("");
+
+  const [filterActivity, setFilterActivity] = useState(false);
+  const [cleanFilterActivity, setCleanFilterActivity] = useState(false);
+  const [pendingCleaningFilterActivity, setPendingCleaningFilterActivity] = useState(false);
+  
   function handleGoToDetailsRoom(id: number) {
     navigation.navigate("roomDetails", { id: id });
   }
 
-  function handlePressButton() {
-    filterActivity ? setFilterActivity(false) : setFilterActivity(true);
-    console.log(filterActivity);
+  const filteredRooms = rooms.filter((room) => {
+    const matchName = room.nome_numero.toLowerCase().includes(search.toLowerCase());
+
+    const matchStatus =
+    (cleanFilterActivity && room.status_limpeza === "Limpa") ||
+    (pendingCleaningFilterActivity && room.status_limpeza === "Limpeza Pendente") ||
+    (!cleanFilterActivity && !pendingCleaningFilterActivity); 
+
+    return matchName && matchStatus;
+  });
+  
+  function handlePressFilterButton() {
+    setFilterActivity(prev => !prev);
+    setCleanFilterActivity(false);
+    setPendingCleaningFilterActivity(false);
   }
+  
+  function handlePressFilterCleanButton() {
+    setCleanFilterActivity(prev => !prev);
+    setPendingCleaningFilterActivity(false);
+  }
+
+  function handlePressFilterPendingCleaningButton() {
+    setPendingCleaningFilterActivity(prev => !prev);
+    setCleanFilterActivity(false);
+  }
+
+
 
   async function fetchRooms() {
     try {
@@ -71,9 +91,9 @@ export function Home() {
     }
   }
 
-  useEffect(() => {
+  useFocusScreen(() => {
     fetchRooms();
-  }, [rooms]);
+  });
 
   return (
     <Container>
@@ -84,7 +104,10 @@ export function Home() {
         
         <OptionsRoomsContainer>
           <SearchFilterContainer>
-            <FilterButton isActive={filterActivity} onPress={handlePressButton} />
+            <FilterButton 
+              isActive={filterActivity} 
+              onPress={handlePressFilterButton} 
+            />
             <SearchInput 
               flex 
               value={search} 
@@ -98,24 +121,23 @@ export function Home() {
             <FiltersContainer>
               <FilterText>Filtrar por: </FilterText>
 
-              <ListFilterContainer>
-                <FilterButton name="Campus/Bloco" />
-                <FilterButton name="Status" />
-                <FilterButton name="Últimas limpas" />
-              </ListFilterContainer>
-
-              <Line />
-
-              <LocationFilterList 
-                data={locationList}
-                keyExtractor={item => item as string}
-                renderItem={({ item }) => (
-                  <FilterButton name={item as string} />
-                )}
+              <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                ItemSeparatorComponent={() => <View style={{ width: 10 }} />}
-              />
+              >
+                <FilterButton 
+                  name="Limpas" 
+                  isActive={cleanFilterActivity}
+                  onPress={handlePressFilterCleanButton}
+                  style={{ marginRight: 10 }}
+                />
+
+                <FilterButton 
+                  name="Limpeza pendente" 
+                  isActive={pendingCleaningFilterActivity}
+                  onPress={handlePressFilterPendingCleaningButton}
+                />
+              </ScrollView>
             </FiltersContainer>
           }
 

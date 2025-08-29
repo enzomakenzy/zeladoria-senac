@@ -21,7 +21,6 @@ export function RoomCardHome({ id, roomName, roomCapacity, roomLocation, roomSta
       <InfoRoomContainer>
         <RoomName>{roomName}</RoomName>
         <RoomInfo>Capacidade: {roomCapacity}</RoomInfo>
-        <RoomInfo>Localização: {roomLocation}</RoomInfo>
       </InfoRoomContainer>
       
       <StatusRoomContainer>
