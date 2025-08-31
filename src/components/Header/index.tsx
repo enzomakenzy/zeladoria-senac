@@ -1,10 +1,14 @@
 import { Image } from "react-native";
 
-import { HeaderContainer, HiText, NavContainer, NotificationButton, NotificationIcon, StaffName, TextContainer } from "./styles";
+import { HeaderContainer, NotificationButton } from "./styles";
+import NotificationIcon from "@assets/notification.svg";
 
 import SenacLogoImage from "@assets/senac-logo.png";
+import { useTheme } from "styled-components/native";
 
 export function Header() {
+  const theme = useTheme();
+
   return (
     <HeaderContainer>
       <Image 
@@ -13,13 +17,9 @@ export function Header() {
         style={{ width: 75, height: 48 }} 
       />
 
-      <NavContainer>
-        
-        <NotificationButton>
-          <NotificationIcon />
-        </NotificationButton>
-      </NavContainer>
-      
+      <NotificationButton>
+        <NotificationIcon fill={theme.COLORS.BLUE} />
+      </NotificationButton>
     </HeaderContainer>
   )
 }
