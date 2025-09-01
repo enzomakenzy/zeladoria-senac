@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { TouchableOpacityProps } from "react-native";
 
-import { CardContainer, TitleContainer, RoomName, RoomInfo, RoomStatus, CircleIcon, StatusRoomContainer, RoomDetailsContainer, InfoContainer, ActionButton, ButtonsContainer } from "./styles"
+import { CardContainer, TitleContainer, RoomName, RoomInfo, RoomStatus, CheckStyledIcon, ScheduleStyledIcon, StatusRoomContainer, RoomDetailsContainer, InfoContainer, ActionButton, ButtonsContainer } from "./styles"
 
 import EditIcon from "@assets/edit.svg";
 import DeleteIcon from "@assets/delete.svg";
+
 
 import { transformUtcToParseISO } from "@utils/transformUtcToParseISO";
 
@@ -32,7 +33,12 @@ export function RoomCardHome({ id, roomName, roomCapacity, roomLocation, roomSta
         
         <StatusRoomContainer>
           <RoomStatus roomStatus={roomStatus}>{roomStatusName}</RoomStatus>
-          <CircleIcon roomStatus={roomStatus} />
+
+          { roomStatus === "Limpa" ?
+              <CheckStyledIcon roomStatus={roomStatus} />
+            :
+              <ScheduleStyledIcon roomStatus={roomStatus} />
+          }
         </StatusRoomContainer>
       </TitleContainer>
       

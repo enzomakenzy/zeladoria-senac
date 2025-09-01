@@ -97,8 +97,6 @@ export function Home() {
     fetchRooms();
   });
 
-  console.log(rooms);
-
   return (
     <Container>
       <Header />

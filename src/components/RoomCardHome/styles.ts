@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components/native";
-import CircleSvg from "@assets/circle.svg";
+
+import CheckIcon from "@assets/check.svg";
+import ScheduleIcon from "@assets/schedule.svg"
 
 type StatusProp = {
   roomStatus: "Limpa" | "Limpeza Pendente"
@@ -46,7 +48,19 @@ export const RoomStatus = styled.Text<StatusProp>`
     font-size: ${theme.FONTS.MEDIUM};
   `}
   font-size: 14px;
-`;
+  `;
+
+export const CheckStyledIcon = styled(CheckIcon).attrs<StatusProp>(({ theme, roomStatus }) => ({
+  fill: roomStatus == "Limpa" ? theme.COLORS.GREEN : theme.COLORS.ORANGE.MAIN,
+  height: 16,
+  width: 16
+}))``;
+
+export const ScheduleStyledIcon = styled(ScheduleIcon).attrs<StatusProp>(({ theme, roomStatus }) => ({
+  fill: roomStatus == "Limpa" ? theme.COLORS.GREEN : theme.COLORS.ORANGE.MAIN,
+  height: 16,
+  width: 16
+}))``;
 
 export const RoomDetailsContainer = styled.View`
   flex-direction: row;
@@ -65,13 +79,6 @@ export const RoomInfo = styled.Text`
   font-size: 14px;
   margin-bottom: 2px;
 `;
-
-
-export const CircleIcon = styled(CircleSvg).attrs<StatusProp>(({ theme, roomStatus }) => ({
-  fill: roomStatus == "Limpa" ? theme.COLORS.GREEN : theme.COLORS.ORANGE.MAIN,
-  height: 12,
-  width: 12
-}))``;
 
 export const ButtonsContainer = styled.View`
   flex-direction: column;
