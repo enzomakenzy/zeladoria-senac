@@ -19,10 +19,10 @@ type Props = TouchableOpacityProps & {
 }
 
 export function RoomCardHome({ id, roomName, roomCapacity, roomLocation, roomStatus, lastClean, lastStaffClean, description, ...rest }: Props) {
-  const [roomStatusName, setRoomStatusName] = useState<"Limpa" | "Limpeza Pendente">();
+  const [roomStatusName, setRoomStatusName] = useState<"Limpa" | "Pendente">();
   
   useEffect(() => {
-    roomStatus == "Limpa" ? setRoomStatusName("Limpa") : setRoomStatusName("Limpeza Pendente");
+    roomStatus == "Limpa" ? setRoomStatusName("Limpa") : setRoomStatusName("Pendente");
   }, [roomStatus]);
 
   return (

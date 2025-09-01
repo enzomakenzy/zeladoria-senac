@@ -32,11 +32,15 @@ export function BottomAppRoutes() {
     <Navigator
       screenOptions={{
         headerShown: false,
-        tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: theme.COLORS.BLUE,
           borderTopWidth: 0,
-          height: 50 + insets.bottom
+          height: 52 + insets.bottom
+        },
+        tabBarActiveTintColor: theme.COLORS.WHITE.TRANSPARENCE_100,
+        tabBarInactiveTintColor: theme.COLORS.WHITE.TRANSPARENCE_70,
+        tabBarLabelStyle: {
+          marginTop: 1
         },
         tabBarButton: (props: any) => (
           <TouchableOpacity 
@@ -51,10 +55,11 @@ export function BottomAppRoutes() {
         name="homeStack"
         component={HomeStackRoutes}
         options={{
+          tabBarLabel: "Início",
           tabBarIcon: ({ focused }) => (
             <HomeIcon 
-              height={30} 
-              width={30} 
+              height={25} 
+              width={25} 
               fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} 
             />
           )
@@ -66,10 +71,11 @@ export function BottomAppRoutes() {
           name="cleanRooms"
           component={CleanRooms}
           options={{
+            tabBarLabel: "Salas limpas",
             tabBarIcon: ({ focused }) => (
               <CleanIcon 
-                height={26} 
-                width={26} 
+                height={24} 
+                width={24} 
                 fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} 
               />
             )
@@ -81,10 +87,11 @@ export function BottomAppRoutes() {
         name="profileStack"
         component={ProfileStackRoutes}
         options={{
+          tabBarLabel: "Perfil",
           tabBarIcon: ({ focused }) => (
             <ProfileIcon 
-              height={34} 
-              width={34} 
+              height={30} 
+              width={30} 
               fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} 
             />
           )
