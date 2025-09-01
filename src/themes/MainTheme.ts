@@ -26,9 +26,9 @@ export default {
   },
 
   FONTS: {
-    REGULAR: "Poppins_400Regular",
-    MEDIUM: "Poppins_500Medium",
-    SEMI_BOLD: "Poppins_600SemiBold",
-    BOLD: "Poppins_700Bold"
+    REGULAR: "Quicksand_400Regular",
+    MEDIUM: "Quicksand_500Medium",
+    SEMI_BOLD: "Quicksand_600SemiBold",
+    BOLD: "Quicksand_700Bold"
   }
 }

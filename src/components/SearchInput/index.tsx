@@ -1,7 +1,7 @@
 import { TextInputProps } from "react-native";
 import { Input, InputContainer, SearchIcon } from "./styles";
 
-type SeachInputProps = TextInputProps & {
+export type SeachInputProps = TextInputProps & {
   flex?: boolean
 }
 

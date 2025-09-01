@@ -7,21 +7,21 @@ export const Container = styled(SafeAreaView).attrs({
   edges: ["right", "left", "top"]
 })`
   flex: 1;
-  background-color: ${({ theme }) => theme.COLORS.BLUE};
+  background-color: ${({ theme }) => theme.COLORS.WHITE.TRANSPARENCE_100};
 `;
 
 export const Main = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.COLORS.WHITE.TRANSPARENCE_100};
-  padding: 15px 15px 0px 15px;
+  padding: 8px 10px 0px 10px;
 `;
 
 export const ScreenTitle = styled.Text`
   ${({ theme }) => css`
-    font-family: ${theme.FONTS.SEMI_BOLD};
+    font-family: ${theme.FONTS.BOLD};
     color: ${theme.COLORS.BLACK.TRANSPARENCE_100};
   `}
-  font-size: 25px;
+  font-size: 22px;
   margin-bottom: 12px;
 `; 
 
