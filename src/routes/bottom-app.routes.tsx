@@ -36,7 +36,7 @@ export function BottomAppRoutes() {
         tabBarStyle: {
           backgroundColor: theme.COLORS.BLUE,
           borderTopWidth: 0,
-          height: 62 + insets.bottom
+          height: 50 + insets.bottom
         },
         tabBarButton: (props: any) => (
           <TouchableOpacity 

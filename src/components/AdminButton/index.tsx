@@ -44,7 +44,7 @@ export function AdminButton({ name, screen, icon, roomId }: Props) {
       
       {
         icon === "create" ?
-        <DoorOpenIcon />
+        <DoorOpenIcon height={20} width={20} />
         :
         <DoorConfigIcon />
       }

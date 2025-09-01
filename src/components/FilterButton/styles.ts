@@ -7,7 +7,6 @@ type PressedProp = {
 
 export const Button = styled.Pressable<PressedProp>`
   padding: 5px;
-  height: 38px;
   border-radius: 6px;
   align-items: center;
   justify-content: center;
@@ -24,7 +23,7 @@ export const FilterName = styled.Text<PressedProp>`
     color: ${pressed ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.BLUE};
     font-family: ${theme.FONTS.SEMI_BOLD};
   `}
-  font-size: 16px;
+  font-size: 14px;
   padding: 2px 4px;
 `; 
 
