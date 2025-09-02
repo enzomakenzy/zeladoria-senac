@@ -14,11 +14,15 @@ export function Header() {
       <Image 
         source={SenacLogoImage} 
         resizeMode="contain"
-        style={{ width: 75, height: 48 }} 
+        style={{ width: 50, height: 38 }} 
       />
 
       <NotificationButton>
-        <NotificationIcon fill={theme.COLORS.BLUE} />
+        <NotificationIcon 
+          fill={theme.COLORS.BLUE} 
+          height={28}
+          width={28}
+        />
       </NotificationButton>
     </HeaderContainer>
   )
