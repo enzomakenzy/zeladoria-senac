@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components/native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View } from "react-native";
 
 export const Container = styled(SafeAreaView).attrs({
   edges: ["right", "left", "top"]
@@ -45,8 +44,8 @@ export const FilterText = styled.Text`
     color: ${theme.COLORS.BLUE};
     font-family: ${theme.FONTS.REGULAR};
   `}
-  font-size: 16px;
-  margin-left: 10px;
+  font-size: 14px;
+  margin-left: 5px;
 `;
 
 export const Line = styled.View`

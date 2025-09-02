@@ -16,5 +16,5 @@ export const ButtonText = styled.Text`
     color: ${theme.COLORS.WHITE.TRANSPARENCE_100};
     font-family: ${theme.FONTS.SEMI_BOLD};
   `}
-  font-size: 18px;
+  font-size: 16px;
 `;

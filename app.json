@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "sistema-de-mapeamento-de-limpeza-das-salas",
-    "slug": "sistema-de-mapeamento-de-limpeza-das-salas",
+    "name": "zeladoria-senac",
+    "slug": "zeladoria-senac",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
