@@ -7,10 +7,6 @@ type StatusProp = {
   roomStatus: "Limpa" | "Limpeza Pendente"
 } 
 
-type ActionButtonProp = {
-  buttonColor: "blue" | "red";
-}
-
 export const CardContainer = styled.TouchableOpacity.attrs({
   activeOpacity: 0.58
 })`
@@ -33,6 +29,7 @@ export const RoomName = styled.Text`
     font-family: ${theme.FONTS.SEMI_BOLD};
   `}
   font-size: 18px;
+  margin-bottom: 4px;
 `;  
 
 export const StatusRoomContainer = styled.View`
@@ -64,6 +61,7 @@ export const ScheduleStyledIcon = styled(ScheduleIcon).attrs<StatusProp>(({ them
 
 export const RoomDetailsContainer = styled.View`
   flex-direction: row;
+  align-items: flex-end;
 `;
 
 export const InfoContainer = styled.View`
@@ -80,16 +78,27 @@ export const RoomInfo = styled.Text`
   margin-bottom: 2px;
 `;
 
-export const ButtonsContainer = styled.View`
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 12px;
-`;
+export const BoldText = styled.Text`
+  font-family: ${({ theme }) => theme.FONTS.SEMI_BOLD};
+`
 
-export const ActionButton = styled.TouchableOpacity.attrs({
-  activeOpacity: 0.6
-})<ActionButtonProp>`
-  background-color: ${({ theme, buttonColor }) => buttonColor === "blue" ? theme.COLORS.BLUE : theme.COLORS.RED};
-  padding: 5px;
+export const CleanButton = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.55
+})`
+  padding: 6px 8px;
+  background-color: ${({ theme }) => theme.COLORS.ORANGE.MAIN};
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 4px;
   border-radius: 6px;
+`
+
+export const CleanText = styled.Text`
+  ${({ theme }) => css`
+    color: ${theme.COLORS.WHITE.TRANSPARENCE_100};
+    font-family: ${theme.FONTS.MEDIUM};
+  `}
+  font-size: 14px;
+  padding-bottom: 2px;
 `;

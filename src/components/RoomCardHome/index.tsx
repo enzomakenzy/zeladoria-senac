@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 import { TouchableOpacityProps } from "react-native";
 
-import { CardContainer, TitleContainer, RoomName, RoomInfo, RoomStatus, CheckStyledIcon, ScheduleStyledIcon, StatusRoomContainer, RoomDetailsContainer, InfoContainer, ActionButton, ButtonsContainer } from "./styles"
+import { CardContainer, TitleContainer, RoomName, RoomInfo, RoomStatus, CheckStyledIcon, ScheduleStyledIcon, StatusRoomContainer, RoomDetailsContainer, InfoContainer, CleanButton, CleanText, BoldText } from "./styles"
 
-import EditIcon from "@assets/edit.svg";
-import DeleteIcon from "@assets/delete.svg";
-
-
-import { transformUtcToParseISO } from "@utils/transformUtcToParseISO";
+import CleanIcon from "@assets/clean-home.svg";
 
 type Props = TouchableOpacityProps & {
   roomName: string;
@@ -15,11 +11,9 @@ type Props = TouchableOpacityProps & {
   roomLocation: string;
   roomStatus: "Limpa" | "Limpeza Pendente";
   lastClean: string;
-  lastStaffClean: string;
-  description: string;
 }
 
-export function RoomCardHome({ id, roomName, roomCapacity, roomLocation, roomStatus, lastClean, lastStaffClean, description, ...rest }: Props) {
+export function RoomCardHome({ id, roomName, roomCapacity, roomLocation, roomStatus, lastClean, ...rest }: Props) {
   const [roomStatusName, setRoomStatusName] = useState<"Limpa" | "Pendente">();
   
   useEffect(() => {
@@ -44,22 +38,16 @@ export function RoomCardHome({ id, roomName, roomCapacity, roomLocation, roomSta
       
       <RoomDetailsContainer>
         <InfoContainer>
-          <RoomInfo>Capacidade: {roomCapacity}</RoomInfo>
-          <RoomInfo>Localização: {roomLocation}</RoomInfo>
-          <RoomInfo>Última limpeza: {transformUtcToParseISO(lastClean)}</RoomInfo>
-          <RoomInfo>Último funcionário a limpar: {lastStaffClean}</RoomInfo>
-          <RoomInfo>Descrição: {description}</RoomInfo>
+          <RoomInfo><BoldText>Capacidade:</BoldText> {roomCapacity}</RoomInfo>
+          <RoomInfo><BoldText>Localização:</BoldText> {roomLocation}</RoomInfo>
         </InfoContainer>
 
-        <ButtonsContainer>
-          <ActionButton buttonColor="blue">
-            <EditIcon />
-          </ActionButton>
-
-          <ActionButton buttonColor="red">
-            <DeleteIcon />
-          </ActionButton>
-        </ButtonsContainer>
+        { roomStatus === "Limpeza Pendente" &&
+          <CleanButton>
+            <CleanText>Limpar</CleanText>
+            <CleanIcon />
+          </CleanButton>
+          }
       </RoomDetailsContainer>
     </CardContainer>
   );

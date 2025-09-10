@@ -160,8 +160,6 @@ export function Home() {
                 roomLocation={item.localizacao} 
                 roomStatus={item.status_limpeza} 
                 lastClean={item.ultima_limpeza_data_hora}
-                lastStaffClean={item.ultima_limpeza_funcionario}
-                description={item.descricao}
                 onPress={() => handleGoToDetailsRoom(item.id)}
               />
             )}
