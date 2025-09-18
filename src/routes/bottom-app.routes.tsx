@@ -2,15 +2,19 @@ import { TouchableOpacity } from "react-native";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { HomeStackRoutes } from "./stacks/home-stack.routes";
+import { HomeStackRoutes } from "@routes/stacks/home-stack.routes";
+import { ProfileStackRoutes } from "@routes/stacks/profile-stack.routes";
 import { CleanRooms } from "@screens/CleanRooms";
-import { ProfileStackRoutes } from "./stacks/profile-stack.routes";
+import { Notifications } from "@screens/Notifications";
 
 import HomeIcon from "@assets/home.svg";
 import CleanIcon from "@assets/clean.svg";
-import ProfileIcon from "@assets/profile.svg";
+import NotificationIcon from "@assets/notification.svg";
+import ProfileIcon from "@assets/user.svg";
 
 import { useTheme } from "styled-components/native";
+
+import { TabIcon } from "@components/TabIcon";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useAuth } from "@hooks/useAuth";
@@ -18,6 +22,7 @@ import { useAuth } from "@hooks/useAuth";
 type BottomAppProps = {
   homeStack: undefined;
   cleanRooms: undefined;
+  notification: undefined;
   profileStack: undefined;
 }
 
@@ -32,13 +37,12 @@ export function BottomAppRoutes() {
     <Navigator
       screenOptions={{
         headerShown: false,
+        tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: theme.COLORS.BLUE,
           borderTopWidth: 0,
-          height: 52 + insets.bottom
+          height: 54 + insets.bottom
         },
-        tabBarActiveTintColor: theme.COLORS.WHITE.TRANSPARENCE_100,
-        tabBarInactiveTintColor: theme.COLORS.WHITE.TRANSPARENCE_70,
         tabBarLabelStyle: {
           marginTop: 1
         },
@@ -55,14 +59,7 @@ export function BottomAppRoutes() {
         name="homeStack"
         component={HomeStackRoutes}
         options={{
-          tabBarLabel: "Início",
-          tabBarIcon: ({ focused }) => (
-            <HomeIcon 
-              height={25} 
-              width={25} 
-              fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} 
-            />
-          )
+          tabBarIcon: ({ focused }) => <TabIcon Icon={HomeIcon} focused={focused} />
         }}
       />
 
@@ -71,30 +68,24 @@ export function BottomAppRoutes() {
           name="cleanRooms"
           component={CleanRooms}
           options={{
-            tabBarLabel: "Salas limpas",
-            tabBarIcon: ({ focused }) => (
-              <CleanIcon 
-                height={24} 
-                width={24} 
-                fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} 
-              />
-            )
+            tabBarIcon: ({ focused }) => <TabIcon Icon={CleanIcon} focused={focused} />
           }}
         />
       }
 
       <Screen 
+        name="notification"
+        component={Notifications}
+        options={{
+          tabBarIcon: ({ focused }) => <TabIcon Icon={NotificationIcon} focused={focused} />
+        }}
+      />
+
+      <Screen 
         name="profileStack"
         component={ProfileStackRoutes}
         options={{
-          tabBarLabel: "Perfil",
-          tabBarIcon: ({ focused }) => (
-            <ProfileIcon 
-              height={30} 
-              width={30} 
-              fill={focused ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.WHITE.TRANSPARENCE_70} 
-            />
-          )
+          tabBarIcon: ({ focused }) => <TabIcon Icon={ProfileIcon} focused={focused} />
         }}
       />
     </Navigator>
