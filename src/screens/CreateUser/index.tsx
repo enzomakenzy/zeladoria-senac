@@ -102,7 +102,7 @@ export function CreateUser() {
         </ModalContentContainer>
       </CustomModal>
 
-      <Header />
+      <Header screenName="Criar novo usuário" />
       
       <Main>
         <ScreenTitle>

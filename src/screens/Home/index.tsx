@@ -99,7 +99,7 @@ export function Home() {
 
   return (
     <Container>
-      <Header />
+      <Header screenName="Todas as salas" />
       
       <Main>
         <ScreenTitle>Todas as salas</ScreenTitle>

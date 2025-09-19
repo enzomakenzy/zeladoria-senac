@@ -93,7 +93,7 @@ export function CleanRooms() {
         </ModalCloseButton>
       </CustomModal>
 
-      <Header />
+      <Header screenName="Registros de limpeza" />
 
       <Main>
         <ScreenTitle>Registros de limpeza</ScreenTitle>

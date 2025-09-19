@@ -11,12 +11,26 @@ export const HeaderContainer = styled.View`
   align-items: center;
   gap: 15px;
   border-bottom-width: 2px;
+  height: 56px
 `;
 
-export const NotificationButton = styled.TouchableOpacity.attrs({
-  activeOpacity: 0.6
-})`
-  padding: 10px;
+export const ScreenName = styled.Text`
+  ${({ theme }) => css`
+    color: ${theme.COLORS.BLACK.TRANSPARENCE_100};
+    font-family: ${theme.FONTS.BOLD};
+  `}
+  font-size: 22px;
   flex: 1;
-  align-items: flex-end;
+  text-align: center;
+`;
+
+export const ArrowButton = styled.TouchableOpacity`
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
 `;

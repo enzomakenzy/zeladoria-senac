@@ -1,9 +1,10 @@
-import { Fragment } from "react";
+import { Header } from "@components/Header";
+import { Container } from "./styles";
 
 export function Notifications() {
   return (
-    <Fragment>
-      
-    </Fragment>
+    <Container>
+      <Header screenName="Notificações" />
+    </Container>
   );
 }

@@ -146,13 +146,9 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
 
       </CustomModal>
 
-      <Header />
+      <Header screenName="Detalhes da sala" variant />
 
       <Main>
-        <ScreenTitle>
-          Detalhes da Sala
-        </ScreenTitle>
-
         <Line />
         { isLoading ? (
           <Loading />

@@ -174,11 +174,9 @@ export function EditRoom({ route }: EditRoomScreenProps) {
         }
       </CustomModal>
 
-      <Header />
+      <Header screenName="Editar sala" variant />
       
       <Main>
-        <ScreenTitle>Editar sala</ScreenTitle>
-
         <FormContainer>
           <Controller 
             control={control}

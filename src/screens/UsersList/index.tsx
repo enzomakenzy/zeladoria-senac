@@ -51,7 +51,7 @@ export function UsersList() {
   
   return (
     <Container>
-      <Header />
+      <Header screenName="Lista de usuários" variant />
 
       <Main>
         <ScreenTitle>

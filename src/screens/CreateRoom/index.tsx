@@ -88,11 +88,9 @@ export function CreateRoom() {
         </ModalContentContainer>
       </CustomModal>
 
-      <Header />
+      <Header screenName="Criar nova sala" variant />
 
       <Main>
-        <ScreenTitle>Criar nova sala</ScreenTitle>
-
         <FormContainer>
           <Controller 
             control={control}

@@ -163,12 +163,10 @@ export function Profile() {
         />
       </CustomModal>
 
-      <Header />
+      <Header screenName="Perfil" />
 
       <Main>
         <ContentContainer>
-          <ScreenTitle>Perfil</ScreenTitle>
-
           <ImgNameContainer>
             <Image 
               source={ImageProfile}
