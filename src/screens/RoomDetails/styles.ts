@@ -21,15 +21,6 @@ export const Main = styled.View`
   padding: 15px;
 `;
 
-export const ScreenTitle = styled.Text`
-  ${({ theme }) => css`
-    font-family: ${theme.FONTS.SEMI_BOLD};
-    color: ${theme.COLORS.BLACK.TRANSPARENCE_100};
-  `}
-  font-size: 25px;
-  margin-bottom: 12px;
-`; 
-
 export const Line = styled.View`
   width: 100%;
   height: 1px;

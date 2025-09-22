@@ -15,15 +15,6 @@ export const Main = styled.View`
   padding: 8px 10px 0px 10px;
 `;
 
-export const ScreenTitle = styled.Text`
-  ${({ theme }) => css`
-    font-family: ${theme.FONTS.BOLD};
-    color: ${theme.COLORS.BLACK.TRANSPARENCE_100};
-  `}
-  font-size: 22px;
-  margin-bottom: 12px;
-`; 
-
 export const OptionsRoomsContainer = styled.View`
   gap: 12px;
   margin-bottom: 20px;

@@ -1,4 +1,4 @@
-import { Container, InfoRoomContainer, InfoRoomText, Line, Main, ModalButtonsContainer, ModalInfoContainer, ModalTitle, RoomNameText, ScreenTitle} from "./styles";
+import { Container, InfoRoomContainer, InfoRoomText, Line, Main, ModalButtonsContainer, ModalInfoContainer, ModalTitle, RoomNameText } from "./styles";
 
 import { Header } from "@components/Header";
 import { FormInput } from "@components/FormInput";

@@ -16,15 +16,6 @@ export const Main = styled.View`
   padding: 15px 15px 0px 15px;
 `;
 
-export const ScreenTitle = styled.Text`
-  ${({ theme }) => css`
-    font-family: ${theme.FONTS.SEMI_BOLD};
-    color: ${theme.COLORS.BLACK.TRANSPARENCE_100};
-  `}
-  font-size: 25px;
-  margin-bottom: 12px;
-`; 
-
 export const FormContainer = styled.View`
   gap: 10px;
   margin-bottom: 30px;

@@ -18,15 +18,6 @@ export const Main = styled.View`
 
 export const ContentContainer = styled.View``;
 
-export const ScreenTitle = styled.Text`
-  ${({ theme }) => css`
-    font-family: ${theme.FONTS.SEMI_BOLD};
-    color: ${theme.COLORS.BLACK.TRANSPARENCE_100};
-  `}
-  font-size: 25px;
-  margin-bottom: 12px;
-`; 
-
 export const ImgNameContainer = styled.View`
   gap: 12px;
   align-items: center;

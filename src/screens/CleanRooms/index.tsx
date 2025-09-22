@@ -1,7 +1,7 @@
 import { FlatList } from "react-native";
 import { useState } from "react";
 
-import { Container, Main, ModalCategoryText, ModalCloseButton, ModalCloseTextButton, ModalContentContainer, ModalInfoText, ModalRoomNameTitle, ScreenTitle } from "./styles";
+import { Container, Main, ModalCategoryText, ModalCloseButton, ModalCloseTextButton, ModalContentContainer, ModalInfoText, ModalRoomNameTitle } from "./styles";
 
 import { Header } from "@components/Header";
 import { SearchInput } from "@components/SearchInput";
@@ -96,8 +96,6 @@ export function CleanRooms() {
       <Header screenName="Registros de limpeza" />
 
       <Main>
-        <ScreenTitle>Registros de limpeza</ScreenTitle>
-        
         <SearchInput 
           value={search} 
           onChangeText={setSearch} 

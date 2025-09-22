@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { ButtonContainer, Container, FormContainer, Main, ModalContentContainer, ModalCreateRoomDescription, ModalCreateRoomTitle, ScreenTitle } from "./styles";
+import { ButtonContainer, Container, FormContainer, Main, ModalContentContainer, ModalCreateRoomDescription, ModalCreateRoomTitle } from "./styles";
 
 import { Header } from "@components/Header";
 import { FormInput } from "@components/FormInput";

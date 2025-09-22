@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FlatList, ScrollView } from "react-native";
 
-import { Container, FiltersContainer, FilterText, Main, OptionsRoomsContainer, ScreenTitle, SearchFilterContainer } from "./styles";
+import { Container, FiltersContainer, FilterText, Main, OptionsRoomsContainer, SearchFilterContainer } from "./styles";
 
 import { Header } from "@components/Header";
 import { SearchInput } from "@components/SearchInput";
@@ -102,8 +102,6 @@ export function Home() {
       <Header screenName="Todas as salas" />
       
       <Main>
-        <ScreenTitle>Todas as salas</ScreenTitle>
-        
         <OptionsRoomsContainer>
           <SearchFilterContainer>
             <FilterButton 

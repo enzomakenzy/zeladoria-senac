@@ -14,12 +14,3 @@ export const Main = styled.View`
   background-color: ${({ theme }) => theme.COLORS.WHITE.TRANSPARENCE_100};
   padding: 15px 15px 0;
 `;
-
-export const ScreenTitle = styled.Text`
-  ${({ theme }) => css`
-    font-family: ${theme.FONTS.SEMI_BOLD};
-    color: ${theme.COLORS.BLACK.TRANSPARENCE_100};
-  `}
-  font-size: 25px;
-  margin-bottom: 12px;
-`; 

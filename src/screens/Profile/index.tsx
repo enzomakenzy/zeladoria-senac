@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Image } from "react-native";
 
-import { ButtonsContainer, Container, ContentContainer, ImgNameContainer, Line, Main, ModalChangePasswordTitle, ModalContentContainer, ScreenTitle, UserNameText } from "./styles";
+import { ButtonsContainer, Container, ContentContainer, ImgNameContainer, Line, Main, ModalChangePasswordTitle, ModalContentContainer, UserNameText } from "./styles";
 
 import { Header } from "@components/Header";
 import { FormInput } from "@components/FormInput";

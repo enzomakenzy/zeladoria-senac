@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { ButtonsContainer, CheckBoxContainer, CheckBoxText, Container, FormContainer, Main, ModalContentContainer, ModalCreateRoomTitle, ScreenTitle, StyledCheckBox } from "./styles";
+import { ButtonsContainer, CheckBoxContainer, CheckBoxText, Container, FormContainer, Main, ModalContentContainer, ModalCreateRoomTitle, StyledCheckBox } from "./styles";
 
 import { Header } from "@components/Header";
 import { FormInput } from "@components/FormInput";
@@ -105,10 +105,6 @@ export function CreateUser() {
       <Header screenName="Criar novo usuário" />
       
       <Main>
-        <ScreenTitle>
-          Criar novo usuário
-        </ScreenTitle>
-
         <FormContainer>
           <Controller 
             control={control}

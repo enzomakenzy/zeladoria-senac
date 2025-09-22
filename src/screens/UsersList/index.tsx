@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FlatList, View } from "react-native";
 
-import { Container, Main, ScreenTitle } from "./styles";
+import { Container, Main } from "./styles";
 
 import { Header } from "@components/Header";
 import { SearchInput } from "@components/SearchInput";
@@ -54,10 +54,6 @@ export function UsersList() {
       <Header screenName="Lista de usuários" variant />
 
       <Main>
-        <ScreenTitle>
-          Lista de usuários
-        </ScreenTitle>
-
         <SearchInput 
           placeholder="Nome do usuário"
           value={search}
