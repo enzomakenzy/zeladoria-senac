@@ -6,12 +6,12 @@ export const Container = styled(SafeAreaView).attrs({
   edges: ["right", "left", "top"]
 })`
   flex: 1;
-  background-color: ${({ theme }) => theme.COLORS.WHITE.TRANSPARENCE_100};
+  background-color: ${({ theme }) => theme.COLORS.WHITE[100]};
 `;
 
 export const Main = styled.View`
   flex: 1;
-  background-color: ${({ theme }) => theme.COLORS.WHITE.TRANSPARENCE_100};
+  background-color: ${({ theme }) => theme.COLORS.WHITE[100]};
   padding: 15px 15px 0px 15px;
 `;
 
@@ -57,7 +57,7 @@ export const ModalCloseButton = styled.TouchableOpacity.attrs({
 export const ModalCloseTextButton = styled.Text`
   ${({ theme }) => css`
     font-family: ${({ theme }) => theme.FONTS.MEDIUM};
-    color: ${theme.COLORS.WHITE.TRANSPARENCE_100};
+    color: ${theme.COLORS.WHITE[100]};
   `}
   font-size: 16px;
   text-align: center;

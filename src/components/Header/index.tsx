@@ -6,6 +6,7 @@ import SenacLogoImage from "@assets/senac-logo.png";
 import ProfileImg from "@assets/profile-img.png";
 import ArrowBackIcon from "@assets/arrow-back.svg";
 import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "styled-components/native";
 
 interface Props {
   screenName: string;
@@ -14,6 +15,7 @@ interface Props {
 
 export function Header({ screenName, variant = false }: Props) {
   const navigation = useNavigation();
+  const theme = useTheme();
 
   return (
     <HeaderContainer>

@@ -19,7 +19,7 @@ export const Button = styled.TouchableOpacity.attrs({
 
 export const ButtonText = styled.Text`
   ${({ theme }) => css`
-    color: ${theme.COLORS.WHITE.TRANSPARENCE_100};
+    color: ${theme.COLORS.WHITE[100]};
     font-family: ${theme.FONTS.REGULAR};
   `}
   font-size: 16px;

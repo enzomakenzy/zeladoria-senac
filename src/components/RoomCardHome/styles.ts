@@ -96,7 +96,7 @@ export const CleanButton = styled.TouchableOpacity.attrs({
 
 export const CleanText = styled.Text`
   ${({ theme }) => css`
-    color: ${theme.COLORS.WHITE.TRANSPARENCE_100};
+    color: ${theme.COLORS.WHITE[100]};
     font-family: ${theme.FONTS.MEDIUM};
   `}
   font-size: 14px;

@@ -161,6 +161,7 @@ export function Home() {
                 onPress={() => handleGoToDetailsRoom(item.id)}
               />
             )}
+            contentContainerStyle={{ margin: 1 }}
           />
         }
 

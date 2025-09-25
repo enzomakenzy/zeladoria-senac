@@ -13,7 +13,7 @@ export const Button = styled.Pressable`
 
 export const ButtonText = styled.Text`
   ${({ theme }) => css`
-    color: ${theme.COLORS.WHITE.TRANSPARENCE_100};
+    color: ${theme.COLORS.WHITE[100]};
     font-family: ${theme.FONTS.SEMI_BOLD};
   `}
   font-size: 16px;

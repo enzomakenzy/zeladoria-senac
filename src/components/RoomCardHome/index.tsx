@@ -4,6 +4,7 @@ import { TouchableOpacityProps } from "react-native";
 import { CardContainer, TitleContainer, RoomName, RoomInfo, RoomStatus, CheckStyledIcon, ScheduleStyledIcon, StatusRoomContainer, RoomDetailsContainer, InfoContainer, CleanButton, CleanText, BoldText } from "./styles"
 
 import CleanIcon from "@assets/clean-home.svg";
+import { useTheme } from "styled-components/native";
 
 type Props = TouchableOpacityProps & {
   roomName: string;
@@ -15,13 +16,14 @@ type Props = TouchableOpacityProps & {
 
 export function RoomCardHome({ id, roomName, roomCapacity, roomLocation, roomStatus, lastClean, ...rest }: Props) {
   const [roomStatusName, setRoomStatusName] = useState<"Limpa" | "Pendente">();
+  const theme = useTheme()
   
   useEffect(() => {
     roomStatus == "Limpa" ? setRoomStatusName("Limpa") : setRoomStatusName("Pendente");
   }, [roomStatus]);
 
   return (
-    <CardContainer {...rest}>
+    <CardContainer style={{ boxShadow: `0px 0px 2px ${theme.COLORS.BLACK.TRANSPARENCE_20}` }} {...rest}>
       <TitleContainer>
         <RoomName>{roomName}</RoomName>
         

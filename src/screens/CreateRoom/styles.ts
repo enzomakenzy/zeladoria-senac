@@ -6,12 +6,12 @@ export const Container = styled(SafeAreaView).attrs({
   edges: ["right", "left", "top"]
 })`
   flex: 1;
-  background-color: ${({ theme }) => theme.COLORS.WHITE.TRANSPARENCE_100};
+  background-color: ${({ theme }) => theme.COLORS.WHITE[100]};
 `;
 
 export const Main = styled.View`
   flex: 1;
-  background-color: ${({ theme }) => theme.COLORS.WHITE.TRANSPARENCE_100};
+  background-color: ${({ theme }) => theme.COLORS.WHITE[100]};
   padding: 15px 15px 0px 15px;
 `;
 

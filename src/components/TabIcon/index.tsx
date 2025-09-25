@@ -24,7 +24,7 @@ export function TabIcon({ Icon, FocusedIcon, focused}: Props) {
         />
         :
         <Icon 
-          fill={theme.COLORS.WHITE.TRANSPARENCE_100} 
+          fill={theme.COLORS.WHITE[100]} 
           height={27}
           width={27}
         />

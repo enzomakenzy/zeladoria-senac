@@ -2,7 +2,7 @@ import styled, { css } from "styled-components/native";
 
 export const HeaderContainer = styled.View`
   ${({ theme }) => css`
-    background-color: ${theme.COLORS.WHITE.TRANSPARENCE_100};
+    background-color: ${theme.COLORS.WHITE[100]};
     border-color: ${theme.COLORS.BLACK.TRANSPARENCE_6};
   `}
   width: 100%;
@@ -10,8 +10,9 @@ export const HeaderContainer = styled.View`
   flex-direction: row;
   align-items: center;
   gap: 15px;
-  border-bottom-width: 2px;
-  height: 56px
+  border-bottom-width: 1px;
+  height: 56px;
+  margin-bottom: 5px;
 `;
 
 export const ScreenName = styled.Text`

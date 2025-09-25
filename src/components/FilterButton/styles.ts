@@ -20,7 +20,7 @@ export const Button = styled.Pressable<PressedProp>`
 
 export const FilterName = styled.Text<PressedProp>`
   ${({ theme, pressed }) => css`
-    color: ${pressed ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.BLUE};
+    color: ${pressed ? theme.COLORS.WHITE[100] : theme.COLORS.BLUE};
     font-family: ${theme.FONTS.SEMI_BOLD};
   `}
   font-size: 14px;
@@ -28,7 +28,7 @@ export const FilterName = styled.Text<PressedProp>`
 `; 
 
 export const Icon = styled(FilterIcon).attrs<PressedProp>(({ theme, pressed }) => ({
-  fill: pressed ? theme.COLORS.WHITE.TRANSPARENCE_100 : theme.COLORS.BLUE,
+  fill: pressed ? theme.COLORS.WHITE[100] : theme.COLORS.BLUE,
   height: 26,
   width: 50
 }))``;

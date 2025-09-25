@@ -16,7 +16,7 @@ export function LargeButton({ textButton, primary = "blue", isLoading, ...rest }
   return (
     <Button primary={primary} {...rest}>
       { isLoading ? 
-        <ActivityIndicator color={theme.COLORS.WHITE.TRANSPARENCE_100} />
+        <ActivityIndicator color={theme.COLORS.WHITE[100]} />
       :
         <ButtonText>
           {textButton}

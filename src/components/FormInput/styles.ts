@@ -36,7 +36,7 @@ export const Input = styled.TextInput.attrs(({ theme }) => ({
   placeholderTextColor: theme.COLORS.BLACK.TRANSPARENCE_30
 }))<ErrorInputProp>`
   ${({ theme, editable = true, error }) => css`
-  color: ${editable ? theme.COLORS.BLUE : theme.COLORS.BLACK.TRANSPARENCE_39};
+  color: ${editable ? theme.COLORS.BLUE : theme.COLORS.BLACK.TRANSPARENCE_30};
   font-family: ${theme.FONTS.REGULAR};
   `}
   width: 88%;
