@@ -13,7 +13,7 @@ export const RoomInfoContainer = styled.View`
 
 export const RoomName = styled.Text`
   ${({ theme }) => css`
-    color: ${theme.COLORS.BLUE};
+    color: ${theme.COLORS.BLUE[200]};
     font-family: ${theme.FONTS.SEMI_BOLD};
   `}
   font-size: 22px;
@@ -31,7 +31,7 @@ export const RoomInfo = styled.Text`
 export const ButtonDetails = styled.TouchableOpacity.attrs({
   activeOpacity: 0.55
 })`
-  background-color: ${({ theme }) => theme.COLORS.BLUE};
+  background-color: ${({ theme }) => theme.COLORS.BLUE[200]};
   padding: 8px;
   border-radius: 6px;
   align-items: center;

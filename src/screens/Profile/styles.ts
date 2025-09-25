@@ -28,7 +28,7 @@ export const ImgNameContainer = styled.View`
 export const UserNameText = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.FONTS.MEDIUM};
-    color: ${theme.COLORS.BLUE};
+    color: ${theme.COLORS.BLUE[200]};
   `}
   font-size: 20px;
   width: 50%;
@@ -57,7 +57,7 @@ export const ButtonsContainer = styled.View`
 export const ModalChangePasswordTitle = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.FONTS.SEMI_BOLD};
-    color: ${theme.COLORS.BLUE};
+    color: ${theme.COLORS.BLUE[200]};
   `}
   font-size: 20px;
   text-align: center;

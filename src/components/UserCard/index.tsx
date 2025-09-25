@@ -44,7 +44,7 @@ export function UserCard({ userName, isAdmin }: UserCardProps) {
         isAdmin ?
           <UserAdminIcon />
         :
-          <UserStaffIcon fill={theme.COLORS.BLUE} />
+          <UserStaffIcon fill={theme.COLORS.BLUE[200]} />
       }
     </CardContainer>
   )

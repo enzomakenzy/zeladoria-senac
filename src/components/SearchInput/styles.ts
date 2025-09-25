@@ -3,7 +3,7 @@ import Search from "@assets/search.svg";
 import { SeachInputProps } from ".";
 
 export const InputContainer = styled.View<SeachInputProps>`
-  background-color: ${({ theme }) => theme.COLORS.BLACK.TRANSPARENCE_4};
+  background-color: ${({ theme }) => theme.COLORS.WHITE[200]};
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

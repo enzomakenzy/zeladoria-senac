@@ -35,13 +35,13 @@ export const CheckBoxContainer = styled.View`
 export const CheckBoxText = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.FONTS.REGULAR};
-    color: ${theme.COLORS.BLUE};
+    color: ${theme.COLORS.BLUE[200]};
   `}
   font-size: 18px;
 `
 
 export const StyledCheckBox = styled(Checkbox).attrs(({ theme }) => ({
-  color: theme.COLORS.BLUE
+  color: theme.COLORS.BLUE[200]
 }))``;
 
 // modal styles
@@ -56,7 +56,7 @@ export const ModalContentContainer = styled.View`
 export const ModalCreateRoomTitle = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.FONTS.SEMI_BOLD};
-    color: ${theme.COLORS.BLUE};
+    color: ${theme.COLORS.BLUE[200]};
   `}
   font-size: 25px;
   text-align: center;

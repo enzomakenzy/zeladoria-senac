@@ -30,7 +30,7 @@ export const Line = styled.View`
 export const RoomNameText = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.FONTS.MEDIUM};
-    color: ${theme.COLORS.BLUE};
+    color: ${theme.COLORS.BLUE[200]};
   `};
   font-size: 22px;
   margin: 18px 0px 10px; 
@@ -75,7 +75,7 @@ export const StatusRoomIcon = styled(Circle)<RoomProps>`
 
 export const ModalTitle = styled.Text`
   ${({ theme }) => css`
-    color: ${theme.COLORS.BLUE};
+    color: ${theme.COLORS.BLUE[200]};
     font-family: ${theme.FONTS.SEMI_BOLD};
   `}
   font-size: 18px;

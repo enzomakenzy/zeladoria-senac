@@ -37,7 +37,7 @@ export const ModalContentContainer = styled.View`
 export const ModalCreateRoomTitle = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.FONTS.SEMI_BOLD};
-    color: ${theme.COLORS.BLUE};
+    color: ${theme.COLORS.BLUE[200]};
   `}
   font-size: 25px;
 `;

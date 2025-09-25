@@ -124,6 +124,7 @@ export function Home() {
               <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ margin: 2 }}
               >
                 <FilterButton 
                   name="Limpa" 
@@ -161,7 +162,7 @@ export function Home() {
                 onPress={() => handleGoToDetailsRoom(item.id)}
               />
             )}
-            contentContainerStyle={{ margin: 1 }}
+            contentContainerStyle={{ margin: 2 }}
           />
         }
 

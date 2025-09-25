@@ -1,25 +1,27 @@
 import { useEffect, useState } from "react";
 import { TouchableOpacityProps } from "react-native";
 
-import { CardContainer, TitleContainer, RoomName, RoomInfo, RoomStatus, CheckStyledIcon, ScheduleStyledIcon, StatusRoomContainer, RoomDetailsContainer, InfoContainer, CleanButton, CleanText, BoldText } from "./styles"
+import { CardContainer, TitleContainer, RoomName, RoomInfo, RoomStatus, CheckStyledIcon, ScheduleStyledIcon, StatusRoomContainer, InfoContainer, BoldText } from "./styles"
 
-import CleanIcon from "@assets/clean-home.svg";
 import { useTheme } from "styled-components/native";
 
 type Props = TouchableOpacityProps & {
   roomName: string;
   roomCapacity: number;
   roomLocation: string;
-  roomStatus: "Limpa" | "Limpeza Pendente";
+  roomStatus: "Limpa" | "Em Limpeza" | "Limpeza Pendente" | "Suja";
   lastClean: string;
 }
 
 export function RoomCardHome({ id, roomName, roomCapacity, roomLocation, roomStatus, lastClean, ...rest }: Props) {
-  const [roomStatusName, setRoomStatusName] = useState<"Limpa" | "Pendente">();
-  const theme = useTheme()
+  const [roomStatusName, setRoomStatusName] = useState<"Limpa" | "Pendente" | "Suja" | "Em Limpeza">();
+  const theme = useTheme();
   
   useEffect(() => {
-    roomStatus == "Limpa" ? setRoomStatusName("Limpa") : setRoomStatusName("Pendente");
+    if (roomStatus === "Limpa") setRoomStatusName("Limpa");
+    if (roomStatus === "Em Limpeza") setRoomStatusName("Em Limpeza");
+    if (roomStatus === "Limpeza Pendente") setRoomStatusName("Pendente");
+    if (roomStatus === "Suja") setRoomStatusName("Suja");
   }, [roomStatus]);
 
   return (
@@ -38,19 +40,10 @@ export function RoomCardHome({ id, roomName, roomCapacity, roomLocation, roomSta
         </StatusRoomContainer>
       </TitleContainer>
       
-      <RoomDetailsContainer>
-        <InfoContainer>
-          <RoomInfo><BoldText>Capacidade:</BoldText> {roomCapacity}</RoomInfo>
-          <RoomInfo><BoldText>Localização:</BoldText> {roomLocation}</RoomInfo>
-        </InfoContainer>
-
-        { roomStatus === "Limpeza Pendente" &&
-          <CleanButton>
-            <CleanText>Limpar</CleanText>
-            <CleanIcon />
-          </CleanButton>
-          }
-      </RoomDetailsContainer>
+      <InfoContainer>
+        <RoomInfo><BoldText>Capacidade:</BoldText> {roomCapacity} pessas</RoomInfo>
+        <RoomInfo><BoldText>Localização:</BoldText> {roomLocation}</RoomInfo>
+      </InfoContainer>
     </CardContainer>
   );
 }

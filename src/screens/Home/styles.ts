@@ -17,7 +17,7 @@ export const Main = styled.View`
 
 export const OptionsRoomsContainer = styled.View`
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 `
 
 export const SearchFilterContainer = styled.View` 
@@ -27,12 +27,12 @@ export const SearchFilterContainer = styled.View`
 `; 
 
 export const FiltersContainer = styled.View`
-  gap: 10px;
+  gap: 8px;
 `;
 
 export const FilterText = styled.Text`
   ${({ theme }) => css`
-    color: ${theme.COLORS.BLUE};
+    color: ${theme.COLORS.BLUE[200]};
     font-family: ${theme.FONTS.REGULAR};
   `}
   font-size: 14px;

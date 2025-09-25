@@ -14,7 +14,7 @@ export const InputFormContainer = styled.View`
 export const InputNameText = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.FONTS.REGULAR};
-    color: ${theme.COLORS.BLUE};
+    color: ${theme.COLORS.BLUE[200]};
   `}
   font-size: 14px;
 `;
@@ -36,7 +36,7 @@ export const Input = styled.TextInput.attrs(({ theme }) => ({
   placeholderTextColor: theme.COLORS.BLACK.TRANSPARENCE_30
 }))<ErrorInputProp>`
   ${({ theme, editable = true, error }) => css`
-  color: ${editable ? theme.COLORS.BLUE : theme.COLORS.BLACK.TRANSPARENCE_30};
+  color: ${editable ? theme.COLORS.BLUE[200] : theme.COLORS.BLACK.TRANSPARENCE_30};
   font-family: ${theme.FONTS.REGULAR};
   `}
   width: 88%;
@@ -53,9 +53,9 @@ export const ErrorInputText = styled.Text<ErrorInputProp>`
 `;
 
 export const StyledUserIcon = styled(UserIcon).attrs<ErrorInputProp>(({ theme, error }) => ({
-  fill: error ? theme.COLORS.RED : theme.COLORS.BLUE
+  fill: error ? theme.COLORS.RED : theme.COLORS.BLUE[200]
 }))``;
 
 export const StyledLockIcon = styled(LockIcon).attrs<ErrorInputProp>(({ theme, error }) => ({
-  fill: error ? theme.COLORS.RED : theme.COLORS.BLUE
+  fill: error ? theme.COLORS.RED : theme.COLORS.BLUE[200]
 }))``;

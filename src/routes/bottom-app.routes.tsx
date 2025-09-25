@@ -43,7 +43,7 @@ export function BottomAppRoutes() {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: theme.COLORS.BLUE,
+          backgroundColor: theme.COLORS.BLUE[200],
           borderTopWidth: 0,
           height: 54 + insets.bottom
         },

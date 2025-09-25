@@ -11,7 +11,7 @@ export const Button = styled.TouchableOpacity.attrs({
   border-radius: 6px;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme, primary }) => (primary === "blue" ? theme.COLORS.BLUE 
+  background-color: ${({ theme, primary }) => (primary === "blue" ? theme.COLORS.BLUE[200] 
     : 
     primary === "red" ? theme.COLORS.RED : theme.COLORS.ORANGE.MAIN
   )};

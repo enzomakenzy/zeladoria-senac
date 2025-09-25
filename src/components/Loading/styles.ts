@@ -8,6 +8,6 @@ export const Container = styled(SafeAreaView)`
 `;
 
 export const LoadingIcon = styled.ActivityIndicator.attrs(({ theme }) => ({
-  color: theme.COLORS.BLUE,
+  color: theme.COLORS.BLUE[200],
   size: 34
 }))``;

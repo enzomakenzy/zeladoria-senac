@@ -15,7 +15,10 @@ export default {
       TRANSPARENCE_100: "#000000"
     },
 
-    BLUE: "#004A8D",
+    BLUE: {
+      100: "",
+      200: "#004A8D"
+    },
     
     ORANGE: {
       MAIN: "#F68E11",

@@ -15,7 +15,7 @@ export const UserInfoContainer = styled.View`
 
 export const UserNameText = styled.Text`
   ${({ theme }) => css`
-    color: ${theme.COLORS.BLUE};
+    color: ${theme.COLORS.BLUE[200]};
     font-family: ${theme.FONTS.REGULAR};
   `}
   font-size: 18px;
@@ -23,7 +23,7 @@ export const UserNameText = styled.Text`
 
 export const UserTypeText = styled.Text`
   ${({ theme }) => css`
-    color: ${theme.COLORS.BLUE};
+    color: ${theme.COLORS.BLUE[200]};
     font-family: ${theme.FONTS.REGULAR};
   `}
   font-size: 14px;

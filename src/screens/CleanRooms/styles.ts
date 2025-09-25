@@ -18,7 +18,7 @@ export const Main = styled.View`
 export const ModalRoomNameTitle = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.FONTS.SEMI_BOLD};
-    color: ${theme.COLORS.BLUE};
+    color: ${theme.COLORS.BLUE[200]};
   `}
   font-size: 26px;
   text-align: center;
@@ -49,7 +49,7 @@ export const ModalCloseButton = styled.TouchableOpacity.attrs({
   activeOpacity: 0.55
 })`
   width: 100%;
-  background-color: ${({ theme }) => theme.COLORS.BLUE};
+  background-color: ${({ theme }) => theme.COLORS.BLUE[200]};
   padding: 5px;
   border-radius: 6px;
 `
