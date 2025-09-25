@@ -7,10 +7,14 @@ import { ProfileStackRoutes } from "@routes/stacks/profile-stack.routes";
 import { CleanRooms } from "@screens/CleanRooms";
 import { Notifications } from "@screens/Notifications";
 
-import HomeIcon from "@assets/home.svg";
-import CleanIcon from "@assets/clean.svg";
-import NotificationIcon from "@assets/notification.svg";
-import ProfileIcon from "@assets/user.svg";
+import HomeIcon from "@assets/house-light.svg";
+import HomeFocusedIcon from "@assets/house-solid.svg";
+import CleanIcon from "@assets/broom-light.svg";
+import CleanFocusedIcon from "@assets/broom-solid.svg";
+import NotificationIcon from "@assets/bell-light.svg";
+import NotificationFocusedIcon from "@assets/bell-solid.svg";
+import ProfileIcon from "@assets/user-light.svg";
+import ProfileFocusedIcon from "@assets/user-solid.svg";
 
 import { useTheme } from "styled-components/native";
 
@@ -59,7 +63,7 @@ export function BottomAppRoutes() {
         name="homeStack"
         component={HomeStackRoutes}
         options={{
-          tabBarIcon: ({ focused }) => <TabIcon Icon={HomeIcon} focused={focused} />
+          tabBarIcon: ({ focused }) => <TabIcon Icon={HomeIcon} FocusedIcon={HomeFocusedIcon} focused={focused} />
         }}
       />
 
@@ -68,7 +72,7 @@ export function BottomAppRoutes() {
           name="cleanRooms"
           component={CleanRooms}
           options={{
-            tabBarIcon: ({ focused }) => <TabIcon Icon={CleanIcon} focused={focused} />
+            tabBarIcon: ({ focused }) => <TabIcon Icon={CleanIcon} FocusedIcon={CleanFocusedIcon} focused={focused} />
           }}
         />
       }
@@ -77,7 +81,7 @@ export function BottomAppRoutes() {
         name="notification"
         component={Notifications}
         options={{
-          tabBarIcon: ({ focused }) => <TabIcon Icon={NotificationIcon} focused={focused} />
+          tabBarIcon: ({ focused }) => <TabIcon Icon={NotificationIcon} FocusedIcon={NotificationFocusedIcon} focused={focused} />
         }}
       />
 
@@ -85,7 +89,7 @@ export function BottomAppRoutes() {
         name="profileStack"
         component={ProfileStackRoutes}
         options={{
-          tabBarIcon: ({ focused }) => <TabIcon Icon={ProfileIcon} focused={focused} />
+          tabBarIcon: ({ focused }) => <TabIcon Icon={ProfileIcon} FocusedIcon={ProfileFocusedIcon} focused={focused} />
         }}
       />
     </Navigator>
