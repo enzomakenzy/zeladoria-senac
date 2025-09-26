@@ -17,6 +17,8 @@ export const Button = styled.Pressable<PressedProp>`
     :
     theme.COLORS.WHITE[200]
   )};
+  border-width: 1px;
+  border-color: ${({ theme }) => theme.COLORS.BLACK.TRANSPARENCE_6};
 `;
 
 export const FilterName = styled.Text<PressedProp>`

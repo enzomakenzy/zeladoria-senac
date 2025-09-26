@@ -12,7 +12,6 @@ export function SearchInput({ flex, ...rest }: SeachInputProps) {
   return (
     <InputContainer 
       flex={flex}
-      style={{ boxShadow: `0px 0px 2px ${theme.COLORS.BLACK.TRANSPARENCE_20}` }}
     >
       <Input {...rest} />
       <SearchIcon />

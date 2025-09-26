@@ -7,7 +7,7 @@ export type ButtonColorProp = {
 export const Button = styled.TouchableOpacity.attrs({
   activeOpacity: 0.6
 })<ButtonColorProp>`
-  padding: 8px;
+  padding: 9px;
   border-radius: 6px;
   align-items: center;
   justify-content: center;

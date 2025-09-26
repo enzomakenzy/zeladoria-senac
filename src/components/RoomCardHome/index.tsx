@@ -25,7 +25,7 @@ export function RoomCardHome({ id, roomName, roomCapacity, roomLocation, roomSta
   }, [roomStatus]);
 
   return (
-    <CardContainer style={{ boxShadow: `0px 0px 2px ${theme.COLORS.BLACK.TRANSPARENCE_20}` }} {...rest}>
+    <CardContainer {...rest}>
       <TitleContainer>
         <RoomName>{roomName}</RoomName>
         

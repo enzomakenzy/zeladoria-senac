@@ -1,6 +1,7 @@
 import { TextInputProps } from "react-native";
 
 import { InputFormContainer, InputNameText, Input, ErrorInputText, InputIconContainer, StyledUserIcon, StyledLockIcon } from "./styles" 
+import { useTheme } from "styled-components/native";
 
 type Props = TextInputProps & {
   inputName: string;

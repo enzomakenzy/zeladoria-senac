@@ -9,14 +9,16 @@ export const InputContainer = styled.View<SeachInputProps>`
   align-items: center;
   border-radius: 6px;
   flex: ${({ flex }) => flex ? 1 : "none"};
+  border-width: 1px;
+  border-color: ${({ theme }) => theme.COLORS.BLACK.TRANSPARENCE_6};
 `;
 
 export const Input = styled.TextInput.attrs(({ theme }) => ({
   placeholderTextColor: theme.COLORS.BLACK.TRANSPARENCE_30
 }))`
   ${({ theme }) => css`
-  color: ${theme.COLORS.BLACK.TRANSPARENCE_100};
-  font-family: ${theme.FONTS.REGULAR};
+    color: ${theme.COLORS.BLACK.TRANSPARENCE_100};
+    font-family: ${theme.FONTS.REGULAR};
   `}
   padding: 8px 12px;
   font-size: 16px;

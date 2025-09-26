@@ -15,7 +15,6 @@ export function FilterButton({ contentType = "name", name, isActive = false, ...
     <Button
       {...rest}
       pressed={isActive}
-      style={{ boxShadow: `0px 0px 2px ${theme.COLORS.BLACK.TRANSPARENCE_20}` }}
     >
       { name ? 
         <FilterName pressed={isActive}>{name}</FilterName>

@@ -3,7 +3,7 @@ import styled, { css } from "styled-components/native";
 import Check from "@assets/check.svg";
 import Schedule from "@assets/schedule.svg";
 import Pending from "@assets/pending.svg";
-import Dirty from "@assets/pending.svg";
+import Dirty from "@assets/dirty.svg";
 
 type StatusProp = {
   roomStatus: "Limpa" | "Em Limpeza" | "Limpeza Pendente" | "Suja"
@@ -17,6 +17,8 @@ export const CardContainer = styled.TouchableOpacity.attrs({
   gap: 4px;
   border-radius: 6px;
   margin-bottom: 14px;
+  border-width: 1px;
+  border-color: ${({ theme }) => theme.COLORS.BLACK.TRANSPARENCE_6};
 `;
 
 export const TitleContainer = styled.View`
@@ -71,7 +73,7 @@ export const ScheduleIcon = styled(Schedule).attrs(({ theme }) => ({
   margin-top: 1px;
 `;
 
-export const PendingIcon = styled(Check).attrs(({ theme }) => ({
+export const PendingIcon = styled(Pending).attrs(({ theme }) => ({
   fill: theme.COLORS.ORANGE.MAIN,
   height: 16,
   width: 16
