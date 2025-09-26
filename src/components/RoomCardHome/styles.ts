@@ -45,7 +45,7 @@ export const RoomStatus = styled.Text<StatusProp>`
     font-size: ${theme.FONTS.MEDIUM};
   `}
   font-size: 14px;
-  `;
+`;
 
 export const CheckStyledIcon = styled(CheckIcon).attrs<StatusProp>(({ theme, roomStatus }) => ({
   fill: roomStatus == "Limpa" ? theme.COLORS.GREEN : theme.COLORS.ORANGE.MAIN,
