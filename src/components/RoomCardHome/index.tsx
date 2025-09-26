@@ -47,7 +47,7 @@ export function RoomCardHome({ id, roomName, roomCapacity, roomLocation, roomSta
       </TitleContainer>
       
       <InfoContainer>
-        <RoomInfo><BoldText>Capacidade:</BoldText> {roomCapacity} pessas</RoomInfo>
+        <RoomInfo><BoldText>Capacidade:</BoldText> {roomCapacity} pessoas</RoomInfo>
         <RoomInfo><BoldText>Localização:</BoldText> {roomLocation}</RoomInfo>
       </InfoContainer>
     </CardContainer>

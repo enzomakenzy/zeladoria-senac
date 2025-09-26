@@ -21,24 +21,26 @@ export const CardContainer = styled.TouchableOpacity.attrs({
 
 export const TitleContainer = styled.View`
   flex-direction: row;
-  align-items: center;
   justify-content: space-between;
 `;
 
-export const RoomName = styled.Text`
+export const RoomName = styled.Text.attrs({
+  numberOfLines: 2
+})`
   ${({ theme }) => css`
     color: ${theme.COLORS.BLUE[200]};
     font-family: ${theme.FONTS.SEMI_BOLD};
   `}
   font-size: 18px;
   margin-bottom: 4px;
+  max-width: 70%;
 `;  
 
 export const StatusRoomContainer = styled.View`
   flex-direction: row;
-  align-items: center;
   gap: 4px;
   justify-content: center;
+  margin-top: 4px;
 `;
 
 export const RoomStatus = styled.Text<StatusProp>`
@@ -56,26 +58,34 @@ export const RoomStatus = styled.Text<StatusProp>`
 export const CheckIcon = styled(Check).attrs(({ theme }) => ({
   fill: theme.COLORS.GREEN,
   height: 16,
-  width: 16
-}))``;
+  width: 16,
+}))`
+  margin-top: 1px;
+`;
 
 export const ScheduleIcon = styled(Schedule).attrs(({ theme }) => ({
   fill: theme.COLORS.BLUE[100],
   height: 16,
   width: 16
-}))``;
+}))`
+  margin-top: 1px;
+`;
 
 export const PendingIcon = styled(Check).attrs(({ theme }) => ({
   fill: theme.COLORS.ORANGE.MAIN,
   height: 16,
   width: 16
-}))``;
+}))`
+  margin-top: 1px;
+`;
 
 export const DirtyIcon = styled(Dirty).attrs(({ theme }) => ({
   fill: theme.COLORS.RED,
   height: 16,
   width: 16
-}))``;
+}))`
+  margin-top: 1px;
+`;
 
 export const RoomDetailsContainer = styled.View`
   flex-direction: row;
@@ -87,7 +97,9 @@ export const InfoContainer = styled.View`
   gap: 4px;
 `;
 
-export const RoomInfo = styled.Text`
+export const RoomInfo = styled.Text.attrs({
+  numberOfLines: 1
+})`
   ${({ theme }) => css`
     color: ${theme.COLORS.BLACK.TRANSPARENCE_100};
     font-family: ${theme.FONTS.REGULAR};
