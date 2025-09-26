@@ -24,7 +24,7 @@ export const Input = styled.TextInput.attrs(({ theme }) => ({
 `;
 
 export const SearchIcon = styled(Search).attrs(({ theme }) => ({
-  fill: theme.COLORS.BLUE
+  fill: theme.COLORS.BLUE[200]
 }))`
   margin-right: 12px;
 `;

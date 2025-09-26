@@ -10,7 +10,7 @@ export const Container = styled(SafeAreaView)`
 export const Title = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.FONTS.SEMI_BOLD};
-    color: ${theme.COLORS.BLUE};
+    color: ${theme.COLORS.BLUE[200]};
   `}
   font-size: 26px;
   text-align: center;
@@ -19,7 +19,7 @@ export const Title = styled.Text`
 export const DescriptionText = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.FONTS.REGULAR};
-    color: ${theme.COLORS.BLUE};
+    color: ${theme.COLORS.BLUE[200]};
   `}
   font-size: 20px;
   margin-bottom: 25px;
