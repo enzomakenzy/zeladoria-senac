@@ -1,7 +1,9 @@
 import styled, { css } from "styled-components/native";
 
-import CheckIcon from "@assets/check.svg";
-import ScheduleIcon from "@assets/schedule.svg"
+import Check from "@assets/check.svg";
+import Schedule from "@assets/schedule.svg";
+import Pending from "@assets/pending.svg";
+import Dirty from "@assets/pending.svg";
 
 type StatusProp = {
   roomStatus: "Limpa" | "Em Limpeza" | "Limpeza Pendente" | "Suja"
@@ -41,20 +43,36 @@ export const StatusRoomContainer = styled.View`
 
 export const RoomStatus = styled.Text<StatusProp>`
   ${({ theme, roomStatus }) => css`
-    color: ${roomStatus == "Limpa" ? theme.COLORS.GREEN : theme.COLORS.ORANGE.MAIN};
+    color: ${
+        roomStatus == "Limpa" ? theme.COLORS.GREEN 
+      : roomStatus === "Em Limpeza" ? theme.COLORS.BLUE[100] 
+      : roomStatus === "Limpeza Pendente" ? theme.COLORS.ORANGE.MAIN : theme.COLORS.RED
+    };
     font-size: ${theme.FONTS.MEDIUM};
   `}
   font-size: 14px;
 `;
 
-export const CheckStyledIcon = styled(CheckIcon).attrs<StatusProp>(({ theme, roomStatus }) => ({
-  fill: roomStatus == "Limpa" ? theme.COLORS.GREEN : theme.COLORS.ORANGE.MAIN,
+export const CheckIcon = styled(Check).attrs(({ theme }) => ({
+  fill: theme.COLORS.GREEN,
   height: 16,
   width: 16
 }))``;
 
-export const ScheduleStyledIcon = styled(ScheduleIcon).attrs<StatusProp>(({ theme, roomStatus }) => ({
-  fill: roomStatus == "Limpa" ? theme.COLORS.GREEN : theme.COLORS.ORANGE.MAIN,
+export const ScheduleIcon = styled(Schedule).attrs(({ theme }) => ({
+  fill: theme.COLORS.BLUE[100],
+  height: 16,
+  width: 16
+}))``;
+
+export const PendingIcon = styled(Check).attrs(({ theme }) => ({
+  fill: theme.COLORS.ORANGE.MAIN,
+  height: 16,
+  width: 16
+}))``;
+
+export const DirtyIcon = styled(Dirty).attrs(({ theme }) => ({
+  fill: theme.COLORS.RED,
   height: 16,
   width: 16
 }))``;

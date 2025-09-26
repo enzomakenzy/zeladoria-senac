@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { TouchableOpacityProps } from "react-native";
 
-import { CardContainer, TitleContainer, RoomName, RoomInfo, RoomStatus, CheckStyledIcon, ScheduleStyledIcon, StatusRoomContainer, InfoContainer, BoldText } from "./styles"
+import { CardContainer, TitleContainer, RoomName, RoomInfo, RoomStatus, CheckIcon, ScheduleIcon, PendingIcon, DirtyIcon, StatusRoomContainer, InfoContainer, BoldText } from "./styles"
 
 import { useTheme } from "styled-components/native";
 
@@ -33,9 +33,15 @@ export function RoomCardHome({ id, roomName, roomCapacity, roomLocation, roomSta
           <RoomStatus roomStatus={roomStatus}>{roomStatusName}</RoomStatus>
 
           { roomStatus === "Limpa" ?
-              <CheckStyledIcon roomStatus={roomStatus} />
+              <CheckIcon />
             :
-              <ScheduleStyledIcon roomStatus={roomStatus} />
+              roomStatus === "Em Limpeza" ?
+                <ScheduleIcon />
+              :
+                roomStatus === "Limpeza Pendente" ?
+                  <PendingIcon />
+                :
+                  <DirtyIcon />
           }
         </StatusRoomContainer>
       </TitleContainer>
