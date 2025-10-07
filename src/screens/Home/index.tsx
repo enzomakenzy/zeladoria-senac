@@ -103,18 +103,11 @@ export function Home() {
       
       <Main>
         <OptionsRoomsContainer>
-          <SearchFilterContainer>
-            <FilterButton 
-              isActive={filterActivity} 
-              onPress={handlePressFilterButton} 
-            />
-            <SearchInput 
-              flex 
-              value={search} 
-              onChangeText={setSearch} 
-              placeholder="Nome da sala"
-            />
-          </SearchFilterContainer>
+          <SearchInput 
+            value={search} 
+            onChangeText={setSearch} 
+            placeholder="Nome da sala"
+          />
 
           {
             filterActivity &&

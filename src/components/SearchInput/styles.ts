@@ -1,14 +1,12 @@
 import styled, { css } from "styled-components/native";
 import Search from "@assets/search.svg";
-import { SeachInputProps } from ".";
 
-export const InputContainer = styled.View<SeachInputProps>`
+export const InputContainer = styled.View`
   background-color: ${({ theme }) => theme.COLORS.WHITE[200]};
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   border-radius: 6px;
-  flex: ${({ flex }) => flex ? 1 : "none"};
   border-width: 1px;
   border-color: ${({ theme }) => theme.COLORS.BLACK.TRANSPARENCE_6};
 `;
