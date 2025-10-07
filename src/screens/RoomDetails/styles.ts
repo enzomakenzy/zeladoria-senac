@@ -5,7 +5,7 @@ import Circle from "@assets/circle.svg";
 
 type RoomProps = {
   status?: boolean;
-  textStyle?: "regular" | "medium";
+  textStyle?: "regular" | "semibold";
 }
 
 export const Container = styled(SafeAreaView).attrs({
@@ -18,7 +18,7 @@ export const Container = styled(SafeAreaView).attrs({
 export const Main = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.COLORS.WHITE[100]};
-  padding: 15px;
+  padding: 4px 15px;
 `;
 
 export const Line = styled.View`
@@ -29,11 +29,11 @@ export const Line = styled.View`
 
 export const RoomNameText = styled.Text`
   ${({ theme }) => css`
-    font-family: ${theme.FONTS.MEDIUM};
+    font-family: ${theme.FONTS.SEMI_BOLD};
     color: ${theme.COLORS.BLUE[200]};
   `};
-  font-size: 22px;
-  margin: 18px 0px 10px; 
+  font-size: 20px;
+  margin-bottom: 10px;
 `;
 
 export const InfoRoomContainer = styled.View`
@@ -48,10 +48,10 @@ export const ItemInfoContainer = styled.View`
 
 export const InfoRoomText = styled.Text<RoomProps>`
   ${({ theme, textStyle = "regular" }) => css`
-    font-family: ${textStyle === "regular" ? theme.FONTS.REGULAR : theme.FONTS.MEDIUM};
+    font-family: ${textStyle === "regular" ? theme.FONTS.REGULAR : theme.FONTS.SEMI_BOLD};
     color: ${theme.COLORS.BLACK.TRANSPARENCE_100};
   `}
-  font-size: 18px;
+  font-size: 16px;
 `;
 
 export const StatusRoomContainer = styled.View`

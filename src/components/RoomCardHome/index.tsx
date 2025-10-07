@@ -1,21 +1,17 @@
 import { useEffect, useState } from "react";
 import { TouchableOpacityProps } from "react-native";
 
-import { CardContainer, TitleContainer, RoomName, RoomInfo, RoomStatus, CheckIcon, ScheduleIcon, PendingIcon, DirtyIcon, StatusRoomContainer, InfoContainer, BoldText } from "./styles"
-
-import { useTheme } from "styled-components/native";
+import { CardContainer, TitleContainer, RoomName, RoomInfo, RoomStatus, CheckIcon, ScheduleIcon, PendingIcon, DirtyIcon, StatusRoomContainer, BoldText } from "./styles"
 
 type Props = TouchableOpacityProps & {
   roomName: string;
   roomCapacity: number;
   roomLocation: string;
   roomStatus: "Limpa" | "Em Limpeza" | "Limpeza Pendente" | "Suja";
-  lastClean: string;
 }
 
-export function RoomCardHome({ id, roomName, roomCapacity, roomLocation, roomStatus, lastClean, ...rest }: Props) {
+export function RoomCardHome({ id, roomName, roomCapacity, roomLocation, roomStatus, ...rest }: Props) {
   const [roomStatusName, setRoomStatusName] = useState<"Limpa" | "Pendente" | "Suja" | "Em Limpeza">();
-  const theme = useTheme();
   
   useEffect(() => {
     if (roomStatus === "Limpa") setRoomStatusName("Limpa");
@@ -46,10 +42,8 @@ export function RoomCardHome({ id, roomName, roomCapacity, roomLocation, roomSta
         </StatusRoomContainer>
       </TitleContainer>
       
-      <InfoContainer>
-        <RoomInfo><BoldText>Capacidade:</BoldText> {roomCapacity} pessoas</RoomInfo>
-        <RoomInfo><BoldText>Localização:</BoldText> {roomLocation}</RoomInfo>
-      </InfoContainer>
+      <RoomInfo><BoldText>Capacidade:</BoldText> {roomCapacity} pessoas</RoomInfo>
+      <RoomInfo><BoldText>Localização:</BoldText> {roomLocation}</RoomInfo>
     </CardContainer>
   );
 }

@@ -1,4 +1,4 @@
-import { Container, InfoRoomContainer, InfoRoomText, Line, Main, ModalButtonsContainer, ModalInfoContainer, ModalTitle, RoomNameText } from "./styles";
+import { Container, InfoRoomContainer, InfoRoomText, Main, ModalButtonsContainer, ModalInfoContainer, ModalTitle, RoomNameText } from "./styles";
 
 import { Header } from "@components/Header";
 import { FormInput } from "@components/FormInput";
@@ -26,6 +26,7 @@ import { useAuth } from "@hooks/useAuth";
 import { transformUtcToParseISO } from "@utils/transformUtcToParseISO";
 import { useFocusScreen } from "@hooks/useFocusScreen";
 import { Loading } from "@components/Loading";
+import { Image } from "react-native";
 
 type RoomDetailsScreenProps = NativeStackScreenProps<HomeStackProps, "roomDetails">;
 
@@ -49,6 +50,11 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
   });
 
   const { qr_code_id } = route.params;
+
+  const baseUrl = "https://zeladoria.tsr.net.br"
+  const imagePath = room.imagem;
+
+  const imageUrl = `${baseUrl}${imagePath}`
 
   async function fetchDetailRoom() {
     try {
@@ -109,6 +115,8 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
   useFocusScreen(() => {
     fetchDetailRoom();
   });
+
+  console.log(room.responsaveis);
   
   return (
     <Container>
@@ -149,7 +157,6 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
       <Header screenName="Detalhes da sala" variant />
 
       <Main>
-        <Line />
         { isLoading ? (
           <Loading />
         )
@@ -161,35 +168,63 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
 
           <InfoRoomContainer>
             <InfoRoomText>
-              <InfoRoomText textStyle="medium">Capacidade: </InfoRoomText>
+              <InfoRoomText textStyle="semibold">Capacidade: </InfoRoomText>
               {room.capacidade}
             </InfoRoomText>
 
             <InfoRoomText>
-              <InfoRoomText textStyle="medium">Status da limpeza: </InfoRoomText>
+              <InfoRoomText textStyle="semibold">Status da limpeza: </InfoRoomText>
               {room.status_limpeza}
             </InfoRoomText>
 
             <InfoRoomText>
-              <InfoRoomText textStyle="medium">Localização: </InfoRoomText>
+              <InfoRoomText textStyle="semibold">Localização: </InfoRoomText>
               {room.localizacao}
             </InfoRoomText>
 
             <InfoRoomText>
-              <InfoRoomText textStyle="medium">Última limpeza: </InfoRoomText>
+              <InfoRoomText textStyle="semibold">Última limpeza: </InfoRoomText>
               {transformUtcToParseISO(room.ultima_limpeza_data_hora)}
             </InfoRoomText>
 
             <InfoRoomText>
-              <InfoRoomText textStyle="medium">Último funcionário a limpar: </InfoRoomText>
+              <InfoRoomText textStyle="semibold">Último funcionário a limpar: </InfoRoomText>
               {room.ultima_limpeza_funcionario}
             </InfoRoomText>
 
-            { room.descricao &&
-              <InfoRoomText>
-                <InfoRoomText textStyle="medium">Descrição: </InfoRoomText>
-                {room.descricao}
-              </InfoRoomText>
+            {
+              room.responsaveis && room.responsaveis.length > 0 &&
+                <InfoRoomText>
+                  <InfoRoomText textStyle="semibold">Responsáveis: </InfoRoomText>
+                  {room.responsaveis ? room.responsaveis.join(", ") : room.responsaveis}
+                </InfoRoomText>
+            }
+
+            {
+              room.instrucoes &&
+                <InfoRoomText>
+                  <InfoRoomText textStyle="semibold">Instruções: </InfoRoomText>
+                  {room.instrucoes}
+                </InfoRoomText>
+            }
+
+            {
+              room.descricao &&
+                <InfoRoomText>
+                  <InfoRoomText textStyle="semibold">Descrição: </InfoRoomText>
+                  {room.descricao}
+                </InfoRoomText>
+            }
+
+            {
+              room.imagem &&
+                <Image 
+                  source={{ uri: imageUrl }}
+                  width={150}
+                  height={150}
+                  resizeMode="contain"
+                  style={{ borderRadius: 6, marginTop: 10 }}
+                />
             }
           </InfoRoomContainer>
 

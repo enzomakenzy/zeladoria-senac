@@ -173,7 +173,6 @@ export function Home() {
                 roomCapacity={item.capacidade} 
                 roomLocation={item.localizacao} 
                 roomStatus={item.status_limpeza} 
-                lastClean={item.ultima_limpeza_data_hora}
                 onPress={() => handleGoToDetailsRoom(item.qr_code_id)}
               />
             )}

@@ -94,11 +94,6 @@ export const RoomDetailsContainer = styled.View`
   align-items: flex-end;
 `;
 
-export const InfoContainer = styled.View`
-  flex: 1;
-  gap: 4px;
-`;
-
 export const RoomInfo = styled.Text.attrs({
   numberOfLines: 1
 })`
