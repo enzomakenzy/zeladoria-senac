@@ -48,12 +48,12 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
     resolver: zodResolver(cleanRoomFormSchema)
   });
 
-  const { id } = route.params;
+  const { qr_code_id } = route.params;
 
   async function fetchDetailRoom() {
     try {
       setIsLoading(true);
-      const { data } = await api.get(`/salas/${id}/`);
+      const { data } = await api.get(`/salas/${qr_code_id}/`);
 
       setRoom(data)
     } catch (error) {
@@ -78,7 +78,7 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
   
   async function handleSetRoomClean({ observations }: CleanRoomFormData) {
     try {
-      await api.post(`/salas/${id}/marcar_como_limpa/`, {
+      await api.post(`/salas/${qr_code_id}/marcar_como_limpa/`, {
         observacoes: observations
       });
       

@@ -9,7 +9,7 @@ import { RoomDetails } from "@screens/RoomDetails";
 export type HomeStackProps = {
   home: undefined;
   roomDetails: {
-    id: number;
+    qr_code_id: string;
   };
   createRoom: undefined;
   editRoom: {

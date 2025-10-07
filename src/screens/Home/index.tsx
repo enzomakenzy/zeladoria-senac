@@ -8,6 +8,7 @@ import { SearchInput } from "@components/SearchInput";
 import { RoomCardHome } from "@components/RoomCardHome";
 import { FilterButton } from "@components/FilterButton";
 import { AdminButton } from "@components/AdminButton";
+import { Loading } from "@components/Loading";
 
 import { useNavigation } from "@react-navigation/native";
 import { HomeStackNavigationProps } from "@routes/stacks/home-stack.routes";
@@ -20,7 +21,6 @@ import { AppError } from "@utils/AppError";
 
 import Toast from "react-native-toast-message";
 import { useFocusScreen } from "@hooks/useFocusScreen";
-import { Loading } from "@components/Loading";
 
 export function Home() {
   const { user } = useAuth();
@@ -35,8 +35,8 @@ export function Home() {
   const [inCleaningFilterActivity, setInCleaningFilterActivity] = useState(false);
   const [dirtyFilterActivy, setDirtyFilterActivity] = useState(false);
 
-  function handleGoToDetailsRoom(id: number) {
-    navigation.navigate("roomDetails", { id: id });
+  function handleGoToDetailsRoom(qr_code_id: string) {
+    navigation.navigate("roomDetails", { qr_code_id });
   }
 
   const filteredRooms = rooms.filter((room) => {
@@ -174,7 +174,7 @@ export function Home() {
                 roomLocation={item.localizacao} 
                 roomStatus={item.status_limpeza} 
                 lastClean={item.ultima_limpeza_data_hora}
-                onPress={() => handleGoToDetailsRoom(item.id)}
+                onPress={() => handleGoToDetailsRoom(item.qr_code_id)}
               />
             )}
           />
