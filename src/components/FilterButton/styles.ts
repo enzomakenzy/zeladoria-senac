@@ -24,7 +24,7 @@ export const Button = styled.Pressable<PressedProp>`
 export const FilterName = styled.Text<PressedProp>`
   ${({ theme, pressed }) => css`
     color: ${pressed ? theme.COLORS.WHITE[100] : theme.COLORS.BLUE[200]};
-    font-family: ${theme.FONTS.SEMI_BOLD};
+    font-family: ${theme.FONTS.REGULAR};
   `}
   font-size: 14px;
   padding: 2px 4px;

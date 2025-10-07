@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FlatList, ScrollView } from "react-native";
 
-import { Container, FiltersContainer, FilterText, Main, OptionsRoomsContainer, SearchFilterContainer } from "./styles";
+import { Container, FiltersContainer, Main, OptionsRoomsContainer } from "./styles";
 
 import { Header } from "@components/Header";
 import { SearchInput } from "@components/SearchInput";
@@ -30,9 +30,10 @@ export function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [rooms, setRooms] = useState<RoomDTO[]>([] as RoomDTO[]);
   const [search, setSearch] = useState("");
-  const [filterActivity, setFilterActivity] = useState(false);
   const [cleanFilterActivity, setCleanFilterActivity] = useState(false);
   const [pendingCleaningFilterActivity, setPendingCleaningFilterActivity] = useState(false);
+  const [inCleaningFilterActivity, setInCleaningFilterActivity] = useState(false);
+  const [dirtyFilterActivy, setDirtyFilterActivity] = useState(false);
 
   function handleGoToDetailsRoom(id: number) {
     navigation.navigate("roomDetails", { id: id });
@@ -44,25 +45,39 @@ export function Home() {
     const matchStatus =
     (cleanFilterActivity && room.status_limpeza === "Limpa") ||
     (pendingCleaningFilterActivity && room.status_limpeza === "Limpeza Pendente") ||
-    (!cleanFilterActivity && !pendingCleaningFilterActivity); 
+    (inCleaningFilterActivity && room.status_limpeza === "Em Limpeza") ||
+    (dirtyFilterActivy && room.status_limpeza === "Suja") ||
+    (!cleanFilterActivity && !pendingCleaningFilterActivity && !inCleaningFilterActivity && !dirtyFilterActivy); 
 
     return matchName && matchStatus;
   });
   
-  function handlePressFilterButton() {
-    setFilterActivity(prev => !prev);
-    setCleanFilterActivity(false);
-    setPendingCleaningFilterActivity(false);
-  }
-  
   function handlePressFilterCleanButton() {
     setCleanFilterActivity(prev => !prev);
     setPendingCleaningFilterActivity(false);
+    setInCleaningFilterActivity(false);
+    setDirtyFilterActivity(false);
   }
 
   function handlePressFilterPendingCleaningButton() {
     setPendingCleaningFilterActivity(prev => !prev);
     setCleanFilterActivity(false);
+    setInCleaningFilterActivity(false);
+    setDirtyFilterActivity(false);
+  }
+
+  function handlePressFilterInCleaningButton() {
+    setInCleaningFilterActivity(prev => !prev);
+    setCleanFilterActivity(false);
+    setPendingCleaningFilterActivity(false);
+    setDirtyFilterActivity(false);
+  }
+
+  function handlePressFilterDirtyButton() {
+    setDirtyFilterActivity(prev => !prev);
+    setCleanFilterActivity(false);
+    setPendingCleaningFilterActivity(false);
+    setInCleaningFilterActivity(false);
   }
 
   async function fetchRooms() {
@@ -109,32 +124,39 @@ export function Home() {
             placeholder="Nome da sala"
           />
 
-          {
-            filterActivity &&
-            <FiltersContainer>
-              <FilterText>Filtrar por: </FilterText>
+          <FiltersContainer>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            >
+              <FilterButton 
+                name="Limpa" 
+                isActive={cleanFilterActivity}
+                onPress={handlePressFilterCleanButton}
+                style={{ marginRight: 10 }}
+              />
 
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ margin: 2 }}
-              >
-                <FilterButton 
-                  name="Limpa" 
-                  isActive={cleanFilterActivity}
-                  onPress={handlePressFilterCleanButton}
-                  style={{ marginRight: 10 }}
-                />
+              <FilterButton 
+                name="Limpeza Pendente" 
+                isActive={pendingCleaningFilterActivity}
+                onPress={handlePressFilterPendingCleaningButton}
+                style={{ marginRight: 10 }}
+              />
 
-                <FilterButton 
-                  name="Limpeza Pendente" 
-                  isActive={pendingCleaningFilterActivity}
-                  onPress={handlePressFilterPendingCleaningButton}
-                />
-              </ScrollView>
-            </FiltersContainer>
-          }
+              <FilterButton 
+                name="Em Limpeza" 
+                isActive={inCleaningFilterActivity}
+                onPress={handlePressFilterInCleaningButton}
+                style={{ marginRight: 10 }}
+              />
 
+              <FilterButton 
+                name="Suja" 
+                isActive={dirtyFilterActivy}
+                onPress={handlePressFilterDirtyButton}
+              />
+            </ScrollView>
+          </FiltersContainer>
         </OptionsRoomsContainer>
 
         { isLoading ? (
