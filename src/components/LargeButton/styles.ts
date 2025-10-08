@@ -10,6 +10,8 @@ export const Button = styled.TouchableOpacity.attrs({
 })<ButtonColorProp>`
   padding: 8px;
   border-radius: 6px;
+  flex-direction: row;
+  gap: 6px;
   align-items: center;
   justify-content: center;
   border-width: 1px;
@@ -36,7 +38,7 @@ export const ButtonText = styled.Text<ButtonColorProp>`
       : primary === "red" ? theme.COLORS.RED 
       : theme.COLORS.WHITE[100]
     };
-    font-family: ${theme.FONTS.REGULAR};
+    font-family: ${theme.FONTS.SEMI_BOLD};
   `}
   font-size: 16px;
 `;

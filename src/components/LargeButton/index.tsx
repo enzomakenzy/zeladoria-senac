@@ -14,7 +14,7 @@ type Props = ButtonColorProp & TouchableOpacityProps & {
   Icon?: FC<SvgProps>;
 }
 
-export function LargeButton({ textButton, primary = "blue", isLoading, status, onPress, Icon, ...rest }: Props) {
+export function LargeButton({ textButton, primary = "blue", isLoading, status, Icon, ...rest }: Props) {
   const theme = useTheme();
 
   return (
@@ -22,7 +22,8 @@ export function LargeButton({ textButton, primary = "blue", isLoading, status, o
       primary={primary} 
       status={status} 
       disabled={status === "inactive" ? true : false} 
-      {...rest}>
+      {...rest}
+    >
       { isLoading ? 
         <ActivityIndicator color={theme.COLORS.WHITE[100]} />
       :
@@ -32,7 +33,14 @@ export function LargeButton({ textButton, primary = "blue", isLoading, status, o
           </ButtonText>
 
           { Icon &&
-            <Icon height={14} width={14} />
+            <Icon 
+              height={18} 
+              width={18} 
+              fill={status === "inactive" ? theme.COLORS.GRAY[600]
+                : primary === "red" ? theme.COLORS.RED
+                : theme.COLORS.WHITE[100]
+              } 
+            />
           }
         </Fragment>
       }
