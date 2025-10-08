@@ -1,7 +1,9 @@
 import styled, { css } from "styled-components/native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import Circle from "@assets/circle.svg";
+import Cancel from "@assets/cancel.svg";
 
 type RoomProps = {
   status?: boolean;
@@ -25,20 +27,20 @@ export const Line = styled.View`
   width: 100%;
   height: 1px;
   background-color: ${({ theme }) => theme.COLORS.BLACK.TRANSPARENCE_6};
+  /* margin-bottom: 3px; */
 `;
 
-export const RoomNameText = styled.Text`
+export const Title = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.FONTS.SEMI_BOLD};
     color: ${theme.COLORS.BLUE[200]};
   `};
   font-size: 20px;
-  margin-bottom: 10px;
 `;
 
 export const InfoRoomContainer = styled.View`
   gap: 8px;
-  margin-bottom: 22px;
+  margin: 10px 0 22px;
 `;
 
 export const ItemInfoContainer = styled.View`
@@ -46,7 +48,7 @@ export const ItemInfoContainer = styled.View`
   gap: 7px;
 `;
 
-export const InfoRoomText = styled.Text<RoomProps>`
+export const StyledText = styled.Text<RoomProps>`
   ${({ theme, textStyle = "regular" }) => css`
     font-family: ${textStyle === "regular" ? theme.FONTS.REGULAR : theme.FONTS.SEMI_BOLD};
     color: ${theme.COLORS.BLACK.TRANSPARENCE_100};
@@ -71,21 +73,31 @@ export const StatusRoomIcon = styled(Circle)<RoomProps>`
   background-color: ${({ theme, status }) => status ? theme.COLORS.GREEN : theme.COLORS.ORANGE};
 `;
 
-// Colocar Modal Visible 
+// Clean Structure
 
-export const ModalTitle = styled.Text`
-  ${({ theme }) => css`
-    color: ${theme.COLORS.BLUE[200]};
-    font-family: ${theme.FONTS.SEMI_BOLD};
-  `}
-  font-size: 18px;
-  text-align: center; 
+export const CleanContainer = styled.View`
+  margin: 25px 0px;
+  gap: 4px;
+  flex: 1;
+`;  
+
+export const CleanTitleContainer = styled.View`
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`
+
+export const CancelButton = styled.TouchableOpacity`
+  padding: 10px;
 `;
 
-export const ModalInfoContainer = styled.View`
-  margin-bottom: 20px;
-`;
+export const CancelIcon = styled(Cancel).attrs(({ theme }) => ({
+  fill: theme.COLORS.BLACK.TRANSPARENCE_100,
+  height: 26,
+  width: 26
+}))``;
 
-export const ModalButtonsContainer = styled.View`
-  gap: 12px;
+export const CleanRoomForm = styled.View`
+  gap: 3px;
 `;

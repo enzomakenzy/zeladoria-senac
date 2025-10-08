@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Image } from "react-native";
 
 import { ButtonsContainer, Container, ContentContainer, ImgNameContainer, Line, Main, ModalChangePasswordTitle, ModalContentContainer, UserNameText } from "./styles";
@@ -192,7 +192,7 @@ export function Profile() {
 
           {
             user.is_superuser &&
-            <>
+            <Fragment>
               <Line />
               
               <ButtonsContainer>
@@ -210,7 +210,7 @@ export function Profile() {
                   style={{ width: "48%" }} 
                 />
               </ButtonsContainer>
-            </>
+            </Fragment>
           }
         </ContentContainer>
 

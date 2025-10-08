@@ -1,12 +1,12 @@
-import { Container, InfoRoomContainer, InfoRoomText, Main, ModalButtonsContainer, ModalInfoContainer, ModalTitle, RoomNameText } from "./styles";
+import { Fragment, useState } from "react";
+import { Image } from "react-native";
+
+import { CancelButton, CancelIcon, CleanContainer, CleanTitleContainer, Container, InfoRoomContainer, StyledText, Line, Main, Title, CleanRoomForm } from "./styles";
 
 import { Header } from "@components/Header";
-import { FormInput } from "@components/FormInput";
-import { CustomModal } from "@components/CustomModal";
 import { LargeButton } from "@components/LargeButton";
 import { AdminButton } from "@components/AdminButton";
-
-import { useState } from "react";
+import { Loading } from "@components/Loading";
 
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
@@ -22,11 +22,10 @@ import { useNavigation } from "@react-navigation/native";
 
 import { RoomDTO } from "@dtos/RoomDTO";
 import { useAuth } from "@hooks/useAuth";
-
-import { transformUtcToParseISO } from "@utils/transformUtcToParseISO";
 import { useFocusScreen } from "@hooks/useFocusScreen";
-import { Loading } from "@components/Loading";
-import { Image } from "react-native";
+import { transformUtcToParseISO } from "@utils/transformUtcToParseISO";
+
+import CleanIcon from "@assets/clean-button.svg";
 
 type RoomDetailsScreenProps = NativeStackScreenProps<HomeStackProps, "roomDetails">;
 
@@ -38,8 +37,9 @@ type CleanRoomFormData = z.infer<typeof cleanRoomFormSchema>;
 
 export function RoomDetails({ route }: RoomDetailsScreenProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
   const [room, setRoom] = useState<RoomDTO>({} as RoomDTO);
+  const [startCleanButtonStatus, setStartCleanButtonStatus] = useState<"active" | "inactive">();
+  const [showCleanForm, setShowCleanForm] = useState(false);
 
   const navigation = useNavigation<HomeStackNavigationProps>()
 
@@ -51,7 +51,7 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
 
   const { qr_code_id } = route.params;
 
-  const baseUrl = "https://zeladoria.tsr.net.br"
+  const baseUrl = "https://zeladoria.tsr.net.br";
   const imagePath = room.imagem;
 
   const imageUrl = `${baseUrl}${imagePath}`
@@ -82,18 +82,12 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
     }
   }
   
-  async function handleSetRoomClean({ observations }: CleanRoomFormData) {
+  async function handleStartClean() {
     try {
-      await api.post(`/salas/${qr_code_id}/marcar_como_limpa/`, {
-        observacoes: observations
-      });
-      
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "home" }]
-      })
-      
-      setModalVisible(false);
+      // await api.post(`/salas/${qr_code_id}/iniciar_limpeza/`);
+
+      setStartCleanButtonStatus("inactive");
+      setShowCleanForm(prev => !prev);
     } catch (error) {
       const isAppError = error instanceof AppError;
       const errorMessage = isAppError ? error.message : "Não foi possível marcar a sala como limpa";
@@ -115,128 +109,134 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
   useFocusScreen(() => {
     fetchDetailRoom();
   });
-
-  console.log(room.responsaveis);
   
   return (
     <Container>
-      <CustomModal modalVisible={modalVisible}>
-        <ModalTitle>Marcar sala como limpa</ModalTitle>
-
-        <ModalInfoContainer>
-          <Controller 
-            control={control}
-            name="observations"
-            render={(({ field: { onChange, value } }) => (
-              <FormInput 
-                inputName="Adicionar observação (opcional)" 
-                placeholder="Observações" 
-                editable
-                value={value}
-                onChangeText={onChange}
-              />
-            ))}
-          />
-        </ModalInfoContainer>
-
-        <ModalButtonsContainer>
-          <LargeButton 
-            textButton="Limpar" 
-            onPress={handleSubmit(handleSetRoomClean)} 
-          />
-
-          <LargeButton 
-            textButton="Cancelar" 
-            primary="red"
-            onPress={() => setModalVisible(false)} 
-          />
-        </ModalButtonsContainer>
-
-      </CustomModal>
-
       <Header screenName="Detalhes da sala" variant />
 
       <Main>
-        { isLoading ? (
+        { isLoading ? 
           <Loading />
-        )
         :
-        <>    
-          <RoomNameText>
-            {room.nome_numero}
-          </RoomNameText>
+          <Fragment>    
+            <Title>
+              {room.nome_numero}
+            </Title>
 
-          <InfoRoomContainer>
-            <InfoRoomText>
-              <InfoRoomText textStyle="semibold">Capacidade: </InfoRoomText>
-              {room.capacidade}
-            </InfoRoomText>
+            <InfoRoomContainer>
+              <StyledText>
+                <StyledText textStyle="semibold">Capacidade: </StyledText>
+                {room.capacidade}
+              </StyledText>
 
-            <InfoRoomText>
-              <InfoRoomText textStyle="semibold">Status da limpeza: </InfoRoomText>
-              {room.status_limpeza}
-            </InfoRoomText>
+              <StyledText>
+                <StyledText textStyle="semibold">Status da limpeza: </StyledText>
+                {room.status_limpeza}
+              </StyledText>
 
-            <InfoRoomText>
-              <InfoRoomText textStyle="semibold">Localização: </InfoRoomText>
-              {room.localizacao}
-            </InfoRoomText>
+              <StyledText>
+                <StyledText textStyle="semibold">Localização: </StyledText>
+                {room.localizacao}
+              </StyledText>
 
-            <InfoRoomText>
-              <InfoRoomText textStyle="semibold">Última limpeza: </InfoRoomText>
-              {transformUtcToParseISO(room.ultima_limpeza_data_hora)}
-            </InfoRoomText>
+              <StyledText>
+                <StyledText textStyle="semibold">Última limpeza: </StyledText>
+                {transformUtcToParseISO(room.ultima_limpeza_data_hora)}
+              </StyledText>
 
-            <InfoRoomText>
-              <InfoRoomText textStyle="semibold">Último funcionário a limpar: </InfoRoomText>
-              {room.ultima_limpeza_funcionario}
-            </InfoRoomText>
+              <StyledText>
+                <StyledText textStyle="semibold">Último funcionário a limpar: </StyledText>
+                {room.ultima_limpeza_funcionario}
+              </StyledText>
 
-            {
-              room.responsaveis && room.responsaveis.length > 0 &&
-                <InfoRoomText>
-                  <InfoRoomText textStyle="semibold">Responsáveis: </InfoRoomText>
-                  {room.responsaveis ? room.responsaveis.join(", ") : room.responsaveis}
-                </InfoRoomText>
+              {
+                room.responsaveis && room.responsaveis.length > 0 &&
+                  <StyledText>
+                    <StyledText textStyle="semibold">Responsáveis: </StyledText>
+                    {room.responsaveis ? room.responsaveis.join(", ") : room.responsaveis}
+                  </StyledText>
+              }
+
+              {
+                room.instrucoes &&
+                  <StyledText>
+                    <StyledText textStyle="semibold">Instruções: </StyledText>
+                    {room.instrucoes}
+                  </StyledText>
+              }
+
+              {
+                room.descricao &&
+                  <StyledText>
+                    <StyledText textStyle="semibold">Descrição: </StyledText>
+                    {room.descricao}
+                  </StyledText>
+              }
+
+              {
+                room.imagem &&
+                  <Image 
+                    source={{ uri: imageUrl }}
+                    width={150}
+                    height={150}
+                    resizeMode="contain"
+                    style={{ borderRadius: 6, marginTop: 10 }}
+                  />
+              }
+            </InfoRoomContainer>
+
+            { (room.status_limpeza === "Limpeza Pendente" || room.status_limpeza === "Suja") &&
+              <LargeButton 
+                textButton="Iniciar limpeza" 
+                status={startCleanButtonStatus}
+                onPress={handleStartClean}
+                Icon={CleanIcon}
+              />
             }
 
-            {
-              room.instrucoes &&
-                <InfoRoomText>
-                  <InfoRoomText textStyle="semibold">Instruções: </InfoRoomText>
-                  {room.instrucoes}
-                </InfoRoomText>
+            { user.is_superuser &&
+              <AdminButton 
+                name="Editar sala" 
+                screen="editRoom" 
+                icon="edit" 
+                roomId={room as RoomDTO} 
+              /> 
             }
-
-            {
-              room.descricao &&
-                <InfoRoomText>
-                  <InfoRoomText textStyle="semibold">Descrição: </InfoRoomText>
-                  {room.descricao}
-                </InfoRoomText>
-            }
-
-            {
-              room.imagem &&
-                <Image 
-                  source={{ uri: imageUrl }}
-                  width={150}
-                  height={150}
-                  resizeMode="contain"
-                  style={{ borderRadius: 6, marginTop: 10 }}
-                />
-            }
-          </InfoRoomContainer>
-
-          { room.status_limpeza === "Limpeza Pendente" &&
-            <LargeButton textButton="Marcar sala como limpa" onPress={() => setModalVisible(true)} />
-          }
-
-          { user.is_superuser &&
-            <AdminButton name="Editar sala" screen="editRoom" icon="edit" roomId={room as RoomDTO} /> 
-          }
-        </>
+          </Fragment>
         }
+
+        { showCleanForm && (
+          <CleanContainer>
+            <Line />
+
+            <CleanTitleContainer>
+              <Title>Limpeza Iniciada</Title>
+
+              <CancelButton>
+                <CancelIcon />
+              </CancelButton>
+            </CleanTitleContainer>
+
+            <CleanRoomForm>
+            <StyledText>
+                <StyledText textStyle="semibold">Funcionário: </StyledText>
+                {room.ultima_limpeza_funcionario}
+              </StyledText>
+            <StyledText>
+                <StyledText textStyle="semibold">Funcionário: </StyledText>
+                {room.ultima_limpeza_funcionario}
+              </StyledText>
+            <StyledText>
+                <StyledText textStyle="semibold">Funcionário: </StyledText>
+                {room.ultima_limpeza_funcionario}
+              </StyledText>
+            <StyledText>
+                <StyledText textStyle="semibold">Funcionário: </StyledText>
+                {room.ultima_limpeza_funcionario}
+              </StyledText>
+            </CleanRoomForm>
+          </CleanContainer>
+        )}
       </Main>
     </Container>
   )
