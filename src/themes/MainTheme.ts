@@ -7,6 +7,11 @@ export default {
       TRANSPARENCE_70: "#ffffffb4",
     },
 
+    GRAY: {
+      100: "#BDC2C6",
+      600: "#757575"
+    },
+
     BLACK: {
       TRANSPARENCE_4: "#0000000a",
       TRANSPARENCE_6: "#0000000f",
