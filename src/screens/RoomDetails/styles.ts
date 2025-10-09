@@ -127,7 +127,7 @@ export const CleanObservationsInput = styled.TextInput.attrs({
   padding: 5px 8px;
 `; 
 
-export const CleanSelectedImagesArea = styled.View<{ error: boolean }>`
+export const CleanSelectedImagesArea = styled.TouchableOpacity<{ error: boolean }>`
   ${({ theme, error }) => css`
     background-color: ${theme.COLORS.WHITE[200]};
     border-color: ${error ? theme.COLORS.RED : theme.COLORS.BLACK.TRANSPARENCE_6};

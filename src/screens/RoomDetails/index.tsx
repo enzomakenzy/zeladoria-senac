@@ -29,6 +29,8 @@ import { transformUtcToParseISO } from "@utils/transformUtcToParseISO";
 import CleanIcon from "@assets/clean-button.svg";
 import CheckedIcon from "@assets/finalized-clean.svg";
 
+import * as ImagePicker from "expo-image-picker";
+
 type RoomDetailsScreenProps = NativeStackScreenProps<HomeStackProps, "roomDetails">;
 
 const cleanRoomFormSchema = z.object({
@@ -58,7 +60,42 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
   const baseUrl = "https://zeladoria.tsr.net.br";
   const imagePath = room.imagem;
 
-  const imageUrl = `${baseUrl}${imagePath}`
+  const imageUrl = `${baseUrl}${imagePath}`;
+
+  async function verifyCameraPermissions() {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (status !== "granted") {
+      Toast.show({
+        type: "error",
+        text1: "Permissão necessária",
+        text2: "Você precisa conceder permissão de acesso à câmera parar tirar fotos.",
+        text1Style: {
+          fontSize: 18
+        },
+        text2Style: {
+          fontSize: 16
+        },
+        visibilityTime: 5000
+      });
+
+      return false;
+    }
+
+    return true;
+  }
+
+  async function handleUserPhotoSelect() {
+    const havePermissions = await verifyCameraPermissions();
+    if (!havePermissions) return;
+
+    const resultado = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true, 
+      aspect: [5, 4],
+      quality: 1
+    });
+  }
 
   async function fetchDetailRoom() {
     try {
@@ -251,7 +288,7 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
                 <CleanFieldContainer>
                   <StyledText textStyle="semibold">Fotos da limpeza: </StyledText>
 
-                  <CleanSelectedImagesArea error={!!errors.images?.message}>
+                  <CleanSelectedImagesArea error={!!errors.images?.message} onPress={handleUserPhotoSelect}>
                     <CameraIcon />
                     <StyledText textColor="gray">Selecione até 3 fotos da limpeza</StyledText>
                   </CleanSelectedImagesArea>
