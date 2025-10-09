@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 import { Image, KeyboardAvoidingView, Platform } from "react-native";
 
-import { CancelButton, CancelIcon, CleanContainer, CleanTitleContainer, Container, InfoRoomContainer, StyledText, Line, Main, Title, CleanRoomFormContainer, CleanFieldContainer, CleanObservationsInput, CleanSelectedImagesArea, CameraIcon } from "./styles";
+import { CancelButton, CancelIcon, CleanContainer, CleanTitleContainer, Container, InfoRoomContainer, StyledText, Line, Main, Title, CleanRoomFormContainer, CleanFieldContainer, CleanObservationsInput, CleanSelectedImagesArea, CameraIcon, ErrorText } from "./styles";
 
 import { Header } from "@components/Header";
 import { LargeButton } from "@components/LargeButton";
@@ -32,7 +32,8 @@ import CheckedIcon from "@assets/finalized-clean.svg";
 type RoomDetailsScreenProps = NativeStackScreenProps<HomeStackProps, "roomDetails">;
 
 const cleanRoomFormSchema = z.object({
-  observations: z.string().optional()
+  observations: z.string().optional(),
+  images: z.string().nonempty("Campo obrigatório")
 })
 
 type CleanRoomFormData = z.infer<typeof cleanRoomFormSchema>;
@@ -48,7 +49,7 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
 
   const { user } = useAuth();
 
-  const { control, handleSubmit } = useForm<CleanRoomFormData>({
+  const { control, handleSubmit, formState: { errors } } = useForm<CleanRoomFormData>({
     resolver: zodResolver(cleanRoomFormSchema)
   });
 
@@ -107,6 +108,14 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
           fontSize: 16
         }
       })
+    }
+  }
+
+  function handleCompleteClean({ observations, images }: CleanRoomFormData) {
+    try {
+      console.log({ observations, images });
+    } catch (error) {
+      console.error(error);
     }
   }
   
@@ -242,13 +251,16 @@ export function RoomDetails({ route }: RoomDetailsScreenProps) {
                 <CleanFieldContainer>
                   <StyledText textStyle="semibold">Fotos da limpeza: </StyledText>
 
-                  <CleanSelectedImagesArea error={false}>
+                  <CleanSelectedImagesArea error={!!errors.images?.message}>
                     <CameraIcon />
                     <StyledText textColor="gray">Selecione até 3 fotos da limpeza</StyledText>
                   </CleanSelectedImagesArea>
+                  { errors.images?.message &&
+                    <ErrorText error={!!errors.images.message}>Campo obrigatório</ErrorText>
+                  }
                 </CleanFieldContainer>
 
-                <LargeButton textButton="Finalizar limpeza" Icon={CheckedIcon} />
+                <LargeButton textButton="Finalizar limpeza" onPress={handleSubmit(handleCompleteClean)} Icon={CheckedIcon} />
               </CleanRoomFormContainer>
             </CleanContainer>
           )}

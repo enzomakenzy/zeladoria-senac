@@ -138,7 +138,6 @@ export const CleanSelectedImagesArea = styled.View<{ error: boolean }>`
   align-items: center;
   justify-content: center;
   border-radius: 6px;
-  margin-bottom: 16px;
 `;
 
 export const CameraIcon = styled(Camera).attrs(({ theme }) => ({
@@ -152,5 +151,6 @@ export const ErrorText = styled.Text<{ error: boolean }>`
     color: ${theme.COLORS.RED};
     font-family: ${theme.FONTS.REGULAR};
   `}
-  font-size: 10px;
+  font-size: 14px;
+  margin-bottom: 16px;
 `;
