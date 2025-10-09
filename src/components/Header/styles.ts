@@ -12,7 +12,6 @@ export const HeaderContainer = styled.View`
   gap: 15px;
   border-bottom-width: 1px;
   height: 56px;
-  margin-bottom: 5px;
 `;
 
 export const ScreenName = styled.Text`

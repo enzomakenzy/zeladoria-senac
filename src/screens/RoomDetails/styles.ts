@@ -4,10 +4,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import Circle from "@assets/circle.svg";
 import Cancel from "@assets/cancel.svg";
+import Camera from "@assets/camera.svg";
 
 type RoomProps = {
   status?: boolean;
   textStyle?: "regular" | "semibold";
+  textColor?: "black" | "gray";
 }
 
 export const Container = styled(SafeAreaView).attrs({
@@ -17,7 +19,9 @@ export const Container = styled(SafeAreaView).attrs({
   background-color: ${({ theme }) => theme.COLORS.WHITE[100]};
 `;
 
-export const Main = styled.View`
+export const Main = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false
+})`
   flex: 1;
   background-color: ${({ theme }) => theme.COLORS.WHITE[100]};
   padding: 4px 15px;
@@ -49,9 +53,9 @@ export const ItemInfoContainer = styled.View`
 `;
 
 export const StyledText = styled.Text<RoomProps>`
-  ${({ theme, textStyle = "regular" }) => css`
+  ${({ theme, textStyle = "regular", textColor = "black" }) => css`
     font-family: ${textStyle === "regular" ? theme.FONTS.REGULAR : theme.FONTS.SEMI_BOLD};
-    color: ${theme.COLORS.BLACK.TRANSPARENCE_100};
+    color: ${textColor === "gray" ? theme.COLORS.GRAY[100] : theme.COLORS.BLACK.TRANSPARENCE_100};
   `}
   font-size: 16px;
 `;
@@ -61,17 +65,17 @@ export const StatusRoomContainer = styled.View`
   gap: 5px;
 `;
 
-export const StatusRoomText = styled.Text<RoomProps>`
-  ${({ theme, status }) => css`
-    font-family: ${theme.FONTS.REGULAR};
-    color: ${status ? theme.COLORS.GREEN : theme.COLORS.ORANGE};
-  `}
-  font-size: 16px;
-`
+// export const StatusRoomText = styled.Text<RoomProps>`
+//   ${({ theme, status }) => css`
+//     font-family: ${theme.FONTS.REGULAR};
+//     color: ${status ? theme.COLORS.GREEN : theme.COLORS.ORANGE.MAIN};
+//   `}
+//   font-size: 16px;
+// `
 
-export const StatusRoomIcon = styled(Circle)<RoomProps>`
-  background-color: ${({ theme, status }) => status ? theme.COLORS.GREEN : theme.COLORS.ORANGE};
-`;
+// export const StatusRoomIcon = styled(Circle)<RoomProps>`
+//   background-color: ${({ theme, status }) => status ? theme.COLORS.GREEN : theme.COLORS.ORANGE.MAIN};
+// `;
 
 // Clean Structure
 
@@ -98,6 +102,55 @@ export const CancelIcon = styled(Cancel).attrs(({ theme }) => ({
   width: 26
 }))``;
 
-export const CleanRoomForm = styled.View`
-  gap: 3px;
+export const CleanRoomFormContainer = styled.View`
+  gap: 7px;
+  margin-bottom: 60px;
+`;
+
+export const CleanFieldContainer = styled.View`
+  gap: 4px;
+`;
+
+export const CleanObservationsInput = styled.TextInput.attrs({
+  multiline: true,
+  textAlignVertical: "top"
+})`
+  ${({ theme }) => css`
+    border-color: ${theme.COLORS.BLACK.TRANSPARENCE_6};
+    font-family: ${theme.FONTS.REGULAR};
+    background-color: ${theme.COLORS.WHITE[200]};
+  `}
+  height: 100px;
+  width: 100%;
+  border-width: 1px;
+  border-radius: 6px;
+  padding: 5px 8px;
+`; 
+
+export const CleanSelectedImagesArea = styled.View<{ error: boolean }>`
+  ${({ theme, error }) => css`
+    background-color: ${theme.COLORS.WHITE[200]};
+    border-color: ${error ? theme.COLORS.RED : theme.COLORS.BLACK.TRANSPARENCE_6};
+  `}
+  width: 100%;
+  height: 140px;
+  border-width: 1px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  margin-bottom: 16px;
+`;
+
+export const CameraIcon = styled(Camera).attrs(({ theme }) => ({
+  height: 30,
+  width: 30,
+  fill: theme.COLORS.GRAY[100]
+}))``;
+
+export const ErrorText = styled.Text<{ error: boolean }>`
+  ${({ theme }) => css`
+    color: ${theme.COLORS.RED};
+    font-family: ${theme.FONTS.REGULAR};
+  `}
+  font-size: 10px;
 `;
